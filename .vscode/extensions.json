@@ -1,0 +1,10 @@
+{
+  "recommendations": [
+    "esbenp.prettier-vscode",
+    "dsznajder.es7-react-js-snippets",
+    "ms-python.python",
+    "dbaeumer.vscode-eslint",
+    "circlecodesolution.ccs-flutter-color",
+    "bradlc.vscode-tailwindcss"
+  ]
+}

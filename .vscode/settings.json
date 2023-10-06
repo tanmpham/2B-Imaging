@@ -1,0 +1,31 @@
+{
+  "files.autoSaveDelay": 400,
+  "editor.formatOnSave": true,
+  "editor.formatOnSaveMode": "file",
+  "files.insertFinalNewline": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true,
+    "source.sortImports": true
+  },
+  "editor.tabSize": 2,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "typescript.preferences.quoteStyle": "single",
+  "editor.detectIndentation": false,
+  "tailwindCSS.classAttributes": [
+    "class",
+    "className",
+    "ngClass",
+    "style",
+    "globalStyles",
+    "styles",
+    "colors"
+  ],
+  "editor.wordWrap": "on",
+  "explorer.confirmDragAndDrop": false,
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.formatOnType": true
+  },
+  "files.autoSave": "onFocusChange",
+  "typescript.updateImportsOnFileMove.enabled": "always"
+}
