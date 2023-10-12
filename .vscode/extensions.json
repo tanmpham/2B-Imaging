@@ -1,12 +1,13 @@
 {
   "recommendations": [
-    "esbenp.prettier-vscode",
+    "rvest.vs-code-prettier-eslint",
     "dsznajder.es7-react-js-snippets",
     "ms-python.python",
     "dbaeumer.vscode-eslint",
     "circlecodesolution.ccs-flutter-color",
     "bradlc.vscode-tailwindcss",
     "kevinrose.vsc-python-indent",
-    "tushortz.python-extended-snippets"
+    "tushortz.python-extended-snippets",
+    "streetsidesoftware.code-spell-checker"
   ]
 }
