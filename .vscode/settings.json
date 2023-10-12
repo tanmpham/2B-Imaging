@@ -8,7 +8,7 @@
     "source.sortImports": true
   },
   "editor.tabSize": 2,
-  "editor.defaultFormatter": "rvest.vs-code-prettier-eslint",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "typescript.preferences.quoteStyle": "single",
   "editor.detectIndentation": false,
   "tailwindCSS.classAttributes": [
