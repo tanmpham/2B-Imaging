@@ -5,6 +5,8 @@
     "ms-python.python",
     "dbaeumer.vscode-eslint",
     "circlecodesolution.ccs-flutter-color",
-    "bradlc.vscode-tailwindcss"
+    "bradlc.vscode-tailwindcss",
+    "kevinrose.vsc-python-indent",
+    "tushortz.python-extended-snippets"
   ]
 }

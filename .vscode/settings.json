@@ -27,5 +27,12 @@
     "editor.formatOnType": true
   },
   "files.autoSave": "onFocusChange",
-  "typescript.updateImportsOnFileMove.enabled": "always"
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "tailwindCSS.experimental.classRegex": [
+    ["style \\=([^;]*)", "'([^']*)'"],
+    ["style \\=([^;]*)", "\"([^\"]*)\""],
+    ["style \\=([^;]*)", "\\`([^\\`]*)\\`"],
+    ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
+    ["cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
+  ]
 }
