@@ -45,7 +45,7 @@ function Navbar() {
 
   // const range = `[${formattedStartDate} ----- ${formattedEndDate}]`
   // console.log(range)
-  const { currentPatient, setCurrentPatient } = useCurrentPatientContext()
+  const { currentPatient, setCurrentPatient,selectedDate,setSelectedDate } = useCurrentPatientContext()
 
   const updateData = (e: ChangeEvent<HTMLInputElement>) => {
     setCurrentPatient({
@@ -57,7 +57,9 @@ function Navbar() {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     console.log(currentPatient)
+    console.log(selectedDate)
   }
+
 
   return (
     <div className="w-[12%] bg-black h-screen p-[22px] text-white">
@@ -142,7 +144,7 @@ function Navbar() {
           Calendar
         </div>
 
-        <input id="dob" className={`${style.input}`} />
+        <input id="dob" onChange={(e)=>{ setSelectedDate(e.target.value); }} className={`${style.input}`} />
       </div>
     </div>
   )

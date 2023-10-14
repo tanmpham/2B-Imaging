@@ -15,6 +15,8 @@ type Props = { children: ReactNode }
 type CurrentPatientContextType = {
   currentPatient: PatientDto
   setCurrentPatient: Dispatch<SetStateAction<PatientDto>>
+  selectedDate:string
+  setSelectedDate: Dispatch<SetStateAction<string>>
 }
 
 const CurrentPatientContext = createContext<CurrentPatientContextType | null>(
@@ -29,11 +31,13 @@ export default function CurrentPatientContextProvider({ children }: Props) {
     dob: '',
   })
 
+  const [selectedDate, setSelectedDate] = useState('')
+
   return (
     <CurrentPatientContext.Provider
       value={{
         currentPatient,
-        setCurrentPatient,
+        setCurrentPatient,selectedDate,setSelectedDate
       }}
     >
       {children}
