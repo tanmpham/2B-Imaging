@@ -5,15 +5,6 @@ const nextConfig = {
   images: {
     domains: ['localhost'],
   },
-  redirects() {
-    return [
-      {
-        source: '/',
-        destination: '/patient-directory',
-        permanent: false,
-      },
-    ]
-  },
 }
 
 module.exports = nextConfig
