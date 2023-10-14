@@ -6,6 +6,13 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  --background-color: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.9) -2.91%,
+    rgba(0, 0, 0, 0.8) 51.04%,
+    rgba(0, 0, 0, 0.9) 107.23%
+  );
+  --rounded-default: 0.14rem;
 }
 
 html {

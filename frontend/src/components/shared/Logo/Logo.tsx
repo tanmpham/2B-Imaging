@@ -2,7 +2,6 @@
 
 import Link from 'next/link'
 import React from 'react'
-import Img from '../Img/Img'
 
 type Props = {
   className?: string
@@ -15,14 +14,16 @@ const Logo = ({ className }: Props) => {
         href="/"
         className={`flex lg:hidden active:scale-95 transition-transform ease-in ${className}`}
       >
-        <Img alt="2B Imaging Logo" src="" />
+        <div className={`w-[117px] h-[58px] bg-green`}></div>
       </Link>
 
       <Link
         href="/"
         className={`hidden lg:flex active:scale-95 transition-transform ease-in ${className}`}
       >
-        <Img alt="2B Imaging Logo" src="" />
+        <div
+          className={`w-full h-[60px] bg-green rounded-[var(--rounded-default)]`}
+        ></div>
       </Link>
     </>
   )

@@ -10,6 +10,12 @@ const config: Config = {
     extend: {
       colors: {
         blue: '#004580',
+        green: '#A5F8EE91',
+        green_1: '#4b7772',
+        navBg: '#0A0A0A',
+        gray: '#D9D9D9',
+        gray_1: '#0000005C',
+        orange: '#E89903',
       },
     },
   },
