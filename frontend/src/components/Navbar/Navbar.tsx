@@ -1,21 +1,21 @@
 'use client'
 
-import { ChangeEvent, FormEvent, useState } from 'react'
-import { DateRange, RangeKeyDict } from 'react-date-range'
+import { ChangeEvent, FormEvent } from 'react'
 import { FaUserAlt } from 'react-icons/fa'
 import { HiHashtag } from 'react-icons/hi2'
 import { VscCalendar } from 'react-icons/vsc'
 import Logo from '../shared/Logo/Logo'
 
-import format from 'date-fns/format'
+// import { DateRange, RangeKeyDict } from 'react-date-range'
+// import format from 'date-fns/format'
 
-import { PatientDto } from '@/app/interfaces/patient.dto'
+import { useCurrentPatientContext } from '@/context/current-patient-context'
 import 'react-date-range/dist/styles.css'
 import 'react-date-range/dist/theme/default.css'
 
 const style = {
   label: `ml-[2rem] hover:text-green cursor-pointer group-hover:text-green`,
-  input: `w-full outline-none pl-[1rem] h-[28px] text-black text-[12px] font-semibold rounded-[var(--rounded-default)]`,
+  input: `w-full outline-none px-[1rem] h-[28px] text-black text-[12px] font-semibold rounded-[var(--rounded-default)] mt-[.4rem]`,
 }
 
 function Navbar() {
@@ -44,25 +44,19 @@ function Navbar() {
   // )
 
   // const range = `[${formattedStartDate} ----- ${formattedEndDate}]`
-
   // console.log(range)
-  const [data, setData] = useState<PatientDto>({
-    id: '',
-    last: '',
-    first: '',
-    dob: '',
-  })
+  const { currentPatient, setCurrentPatient } = useCurrentPatientContext()
 
   const updateData = (e: ChangeEvent<HTMLInputElement>) => {
-    setData({
-      ...data,
+    setCurrentPatient({
+      ...currentPatient,
       [e.target.id]: e.target.value,
     })
   }
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    console.log(data)
+    console.log(currentPatient)
   }
 
   return (
@@ -74,34 +68,54 @@ function Navbar() {
         action="#"
         id="patientSelection"
         onSubmit={handleSubmit}
-        className="flex flex-col gap-y-[.4rem]"
+        className="flex flex-col gap-y-[.6rem]"
       >
         <div className="group">
           <label htmlFor="id" className={style.label}>
             ID
           </label>
-          <input id="id" onChange={updateData} className={style.input} />
+          <input
+            id="id"
+            type="text"
+            onChange={updateData}
+            className={style.input}
+          />
         </div>
 
         <div className="group">
           <label htmlFor="last" className={style.label}>
             Last
           </label>
-          <input id="last" onChange={updateData} className={style.input} />
+          <input
+            id="last"
+            type="text"
+            onChange={updateData}
+            className={style.input}
+          />
         </div>
 
         <div className="group">
           <label htmlFor="first" className={style.label}>
             First
           </label>
-          <input id="first" onChange={updateData} className={style.input} />
+          <input
+            id="first"
+            type="text"
+            onChange={updateData}
+            className={style.input}
+          />
         </div>
 
         <div className="group">
           <label htmlFor="dob" className={style.label}>
             DOB
           </label>
-          <input id="dob" onChange={updateData} className={style.input} />
+          <input
+            id="dob"
+            type="date"
+            onChange={updateData}
+            className={style.input}
+          />
         </div>
         <button
           form="patientSelection"
@@ -111,7 +125,7 @@ function Navbar() {
         </button>
       </form>
 
-      <div className={`mt-[3rem] h-[44%] flex flex-col justify-between`}>
+      <div className={`mt-[3rem] h-[42%] flex flex-col justify-between`}>
         <HiHashtag className="text-6xl ml-[1rem] cursor-pointer hover:text-green active:scale-95 transition-transform ease-in" />
 
         <VscCalendar className="text-6xl ml-[1rem] cursor-pointer hover:text-green active:scale-95 transition-transform ease-in" />

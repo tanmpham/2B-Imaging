@@ -1,4 +1,5 @@
 import Navbar from '@/components/Navbar/Navbar'
+import CurrentPatientContextProvider from '@/context/current-patient-context'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
@@ -18,8 +19,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} flex`}>
-        <Navbar />
-        {children}
+        <CurrentPatientContextProvider>
+          <Navbar />
+          {children}
+        </CurrentPatientContextProvider>
       </body>
     </html>
   )
