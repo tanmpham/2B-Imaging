@@ -15,7 +15,7 @@ import 'react-date-range/dist/theme/default.css'
 
 const style = {
   label: `ml-[2rem] hover:text-green cursor-pointer group-hover:text-green`,
-  input: `w-full outline-none px-[1rem] h-[28px] text-black text-[12px] font-semibold rounded-[var(--rounded-default)] mt-[.4rem] group-hover:scale-[1.02] transition-transform ease-linear`,
+  input: `w-full outline-none px-[1rem] h-[28px] text-black text-[12px] font-semibold rounded-[var(--rounded-default)] mt-[.4rem] hover:scale-[1.02] transition-transform ease-linear`,
 }
 
 function Navbar() {
