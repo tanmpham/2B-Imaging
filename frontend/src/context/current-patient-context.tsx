@@ -1,6 +1,6 @@
 'use client'
 
-import { PatientDto } from '@/app/interfaces/patient.dto'
+import { PatientDto } from '@/components/interfaces/patient.dto'
 import {
   Dispatch,
   ReactNode,
@@ -15,7 +15,7 @@ type Props = { children: ReactNode }
 type CurrentPatientContextType = {
   currentPatient: PatientDto
   setCurrentPatient: Dispatch<SetStateAction<PatientDto>>
-  selectedDate:string
+  selectedDate: string
   setSelectedDate: Dispatch<SetStateAction<string>>
 }
 
@@ -37,7 +37,9 @@ export default function CurrentPatientContextProvider({ children }: Props) {
     <CurrentPatientContext.Provider
       value={{
         currentPatient,
-        setCurrentPatient,selectedDate,setSelectedDate
+        setCurrentPatient,
+        selectedDate,
+        setSelectedDate,
       }}
     >
       {children}

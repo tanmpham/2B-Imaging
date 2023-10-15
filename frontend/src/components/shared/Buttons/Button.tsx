@@ -4,16 +4,16 @@ import * as React from 'react'
 import { ImSpinner8 } from 'react-icons/im'
 
 const buttonVariants = cva(
-  `shrink-0 rounded-[3px] text-[13px] lg:text-base inline-flex items-center justify-center border disabled:pointer-events-none disabled:text-gray_3 disabled:border-gray_2 disabled:bg-white disabled:border active:scale-95 transition-transform ease-in`, //these are the base styles
+  `shrink-0 rounded-[0.2rem] text-[13px] lg:text-base border disabled:pointer-events-none disabled:text-gray_3 disabled:border-gray_2 disabled:bg-white disabled:border active:scale-95 transition-transform ease-in`, //these are the base styles
   {
     variants: {
       variant: {
-        primary: 'bg-primary text-white border-primary hover:border-black',
-        alternate: 'text-primary border-primary',
+        primary: 'text-white border-white hover:border-green hover:text-green',
+        custom: '',
       },
       size: {
-        default: 'w-[130px] h-[44px] lg:h-[52px] lg:w-[190px]',
-        none: '',
+        default: 'px-[.4rem]',
+        custom: '',
       },
     },
     defaultVariants: {
@@ -51,15 +51,16 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           className={cn(buttonVariants({ variant, size, className }))}
           ref={ref}
           disabled={isLoading}
-          {...props}>
+          {...props}
+        >
           {isLoading ? (
-            <ImSpinner8 className='mr-2 h-4 w-4 animate-spin' />
+            <ImSpinner8 className="mr-2 h-4 w-4 animate-spin" />
           ) : null}
           {children}
         </button>
 
         {error && (
-          <div className='text-red-700 text-[12px] m-1 w-full text-center'>
+          <div className="text-red-700 text-[12px] m-1 w-full text-center">
             {errorMessage}
           </div>
         )}
@@ -70,4 +71,3 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 Button.displayName = 'Button'
 
 export { Button }
-

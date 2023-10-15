@@ -12,6 +12,7 @@ import Logo from '../shared/Logo/Logo'
 import { useCurrentPatientContext } from '@/context/current-patient-context'
 import 'react-date-range/dist/styles.css'
 import 'react-date-range/dist/theme/default.css'
+import { Button } from '../shared/Buttons/Button'
 
 const style = {
   label: `ml-[2rem] hover:text-green cursor-pointer group-hover:text-green`,
@@ -62,7 +63,7 @@ function Navbar() {
   }
 
   return (
-    <div className="w-[12%] bg-black h-screen p-[22px] text-white">
+    <div className="w-[12vw] bg-navBg h-screen p-[22px] text-white">
       <Logo />
       <FaUserAlt className="ml-[1.4rem] my-[30px] text-4xl" />
 
@@ -119,12 +120,12 @@ function Navbar() {
             className={style.input}
           />
         </div>
-        <button
+        <Button
           form="patientSelection"
-          className={`hover:text-green active:scale-95 transition-transform ease-in mt-[.4rem] ml-[1rem] px-[.4rem] rounded-[0.2rem] w-fit border border-white hover:border-green`}
+          className={`mt-[.4rem] ml-[1rem] w-fit`}
         >
           Search
-        </button>
+        </Button>
       </form>
 
       <div className={`mt-[3rem] h-[42%] flex flex-col justify-between`}>
@@ -149,6 +150,7 @@ function Navbar() {
           onChange={(e) => {
             setSelectedDate(e.target.value)
           }}
+          type="date"
           className={`${style.input}`}
         />
       </div>
