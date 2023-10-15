@@ -16,6 +16,11 @@ function Page() {
   return (
     <div className="w-screen h-screen flex justify-center items-center text-4xl font-bold">
       Test page
+      <img
+        src="http://localhost:4000/gallery/image.png"
+        width={500}
+        height={500}
+      />
     </div>
   )
 }
