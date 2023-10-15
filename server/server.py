@@ -15,7 +15,7 @@ class SecuredStaticFlask(Flask):
 
 
 app = SecuredStaticFlask(
-    __name__, static_folder="patient_gallery", static_url_path="/gallery"
+    __name__, static_folder="patientimages", static_url_path="/gallery"
 )
 CORS(app, origins=["http://localhost:3000"])
 
