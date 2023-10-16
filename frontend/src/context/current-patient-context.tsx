@@ -1,6 +1,6 @@
 'use client'
 
-import { PatientDto } from '@/components/interfaces/patient.dto'
+import { PatientDto } from '@/interfaces/patient.dto'
 import {
   Dispatch,
   ReactNode,

@@ -11,7 +11,7 @@ function Home() {
   return (
     <div className="w-[88vw] h-screen bg-black flex text-white">
       <PatientSelection />
-      <MediaList />
+      <MediaList setPreviewSrc={setPreviewSrc} previewSrc={previewSrc} />
       <Preview src={previewSrc} />
     </div>
   )
