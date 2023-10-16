@@ -15,7 +15,7 @@ import 'react-date-range/dist/theme/default.css'
 
 const style = {
   label: `ml-[2rem] hover:text-green cursor-pointer group-hover:text-green`,
-  input: `w-full outline-none px-[1rem] h-[28px] text-black text-[12px] font-semibold rounded-[var(--rounded-default)] mt-[.4rem]`,
+  input: `w-full outline-none px-[1rem] h-[28px] text-black text-[12px] font-semibold rounded-[var(--rounded-default)] mt-[.4rem] hover:scale-[1.02] transition-transform ease-linear`,
 }
 
 function Navbar() {
@@ -45,7 +45,8 @@ function Navbar() {
 
   // const range = `[${formattedStartDate} ----- ${formattedEndDate}]`
   // console.log(range)
-  const { currentPatient, setCurrentPatient } = useCurrentPatientContext()
+  const { currentPatient, setCurrentPatient, selectedDate, setSelectedDate } =
+    useCurrentPatientContext()
 
   const updateData = (e: ChangeEvent<HTMLInputElement>) => {
     setCurrentPatient({
@@ -57,6 +58,7 @@ function Navbar() {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     console.log(currentPatient)
+    console.log(selectedDate)
   }
 
   return (
@@ -142,7 +144,13 @@ function Navbar() {
           Calendar
         </div>
 
-        <input id="dob" className={`${style.input}`} />
+        <input
+          id="dob"
+          onChange={(e) => {
+            setSelectedDate(e.target.value)
+          }}
+          className={`${style.input}`}
+        />
       </div>
     </div>
   )
