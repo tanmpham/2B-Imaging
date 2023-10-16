@@ -1,4 +1,4 @@
-import Home from './_components/Home/Home'
+import Home from './_components/Home'
 
 function page() {
   return <Home />
