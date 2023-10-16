@@ -1,5 +1,6 @@
 import { toasterStyle } from '@/constants/toasterStyle'
 import toast from 'react-hot-toast'
+import Tilt from 'react-parallax-tilt'
 
 type Props = {
   src?: string
@@ -7,7 +8,13 @@ type Props = {
 
 function Initial() {
   return (
-    <div className="mx-auto">
+    <Tilt
+      scale={0.9}
+      tiltMaxAngleX={34}
+      tiltMaxAngleY={34}
+      transitionSpeed={450}
+      className="w-fit h-fit"
+    >
       <div
         onClick={() =>
           toast('Click an image on the left to preview', toasterStyle)
@@ -16,7 +23,7 @@ function Initial() {
       >
         Preview
       </div>
-    </div>
+    </Tilt>
   )
 }
 
@@ -24,7 +31,11 @@ function Preview({ src }: Props) {
   return (
     <>
       {!src ? (
-        <Initial />
+        <div
+          className={`overflow-hidden mx-auto active:scale-[0.99] transition-transform ease-linear`}
+        >
+          <Initial />
+        </div>
       ) : (
         <div className="mx-auto space-y-[24px]">
           <div

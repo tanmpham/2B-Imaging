@@ -2129,6 +2129,11 @@ react-list@^0.8.13:
   dependencies:
     prop-types "15"
 
+react-parallax-tilt@^1.7.171:
+  version "1.7.171"
+  resolved "https://registry.yarnpkg.com/react-parallax-tilt/-/react-parallax-tilt-1.7.171.tgz#cc1d54a1993e8771d5d93b8a88da0b7412ca9ab1"
+  integrity sha512-vUxBvIxi9sqvCDlk17w7gx5oYIUiowfS5DDCLFKroAYCoUNdjAKlzFmDYNF0MwmlDTkpzyScNeGpW6/RXJtnUg==
+
 react@^18:
   version "18.2.0"
   resolved "https://registry.yarnpkg.com/react/-/react-18.2.0.tgz#555bd98592883255fa00de14f1151a917b5d77d5"
