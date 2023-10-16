@@ -9,9 +9,9 @@ type Props = {
 function Initial() {
   return (
     <Tilt
-      scale={0.9}
-      tiltMaxAngleX={34}
-      tiltMaxAngleY={34}
+      scale={0.94}
+      tiltMaxAngleX={10}
+      tiltMaxAngleY={10}
       transitionSpeed={450}
       className="w-fit h-fit"
     >
