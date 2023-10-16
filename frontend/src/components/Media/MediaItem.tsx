@@ -15,11 +15,15 @@ function MediaItem({ src, video, tag }: Props) {
   return (
     <div className={`relative w-[162px] h-[162px] ${!src && 'bg-grey'}`}>
       {video && (
-        <BsCameraReels className={`${style.icon} text-black left-[1rem]`} />
+        <BsCameraReels
+          className={`${style.icon} text-stone-700 hover:text-black left-[1rem]`}
+        />
       )}
 
       {tag && (
-        <HiHashtag className={`${style.icon} text-orange right-[1rem]`} />
+        <HiHashtag
+          className={`${style.icon} text-orange_1 hover:text-orange-500 right-[1rem]`}
+        />
       )}
     </div>
   )

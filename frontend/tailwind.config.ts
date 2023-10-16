@@ -15,7 +15,7 @@ const config: Config = {
         navBg: '#0A0A0A',
         grey: '#D9D9D9',
         grey_1: '#0000005C',
-        orange: '#E89903',
+        orange_1: '#E89903',
       },
     },
   },

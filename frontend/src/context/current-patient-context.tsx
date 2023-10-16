@@ -9,6 +9,7 @@ import {
   useContext,
   useState,
 } from 'react'
+import { Toaster } from 'react-hot-toast'
 
 type Props = { children: ReactNode }
 
@@ -42,6 +43,7 @@ export default function CurrentPatientContextProvider({ children }: Props) {
         setSelectedDate,
       }}
     >
+      <Toaster />
       {children}
     </CurrentPatientContext.Provider>
   )
