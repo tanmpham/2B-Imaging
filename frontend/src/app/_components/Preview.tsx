@@ -28,7 +28,9 @@ function Preview({ src }: Props) {
       ) : (
         <div className="mx-auto space-y-[24px]">
           <div
-            className={`w-[600px] h-[400px] mt-[130px] ${'bg-grey'} flex items-center justify-center text-stone-600 text-[80px]`}
+            className={`w-[600px] h-[400px] mt-[130px] ${
+              src && 'bg-grey'
+            } flex items-center justify-center text-stone-600 text-[80px]`}
           >
             img
           </div>
