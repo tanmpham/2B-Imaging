@@ -6,7 +6,7 @@ import PatientSelection from './PatientSelection'
 import Preview from './Preview'
 
 function Home() {
-  const [previewSrc, setPreviewSrc] = useState('1')
+  const [previewSrc, setPreviewSrc] = useState('')
 
   return (
     <div className="w-[88vw] h-screen bg-black flex text-white">

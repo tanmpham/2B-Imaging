@@ -14,7 +14,7 @@ function MediaList({ previewSrc, setPreviewSrc }: Props) {
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     switch (e.detail) {
       case 1:
-        console.log('click')
+        setPreviewSrc('1')
         break
       case 2:
         console.log('double click')
