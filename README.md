@@ -41,6 +41,7 @@
 		rel="noreferrer">
 <img align="left" alt="NextJs" width="24px" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" />
 </a>
+<br/>
 
 ## Setup instructions:
 
