@@ -42,7 +42,7 @@ function Preview({ src }: Props) {
             </div>
 
             <div>
-              <div>OD/OS (right / left eye)</div>
+              <div>OD/OS (right / left eye):</div>
               <div>tags#:</div>
             </div>
 
