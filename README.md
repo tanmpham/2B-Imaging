@@ -59,4 +59,5 @@ yarn dev
 ```powershell
 cd server
 pip install -r requirements.txt
+py server.py
 ```
