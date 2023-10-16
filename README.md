@@ -41,3 +41,21 @@
 		rel="noreferrer">
 <img align="left" alt="NextJs" width="24px" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" />
 </a>
+
+## Setup instructions:
+
+#### Install dependencies and run the front-end app locally
+
+```powershell
+cd frontend
+npm i -g yarn
+yarn install
+yarn dev
+```
+
+#### Install dependencies and run the back-end server app locally
+
+```powershell
+cd server
+pip install -r requirements.txt
+```
