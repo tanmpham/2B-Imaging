@@ -1348,6 +1348,11 @@ globby@^11.1.0:
     merge2 "^1.4.1"
     slash "^3.0.0"
 
+goober@^2.1.10:
+  version "2.1.13"
+  resolved "https://registry.yarnpkg.com/goober/-/goober-2.1.13.tgz#e3c06d5578486212a76c9eba860cbc3232ff6d7c"
+  integrity sha512-jFj3BQeleOoy7t93E9rZ2de+ScC4lQICLwiAQmKMg9F6roKGaLSHoCDYKkWlSafg138jejvq/mTdvmnwDQgqoQ==
+
 gopd@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/gopd/-/gopd-1.0.1.tgz#29ff76de69dac7489b7c0918a5788e56477c332c"
@@ -2100,6 +2105,13 @@ react-dom@^18:
     loose-envify "^1.1.0"
     scheduler "^0.23.0"
 
+react-hot-toast@^2.4.1:
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/react-hot-toast/-/react-hot-toast-2.4.1.tgz#df04295eda8a7b12c4f968e54a61c8d36f4c0994"
+  integrity sha512-j8z+cQbWIM5LY37pR6uZR6D4LfseplqnuAO4co4u8917hBUvXlEqyP1ZzqVLcqoyUesZZv/ImreoCeHVDpE5pQ==
+  dependencies:
+    goober "^2.1.10"
+
 react-icons@^4.11.0:
   version "4.11.0"
   resolved "https://registry.yarnpkg.com/react-icons/-/react-icons-4.11.0.tgz#4b0e31c9bfc919608095cc429c4f1846f4d66c65"
@@ -2116,6 +2128,11 @@ react-list@^0.8.13:
   integrity sha512-pgmzGi0G5uGrdHzMhgO7KR1wx5ZXVvI3SsJUmkblSAKtewIhMwbQiMuQiTE83ozo04BQJbe0r3WIWzSO0dR1xg==
   dependencies:
     prop-types "15"
+
+react-parallax-tilt@^1.7.171:
+  version "1.7.171"
+  resolved "https://registry.yarnpkg.com/react-parallax-tilt/-/react-parallax-tilt-1.7.171.tgz#cc1d54a1993e8771d5d93b8a88da0b7412ca9ab1"
+  integrity sha512-vUxBvIxi9sqvCDlk17w7gx5oYIUiowfS5DDCLFKroAYCoUNdjAKlzFmDYNF0MwmlDTkpzyScNeGpW6/RXJtnUg==
 
 react@^18:
   version "18.2.0"
