@@ -1,8 +1,10 @@
 'use client'
 
 import { ChangeEvent, FormEvent, useRef, useState } from 'react'
+import { BsArrowRightShort } from 'react-icons/bs'
 import { FaUserAlt } from 'react-icons/fa'
 import { HiHashtag } from 'react-icons/hi2'
+
 import { VscCalendar } from 'react-icons/vsc'
 import Logo from '../shared/Logo/Logo'
 
@@ -131,33 +133,46 @@ function Navbar() {
         </Button>
       </form>
 
-      <div className={`mt-[4rem] h-[24%] flex flex-col justify-between`}>
+      <div className={`mt-[4rem] flex flex-col space-y-[40px] justify-between`}>
         <HiHashtag className="text-6xl ml-[1rem] cursor-pointer hover:text-green active:scale-95 transition-transform ease-in" />
 
-        <VscCalendar className="text-6xl ml-[1rem] cursor-pointer hover:text-green active:scale-95 transition-transform ease-in" />
-
-        <input
-          id="dob"
-          ref={ref}
-          value={`${
-            formattedStartDate !== formattedEndDate ? range : formattedStartDate
-          }`}
-          readOnly
-          className={`${style.input} text-center`}
+        <VscCalendar
           onClick={() => {
-            setIsCalOpen((prev) => !prev)
-            closeOnClickOutside(ref, () => {
-              setIsCalOpen(false)
-            })
+            setStartDate(new Date())
+            setEndDate(new Date())
           }}
+          className="text-6xl ml-[1rem] cursor-pointer hover:text-green active:scale-95 transition-transform ease-in"
         />
+
+        <div className="flex flex-col space-y-[1rem] items-center">
+          <input
+            id="dob"
+            ref={ref}
+            value={`${
+              formattedStartDate !== formattedEndDate
+                ? range
+                : formattedStartDate
+            }`}
+            readOnly
+            className={`${style.input} text-center`}
+            onClick={() => {
+              setIsCalOpen((prev) => !prev)
+              closeOnClickOutside(ref, () => {
+                setIsCalOpen(false)
+              })
+            }}
+          />
+          <Button size="custom" className="text-[14px] px-[.4rem]">
+            Select Date <BsArrowRightShort className="text-[26px]" />
+          </Button>
+        </div>
       </div>
 
       <div
         ref={ref}
         className={`${
           isCalOpen ? 'block' : 'hidden'
-        } absolute z-10 bottom-[2rem] left-[14rem]`}
+        } absolute z-10 bottom-[1rem] left-[14rem]`}
       >
         <DateRange
           ranges={[selectionRange]}
