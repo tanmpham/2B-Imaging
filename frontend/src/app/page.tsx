@@ -1,4 +1,6 @@
+import Home from './_components/Home'
+
 function page() {
-  return <div>Home page</div>
+  return <Home />
 }
 export default page

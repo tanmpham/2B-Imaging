@@ -1,6 +1,6 @@
 'use client'
 
-import { PatientDto } from '@/app/interfaces/patient.dto'
+import { PatientDto } from '@/interfaces/patient.dto'
 import {
   Dispatch,
   ReactNode,
@@ -9,13 +9,14 @@ import {
   useContext,
   useState,
 } from 'react'
+import { Toaster } from 'react-hot-toast'
 
 type Props = { children: ReactNode }
 
 type CurrentPatientContextType = {
   currentPatient: PatientDto
   setCurrentPatient: Dispatch<SetStateAction<PatientDto>>
-  selectedDate:string
+  selectedDate: string
   setSelectedDate: Dispatch<SetStateAction<string>>
 }
 
@@ -37,9 +38,12 @@ export default function CurrentPatientContextProvider({ children }: Props) {
     <CurrentPatientContext.Provider
       value={{
         currentPatient,
-        setCurrentPatient,selectedDate,setSelectedDate
+        setCurrentPatient,
+        selectedDate,
+        setSelectedDate,
       }}
     >
+      <Toaster />
       {children}
     </CurrentPatientContext.Provider>
   )

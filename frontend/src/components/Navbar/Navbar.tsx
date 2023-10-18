@@ -1,17 +1,21 @@
 'use client'
 
-import { ChangeEvent, FormEvent } from 'react'
+import { ChangeEvent, FormEvent, useRef, useState } from 'react'
+import { BsArrowRightShort } from 'react-icons/bs'
 import { FaUserAlt } from 'react-icons/fa'
 import { HiHashtag } from 'react-icons/hi2'
+
 import { VscCalendar } from 'react-icons/vsc'
 import Logo from '../shared/Logo/Logo'
 
-// import { DateRange, RangeKeyDict } from 'react-date-range'
-// import format from 'date-fns/format'
-
-import { useCurrentPatientContext } from '@/context/current-patient-context'
+import format from 'date-fns/format'
+import { DateRange, RangeKeyDict } from 'react-date-range'
 import 'react-date-range/dist/styles.css'
 import 'react-date-range/dist/theme/default.css'
+
+import { useCurrentPatientContext } from '@/context/current-patient-context'
+import { closeOnClickOutside } from '@/utils/closeOnClickOutside'
+import { Button } from '../shared/Buttons/Button'
 
 const style = {
   label: `ml-[2rem] hover:text-green cursor-pointer group-hover:text-green`,
@@ -19,34 +23,33 @@ const style = {
 }
 
 function Navbar() {
-  // date state
-  // const [startDate, setStartDate] = useState<Date | undefined>(new Date())
-  // const [endDate, setEndDate] = useState<Date | undefined>(new Date())
-
-  // const selectionRange = {
-  //   startDate: startDate,
-  //   endDate: endDate,
-  //   key: 'selection',
-  // }
-
-  // const handleSelect = (ranges: RangeKeyDict) => {
-  //   setStartDate(ranges.selection.startDate)
-  //   setEndDate(ranges.selection.endDate)
-  // }
-
-  // const formattedStartDate = format(
-  //   startDate ? new Date(startDate) : new Date(),
-  //   'dd MMMM yy'
-  // )
-  // const formattedEndDate = format(
-  //   endDate ? new Date(endDate) : new Date(),
-  //   'dd MMMM yy'
-  // )
-
-  // const range = `[${formattedStartDate} ----- ${formattedEndDate}]`
-  // console.log(range)
   const { currentPatient, setCurrentPatient, selectedDate, setSelectedDate } =
     useCurrentPatientContext()
+  const [startDate, setStartDate] = useState<Date>(new Date())
+  const [endDate, setEndDate] = useState<Date>(new Date())
+  const [isCalOpen, setIsCalOpen] = useState(false)
+
+  const selectionRange = {
+    startDate: startDate,
+    endDate: endDate,
+    key: 'selection',
+  }
+
+  const formattedStartDate = format(
+    startDate ? new Date(startDate) : new Date(),
+    'MM/dd/yyyy'
+  )
+  const formattedEndDate = format(
+    endDate ? new Date(endDate) : new Date(),
+    'MM/dd/yyyy'
+  )
+
+  const range = `${formattedStartDate} - ${formattedEndDate}`
+
+  const handleDateRangeSelect = (ranges: RangeKeyDict) => {
+    setStartDate(ranges.selection.startDate!)
+    setEndDate(ranges.selection.endDate!)
+  }
 
   const updateData = (e: ChangeEvent<HTMLInputElement>) => {
     setCurrentPatient({
@@ -57,20 +60,23 @@ function Navbar() {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    setSelectedDate(range)
     console.log(currentPatient)
     console.log(selectedDate)
   }
 
+  const ref = useRef(null)
+
   return (
-    <div className="w-[12%] bg-black h-screen p-[22px] text-white">
+    <div className="w-[12vw] bg-navBg h-screen p-[22px] text-white">
       <Logo />
-      <FaUserAlt className="ml-[1.4rem] my-[30px] text-4xl" />
+      <FaUserAlt className="ml-[1.4rem] my-[40px] text-4xl" />
 
       <form
         action="#"
         id="patientSelection"
         onSubmit={handleSubmit}
-        className="flex flex-col gap-y-[.6rem]"
+        className="flex flex-col gap-y-[1rem]"
       >
         <div className="group">
           <label htmlFor="id" className={style.label}>
@@ -119,37 +125,60 @@ function Navbar() {
             className={style.input}
           />
         </div>
-        <button
+        <Button
           form="patientSelection"
-          className={`hover:text-green active:scale-95 transition-transform ease-in mt-[.4rem] ml-[1rem] px-[.4rem] rounded-[0.2rem] w-fit border border-white hover:border-green`}
+          className={`mt-[.4rem] ml-[1rem] w-fit`}
         >
           Search
-        </button>
+        </Button>
       </form>
 
-      <div className={`mt-[3rem] h-[42%] flex flex-col justify-between`}>
+      <div className={`mt-[4rem] flex flex-col space-y-[40px] justify-between`}>
         <HiHashtag className="text-6xl ml-[1rem] cursor-pointer hover:text-green active:scale-95 transition-transform ease-in" />
 
-        <VscCalendar className="text-6xl ml-[1rem] cursor-pointer hover:text-green active:scale-95 transition-transform ease-in" />
+        <VscCalendar
+          onClick={() => {
+            setStartDate(new Date())
+            setEndDate(new Date())
+          }}
+          className="text-6xl ml-[1rem] cursor-pointer hover:text-green active:scale-95 transition-transform ease-in"
+        />
 
-        <div
-          className={`w-full h-[140px] bg-green flex items-center justify-center`}
-        >
-          {/* <DateRange
+        <div className="flex flex-col space-y-[1rem] items-center">
+          <input
+            id="dob"
+            ref={ref}
+            value={`${
+              formattedStartDate !== formattedEndDate
+                ? range
+                : formattedStartDate
+            }`}
+            readOnly
+            className={`${style.input} text-center`}
+            onClick={() => {
+              setIsCalOpen((prev) => !prev)
+              closeOnClickOutside(ref, () => {
+                setIsCalOpen(false)
+              })
+            }}
+          />
+          <Button size="custom" className="text-[14px] px-[.4rem]">
+            Select Date <BsArrowRightShort className="text-[26px]" />
+          </Button>
+        </div>
+      </div>
+
+      <div
+        ref={ref}
+        className={`${
+          isCalOpen ? 'block' : 'hidden'
+        } absolute z-10 bottom-[1rem] left-[14rem]`}
+      >
+        <DateRange
           ranges={[selectionRange]}
           rangeColors={['#4b7772']}
-          onChange={handleSelect}
+          onChange={handleDateRangeSelect}
           showDateDisplay={false}
-        /> */}
-          Calendar
-        </div>
-
-        <input
-          id="dob"
-          onChange={(e) => {
-            setSelectedDate(e.target.value)
-          }}
-          className={`${style.input}`}
         />
       </div>
     </div>

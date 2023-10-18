@@ -9,6 +9,9 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
   title: 'Gallery | 2B Imaging',
   description: 'Copyright © 2023 2B Imaging. All rights reserved.',
+  icons: {
+    icon: ['/favicon.png?v=4'],
+  },
 }
 
 export default function RootLayout({
