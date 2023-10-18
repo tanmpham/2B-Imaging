@@ -15,7 +15,7 @@ const style = {
 function MediaList({ previewSrc, setPreviewSrc, className }: Props) {
   return (
     <div
-      className={`${className} grid grid-cols-2 gap-x-[28px] gap-y-[18px] justify-start max-h-screen overflow-y-auto`}
+      className={`${className} grid grid-cols-2 gap-x-[28px] gap-y-[18px] justify-start max-h-screen overflow-y-auto bg-grey_1`}
     >
       <div className={style.date}>03/01/2023</div>
       <MediaItem id={'1'} setPreviewSrc={setPreviewSrc} video tag />
