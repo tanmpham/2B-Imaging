@@ -21,7 +21,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} flex`}>
+      <body
+        className={`${inter.className} flex min-w-screen min-h-screen bg-black`}
+      >
         <CurrentPatientContextProvider>
           <Navbar />
           {children}

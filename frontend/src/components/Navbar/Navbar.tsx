@@ -15,6 +15,7 @@ import 'react-date-range/dist/theme/default.css'
 
 import { useCurrentPatientContext } from '@/context/current-patient-context'
 import { closeOnClickOutside } from '@/utils/closeOnClickOutside'
+import Link from 'next/link'
 import { Button } from '../shared/Buttons/Button'
 
 const style = {
@@ -134,7 +135,9 @@ function Navbar() {
       </form>
 
       <div className={`mt-[4rem] flex flex-col space-y-[40px] justify-between`}>
-        <HiHashtag className="text-6xl ml-[1rem] cursor-pointer hover:text-green active:scale-95 transition-transform ease-in" />
+        <Link href="/tags">
+          <HiHashtag className="text-6xl ml-[1rem] cursor-pointer hover:text-green active:scale-95 transition-transform ease-in" />
+        </Link>
 
         <VscCalendar
           onClick={() => {

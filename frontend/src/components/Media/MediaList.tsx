@@ -1,47 +1,38 @@
+import { useRouter } from 'next/router'
 import { Dispatch, SetStateAction } from 'react'
 import MediaItem from './MediaItem'
 
-type Props = {
+interface Props {
   setPreviewSrc: Dispatch<SetStateAction<string>>
   previewSrc: string
+  className?: string
 }
 
 const style = {
   date: `col-span-2 text-center text-grey font-[300]`,
 }
 
-function MediaList({ previewSrc, setPreviewSrc }: Props) {
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    switch (e.detail) {
-      case 1:
-        setPreviewSrc('1')
-        break
-      case 2:
-        console.log('double click')
-        break
-      case 3:
-        console.log('triple click')
-        break
-    }
-  }
+function MediaList({ previewSrc, setPreviewSrc, className }: Props) {
   return (
-    <div className="ml-[78px] grid grid-cols-2 gap-x-[28px] gap-y-[18px] justify-start max-h-screen overflow-y-auto pt-[90px] pb-[40px] pr-[20px]">
+    <div
+      className={`${className} grid grid-cols-2 gap-x-[28px] gap-y-[18px] justify-start max-h-screen overflow-y-auto`}
+    >
       <div className={style.date}>03/01/2023</div>
-      <MediaItem handleClick={handleClick} video tag />
-      <MediaItem handleClick={handleClick} />
-      <MediaItem handleClick={handleClick} />
-      <MediaItem handleClick={handleClick} video tag />
+      <MediaItem id={'1'} setPreviewSrc={setPreviewSrc} video tag />
+      <MediaItem id={'2'} setPreviewSrc={setPreviewSrc} />
+      <MediaItem id={'3'} setPreviewSrc={setPreviewSrc} />
+      <MediaItem id={'4'} setPreviewSrc={setPreviewSrc} video tag />
       <div className={style.date}>02/01/2023</div>
-      <MediaItem handleClick={handleClick} />
-      <MediaItem handleClick={handleClick} tag />
-      <MediaItem handleClick={handleClick} video tag />
-      <MediaItem handleClick={handleClick} video tag />
-      <MediaItem handleClick={handleClick} />
-      <MediaItem handleClick={handleClick} tag />
+      <MediaItem id={'5'} setPreviewSrc={setPreviewSrc} />
+      <MediaItem id={'6'} setPreviewSrc={setPreviewSrc} tag />
+      <MediaItem id={'7'} setPreviewSrc={setPreviewSrc} video tag />
+      <MediaItem id={'8'} setPreviewSrc={setPreviewSrc} video tag />
+      <MediaItem id={'9'} setPreviewSrc={setPreviewSrc} />
+      <MediaItem id={'10'} setPreviewSrc={setPreviewSrc} tag />
       <div className={style.date}>01/01/2023</div>
-      <MediaItem handleClick={handleClick} />
-      <MediaItem handleClick={handleClick} />
-      <MediaItem handleClick={handleClick} video tag />
+      <MediaItem id={'11'} setPreviewSrc={setPreviewSrc} />
+      <MediaItem id={'12'} setPreviewSrc={setPreviewSrc} />
+      <MediaItem id={'13'} setPreviewSrc={setPreviewSrc} video tag />
     </div>
   )
 }
