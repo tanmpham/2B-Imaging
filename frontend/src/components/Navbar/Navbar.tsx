@@ -68,7 +68,7 @@ function Navbar() {
   return (
     <div className="w-[12vw] bg-navBg h-screen p-[22px] text-white">
       <Logo />
-      <FaUserAlt className="ml-[1.4rem] my-[30px] text-4xl" />
+      <FaUserAlt className="ml-[1.4rem] my-[40px] text-4xl" />
 
       <form
         action="#"
