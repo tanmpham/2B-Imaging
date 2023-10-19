@@ -5,10 +5,13 @@ import { useState } from 'react'
 
 interface Props {}
 function VideosPage({}: Props) {
-  const [previewSrc, setPreviewSrc] = useState('')
+  const [previewData, setPreviewData] = useState({
+    src: '',
+    id: '',
+  })
   return (
     <div className="flex text-white">
-      <MediaList setPreviewSrc={setPreviewSrc} previewSrc={previewSrc} />
+      <MediaList setPreviewData={setPreviewData} previewData={previewData} />
     </div>
   )
 }
