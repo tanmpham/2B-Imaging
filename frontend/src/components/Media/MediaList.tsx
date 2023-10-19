@@ -9,13 +9,13 @@ interface Props {
 }
 
 const style = {
-  date: `col-span-2 text-center text-grey font-[300]`,
+  date: `col-span-2 text-center text-grey_2 font-[300]`,
 }
 
 function MediaList({ previewSrc, setPreviewSrc, className }: Props) {
   return (
     <div
-      className={`${className} grid grid-cols-2 gap-x-[28px] gap-y-[18px] justify-start max-h-screen overflow-y-auto bg-grey_1`}
+      className={`${className} grid grid-cols-2 gap-x-[28px] gap-y-[18px] justify-start overflow-y-auto`}
     >
       <div className={style.date}>03/01/2023</div>
       <MediaItem id={'1'} setPreviewSrc={setPreviewSrc} video tag />

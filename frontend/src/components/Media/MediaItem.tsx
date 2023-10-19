@@ -40,7 +40,7 @@ function MediaItem({ id, src, video, tag, setPreviewSrc }: Props) {
   return (
     <button
       onClick={handleClick}
-      className={`relative w-[162px] h-[162px] ${!src && 'bg-grey'}`}
+      className={`relative w-[200px] h-[200px] ${!src && 'bg-grey_2'}`}
     >
       {video && (
         <BsCameraReels

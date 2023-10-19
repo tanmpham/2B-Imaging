@@ -6,7 +6,7 @@ import { FaUserAlt } from 'react-icons/fa'
 import { HiHashtag } from 'react-icons/hi2'
 
 import { VscCalendar } from 'react-icons/vsc'
-import Logo from '../shared/Logo/Logo'
+import Logo from './shared/Logo/Logo'
 
 import format from 'date-fns/format'
 import { DateRange, RangeKeyDict } from 'react-date-range'
@@ -16,7 +16,7 @@ import 'react-date-range/dist/theme/default.css'
 import { useCurrentPatientContext } from '@/context/current-patient-context'
 import { closeOnClickOutside } from '@/utils/closeOnClickOutside'
 import Link from 'next/link'
-import { Button } from '../shared/Buttons/Button'
+import { Button } from './shared/Buttons/Button'
 
 const style = {
   label: `ml-[2rem] hover:text-green cursor-pointer group-hover:text-green`,

@@ -12,7 +12,7 @@ function Home() {
     <div className="w-[88vw] h-full flex text-white bg-black">
       <PatientSelection />
       <MediaList
-        className="ml-[78px] pt-[90px] pb-[40px] pr-[20px]"
+        className="bg-grey_1 max-h-screen ml-[78px] pt-[90px] pb-[40px] pr-[20px]"
         setPreviewSrc={setPreviewSrc}
         previewSrc={previewSrc}
       />

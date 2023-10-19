@@ -1,4 +1,4 @@
-import Navbar from '@/components/Navbar/Navbar'
+import Navbar from '@/components/Navbar'
 import CurrentPatientContextProvider from '@/context/current-patient-context'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
