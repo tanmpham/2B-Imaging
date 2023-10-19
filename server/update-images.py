@@ -8,7 +8,7 @@ image_names = os.listdir(image_folder_path)
 db_config = {
     "host": "localhost",
     "user": "root",
-    "password": "P@ssw0rd",
+    "password": "your_password",
     "database": "eyecameradb",
 }
 

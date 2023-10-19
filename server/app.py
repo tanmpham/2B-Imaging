@@ -2,6 +2,7 @@ from flask import Flask, abort, request
 from flask_cors import CORS
 from urllib.parse import urlparse
 import yaml
+import mysql.connector
 
 with open("app_conf.yml", "r") as f:
     appConfig = yaml.safe_load(f.read())
@@ -32,6 +33,21 @@ CORS(
         appConfig["client-backend-url"],
     ],
 )
+
+db_config = {
+    "host": "localhost",
+    "user": "root",
+    "password": "your_password",
+    "database": "eyecameradb",
+}
+
+# connection = mysql.connector.connect(**db_config)
+# cursor = connection.cursor()
+
+# # Commit changes and close the connection
+# connection.commit()
+# cursor.close()
+# connection.close()
 
 
 @app.route("/")
