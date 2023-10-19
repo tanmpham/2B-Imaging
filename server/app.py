@@ -41,23 +41,39 @@ db_config = {
     "database": "eyecameradb",
 }
 
-# connection = mysql.connector.connect(**db_config)
-# cursor = connection.cursor()
-
-# sql_query = f"""SELECT * FROM eyecameradb.patientimages;"""
-# cursor.execute(sql_query)
-
-# print(cursor.fetchall())
-
-# # Commit changes and close the connection
-# connection.commit()
-# cursor.close()
-# connection.close()
-
 
 @app.route("/")
 def hello():
     return "Hello, World!"
+
+
+@app.route("/patientimages", methods=["GET"])
+def fetchAll():
+    connection = mysql.connector.connect(**db_config)
+
+    cursor = connection.cursor()
+
+    sql_query = f"""SELECT * FROM eyecameradb.patientimages;"""
+    cursor.execute(sql_query)
+    query_result = cursor.fetchall()
+
+    # Commit changes and close the connection
+    connection.commit()
+    cursor.close()
+    connection.close()
+
+    responseData = {
+        "ImageID": query_result[0][0],
+        "PatientID": query_result[0][1],
+        "ImageData": query_result[0][2],
+        "IsRightEye": query_result[0][3],
+        "Annotation": query_result[0][4],
+        "ThumbnailData": query_result[0][5],
+        "ImageName": query_result[0][6],
+        "DateCreated": query_result[0][7],
+    }
+
+    return responseData
 
 
 app.run(host="0.0.0.0", port=4000, debug=True)
