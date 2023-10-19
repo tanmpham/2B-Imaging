@@ -71,7 +71,9 @@ function MediaItem({
   return (
     <button
       onClick={handleClick}
-      className={`relative w-[200px] h-[200px] ${!src && 'bg-grey_2'}`}
+      className={`relative w-[200px] h-[200px] ${
+        !src && 'bg-grey_2'
+      } hover:translate-y-[-.4rem] transition-transform ease-linear`}
     >
       {video && (
         <BsCameraReels

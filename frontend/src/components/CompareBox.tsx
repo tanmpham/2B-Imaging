@@ -4,7 +4,7 @@ import { MouseEvent } from 'react'
 import { BsFillTrash3Fill } from 'react-icons/bs'
 
 const style = {
-  image: `w-[50px] h-[50px] flex items-center justify-center group text-[18px] text-white`,
+  image: `w-[50px] h-[50px] flex items-center justify-center group text-[18px] text-white hover:translate-y-[-.1rem] transition-transform ease-linear`,
 }
 
 interface Props {

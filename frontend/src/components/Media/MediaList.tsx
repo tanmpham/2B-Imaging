@@ -22,7 +22,7 @@ function MediaList({
 }: Props) {
   return (
     <div
-      className={`${className} grid grid-cols-2 gap-x-[28px] gap-y-[18px] justify-start overflow-y-auto`}
+      className={`${className} grid grid-cols-2 gap-x-[28px] gap-y-[28px] justify-start overflow-y-auto`}
     >
       <div className={style.date}>03/01/2023</div>
       <MediaItem
