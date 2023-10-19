@@ -7,14 +7,17 @@ import { useState } from 'react'
 
 interface Props {}
 function ImagePage({}: Props) {
-  const [previewSrc, setPreviewSrc] = useState('')
+  const [previewData, setPreviewData] = useState({
+    src: '',
+    id: '',
+  })
   return (
     <div className="flex text-white">
       <div className={`bg-grey_1 space-y-[30px]`}>
         <MediaList
           className="max-h-[78vh] px-[80px] pt-[15px]"
-          setPreviewSrc={setPreviewSrc}
-          previewSrc={previewSrc}
+          setPreviewData={setPreviewData}
+          previewData={previewData}
         />
         <div
           className={`w-full flex items-center justify-between pl-[39px] pr-[55px]`}

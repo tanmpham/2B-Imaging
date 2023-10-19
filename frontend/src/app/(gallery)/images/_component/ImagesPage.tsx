@@ -11,8 +11,7 @@ function ImagesPage({}: Props) {
   })
   return (
     <div className="flex text-white">
-      <MediaList setPreviewData={setPreviewData}
-        previewData={previewData} />
+      <MediaList setPreviewData={setPreviewData} previewData={previewData} />
     </div>
   )
 }
