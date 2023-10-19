@@ -62,16 +62,21 @@ def fetchAll():
     cursor.close()
     connection.close()
 
-    responseData = {
-        "ImageID": query_result[0][0],
-        "PatientID": query_result[0][1],
-        "ImageData": query_result[0][2],
-        "IsRightEye": query_result[0][3],
-        "Annotation": query_result[0][4],
-        "ThumbnailData": query_result[0][5],
-        "ImageName": query_result[0][6],
-        "DateCreated": query_result[0][7],
-    }
+    responseData = []
+
+    for image in query_result:
+        responseData.append(
+            {
+                "ImageID": image[0],
+                "PatientID": image[1],
+                "ImageData": image[2],
+                "IsRightEye": image[3],
+                "Annotation": image[4],
+                "ThumbnailData": image[5],
+                "ImageName": image[6],
+                "DateCreated": image[7],
+            }
+        )
 
     return responseData
 
