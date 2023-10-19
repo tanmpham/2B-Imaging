@@ -1,3 +1,5 @@
+import VideosPage from './_component/VideosPage'
+
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -7,6 +9,6 @@ export const metadata: Metadata = {
 
 interface Props {}
 function page({}: Props) {
-  return <div className="text-white">page</div>
+  return <VideosPage />
 }
 export default page
