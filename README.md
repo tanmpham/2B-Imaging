@@ -13,12 +13,20 @@ yarn install
 yarn dev
 ```
 
-#### Install dependencies and run the back-end server app locally
+#### Install dependencies, set up, and run the back-end app locally
+
+Create app_conf.yml files for both server and client folder (content is based on app_conf.example.yml).
 
 ```powershell
 cd server
 pip install -r requirements.txt
-py server.py
+py apps.py
+```
+
+```powershell
+cd client
+pip install -r requirements.txt
+py app.py
 ```
 
 ### Technologies used:
