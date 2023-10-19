@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import React from 'react'
 
-type Props = {
+interface Props {
   className?: string
 }
 
@@ -14,7 +14,7 @@ const Logo = ({ className }: Props) => {
         href="/"
         className={`flex lg:hidden active:scale-95 transition-transform ease-in ${className}`}
       >
-        <div className={`w-[117px] h-[58px] bg-green`}></div>
+        <div className={`w-[117px] h-[58px] bg-green_2`}></div>
       </Link>
 
       <Link
@@ -22,7 +22,7 @@ const Logo = ({ className }: Props) => {
         className={`hidden lg:flex active:scale-95 transition-transform ease-in ${className}`}
       >
         <div
-          className={`w-full h-[60px] bg-green rounded-[var(--rounded-default)]`}
+          className={`w-full h-[60px] bg-green_2 rounded-[var(--rounded-default)]`}
         ></div>
       </Link>
     </>
