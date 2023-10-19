@@ -19,7 +19,7 @@ function Initial() {
         onClick={() =>
           toast('Click an image on the left to preview', toasterStyle)
         }
-        className={`w-[600px] h-[400px] mt-[130px] flex items-center justify-center text-grey_2 border-[2px] border-dashed border-grey_2 text-[80px] rounded-[10px] hover:text-green hover:border-green transition-colors ease-linear cursor-pointer`}
+        className={`w-[600px] h-[400px] mt-[130px] flex items-center justify-center text-grey_2 border-[2px] border-dashed border-grey_2 text-[80px] rounded-[10px] hover:text-green_2 hover:border-green_2 transition-colors ease-linear cursor-pointer`}
       >
         Preview
       </div>

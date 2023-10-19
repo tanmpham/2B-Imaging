@@ -8,7 +8,7 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        primary: 'text-white border-white hover:border-green hover:text-green',
+        primary: 'text-white border-white hover:border-green_2 hover:text-green_2',
         custom: '',
       },
       size: {
