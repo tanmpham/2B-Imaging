@@ -6,17 +6,20 @@ import PatientSelection from './PatientSelection'
 import Preview from './Preview'
 
 function Home() {
-  const [previewSrc, setPreviewSrc] = useState('')
+  const [previewData, setPreviewData] = useState({
+    src: '',
+    id: '',
+  })
 
   return (
     <div className="w-[88vw] h-full flex text-white bg-black">
       <PatientSelection />
       <MediaList
         className="bg-grey_1 max-h-screen ml-[78px] pt-[90px] pb-[40px] pr-[20px]"
-        setPreviewSrc={setPreviewSrc}
-        previewSrc={previewSrc}
+        setPreviewData={setPreviewData}
+        previewData={previewData}
       />
-      <Preview src={previewSrc} />
+      <Preview src={previewData.src} id={previewData.id} />
     </div>
   )
 }

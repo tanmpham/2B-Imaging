@@ -4,6 +4,7 @@ import Tilt from 'react-parallax-tilt'
 
 interface Props {
   src?: string
+  id: string
 }
 
 function Initial() {
@@ -27,7 +28,7 @@ function Initial() {
   )
 }
 
-function Preview({ src }: Props) {
+function Preview({ src, id }: Props) {
   return (
     <>
       {!src ? (
@@ -46,7 +47,7 @@ function Preview({ src }: Props) {
 
           <div className="space-y-[24px]">
             <div>
-              <div>Patient ID:</div>
+              <div>Patient ID: {id}</div>
               <div>Last Name:</div>
               <div>First Name:</div>
               <div>DOB:</div>

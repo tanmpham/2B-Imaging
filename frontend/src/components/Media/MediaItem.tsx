@@ -9,7 +9,7 @@ interface Props {
   src?: string
   video?: boolean
   tag?: boolean
-  setPreviewSrc: Dispatch<SetStateAction<string>>
+  setPreviewData: Dispatch<SetStateAction<{ src: string; id: string }>>
   id: string
 }
 
@@ -17,12 +17,12 @@ const style = {
   icon: `text-[34px] cursor-pointer active:scale-95 hover:scale-[1.04] transition-transform ease-linear z-10 absolute bottom-[1rem]`,
 }
 
-function MediaItem({ id, src, video, tag, setPreviewSrc }: Props) {
+function MediaItem({ id, src, video, tag, setPreviewData }: Props) {
   const router = useRouter()
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     switch (e.detail) {
       case 1:
-        setPreviewSrc('1')
+        setPreviewData({ id: id, src: 'hi' })
         break
       case 2:
         if (video) {
