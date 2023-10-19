@@ -6,7 +6,7 @@ import { FaUserAlt } from 'react-icons/fa'
 import { HiHashtag } from 'react-icons/hi2'
 
 import { VscCalendar } from 'react-icons/vsc'
-import Logo from '../shared/Logo/Logo'
+import Logo from './shared/Logo/Logo'
 
 import format from 'date-fns/format'
 import { DateRange, RangeKeyDict } from 'react-date-range'
@@ -15,10 +15,11 @@ import 'react-date-range/dist/theme/default.css'
 
 import { useCurrentPatientContext } from '@/context/current-patient-context'
 import { closeOnClickOutside } from '@/utils/closeOnClickOutside'
-import { Button } from '../shared/Buttons/Button'
+import Link from 'next/link'
+import { Button } from './shared/Buttons/Button'
 
 const style = {
-  label: `ml-[2rem] hover:text-green cursor-pointer group-hover:text-green`,
+  label: `ml-[2rem] hover:text-green_2 cursor-pointer group-hover:text-green_2`,
   input: `w-full outline-none px-[1rem] h-[28px] text-black text-[12px] font-semibold rounded-[var(--rounded-default)] mt-[.4rem] hover:scale-[1.02] transition-transform ease-linear`,
 }
 
@@ -134,14 +135,16 @@ function Navbar() {
       </form>
 
       <div className={`mt-[4rem] flex flex-col space-y-[40px] justify-between`}>
-        <HiHashtag className="text-6xl ml-[1rem] cursor-pointer hover:text-green active:scale-95 transition-transform ease-in" />
+        <Link href="/tags">
+          <HiHashtag className="text-6xl ml-[1rem] cursor-pointer hover:text-green_2 active:scale-95 transition-transform ease-in" />
+        </Link>
 
         <VscCalendar
           onClick={() => {
             setStartDate(new Date())
             setEndDate(new Date())
           }}
-          className="text-6xl ml-[1rem] cursor-pointer hover:text-green active:scale-95 transition-transform ease-in"
+          className="text-6xl ml-[1rem] cursor-pointer hover:text-green_2 active:scale-95 transition-transform ease-in"
         />
 
         <div className="flex flex-col space-y-[1rem] items-center">

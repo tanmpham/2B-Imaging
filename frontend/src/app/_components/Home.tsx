@@ -9,9 +9,13 @@ function Home() {
   const [previewSrc, setPreviewSrc] = useState('')
 
   return (
-    <div className="w-[88vw] h-screen bg-black flex text-white">
+    <div className="w-[88vw] h-full flex text-white bg-black">
       <PatientSelection />
-      <MediaList setPreviewSrc={setPreviewSrc} previewSrc={previewSrc} />
+      <MediaList
+        className="bg-grey_1 max-h-screen ml-[78px] pt-[90px] pb-[40px] pr-[20px]"
+        setPreviewSrc={setPreviewSrc}
+        previewSrc={previewSrc}
+      />
       <Preview src={previewSrc} />
     </div>
   )

@@ -1,22 +1,46 @@
+'use client'
+
+import { useRouter } from 'next/navigation'
+import { Dispatch, SetStateAction } from 'react'
 import { BsCameraReels } from 'react-icons/bs'
 import { HiHashtag } from 'react-icons/hi2'
 
-type Props = {
+interface Props {
   src?: string
   video?: boolean
   tag?: boolean
-  handleClick: (e: React.MouseEvent<HTMLButtonElement>) => void
+  setPreviewSrc: Dispatch<SetStateAction<string>>
+  id: string
 }
 
 const style = {
   icon: `text-[34px] cursor-pointer active:scale-95 hover:scale-[1.04] transition-transform ease-linear z-10 absolute bottom-[1rem]`,
 }
 
-function MediaItem({ src, video, tag, handleClick }: Props) {
+function MediaItem({ id, src, video, tag, setPreviewSrc }: Props) {
+  const router = useRouter()
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    switch (e.detail) {
+      case 1:
+        setPreviewSrc('1')
+        break
+      case 2:
+        if (video) {
+          router.push(`/videos/${id}`)
+        } else {
+          router.push(`/images/${id}`)
+        }
+        break
+      case 3:
+        console.log('triple click')
+        break
+    }
+  }
+
   return (
     <button
       onClick={handleClick}
-      className={`relative w-[162px] h-[162px] ${!src && 'bg-grey'}`}
+      className={`relative w-[200px] h-[200px] ${!src && 'bg-grey_2'}`}
     >
       {video && (
         <BsCameraReels
