@@ -1,17 +1,11 @@
+import sqlite3
 import os
-import mysql.connector
 
 image_folder_path = "patientimages"
 image_names = os.listdir(image_folder_path)
-db_config = {
-    "host": "localhost",
-    "user": "root",
-    "password": "your_password",
-    "database": "eyecameradb",
-}
 
-connection = mysql.connector.connect(**db_config)
-cursor = connection.cursor()
+conn = sqlite3.connect("eyecameradb.sqlite")
+c = conn.cursor()
 
 # # Reset AUTO_INCREMENT (Use with caution!)
 # #reset_auto_increment_query = "ALTER TABLE patientimages AUTO_INCREMENT = 1"
@@ -54,10 +48,10 @@ DateCreated = [
 for i in range(len(PatientID)):
     sql_query = f"""INSERT INTO patientimages (PatientID, IsRightEye, Annotation, ImageName, DateCreated) VALUES
                 ('{PatientID[i]}', '{IsRightEye[i]}', '{Annotation[i]}', '{image_names[i]}', '{DateCreated[i]}')"""
-    cursor.execute(sql_query)
+    c.execute(sql_query)
 
 
 # Commit changes and close the connection
-connection.commit()
-cursor.close()
-connection.close()
+conn.commit()
+c.close()
+conn.close()
