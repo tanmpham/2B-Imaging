@@ -27,7 +27,10 @@ function VideoPage({}: Props) {
           updateCompareList={updateCompareList}
         />
         <div className={`w-full flex items-center justify-between px-[40px]`}>
-          <CompareBox />
+          <CompareBox
+            compareList={compareList}
+            updateCompareList={updateCompareList}
+          />
           <DeleteConfirmBox />
         </div>
       </div>

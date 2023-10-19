@@ -83,34 +83,6 @@ CREATE TABLE `workqueue` (
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
-
-
--- Add a DateofBirth column to the patients table 
-ALTER TABLE eyecameradb.patients
-ADD DateofBirth DATE;
-
--- Add ImageName and DateCreated columns to the patientimages table 
-ALTER TABLE eyecameradb.patientimages
-ADD ImageName VARCHAR(50),
-ADD DateCreated DATETIME; -- OR TIMESTAMP 
-
--- Add UseCount column to the imagetags table 
-ALTER TABLE eyecameradb.imagetags
-ADD UseCount INT; 
-
--- Add a new table imagenotes with columns NoteId, Note, NoteCreatedAt, and ImageID columns 
-CREATE TABLE `imagenotes` (
-	`NoteID` INT NOT NULL AUTO_INCREMENT,
-    `Note` TEXT,
-	`NoteCreatedAt` DATE, 
-    `ImageID` INT DEFAULT NULL, 
-    PRIMARY KEY (`NoteID`),
-    KEY `ImageID` (`ImageID`),
-	CONSTRAINT `imagenotes_ibfk_1` FOREIGN KEY (`ImageID`) REFERENCES `patientimages` (`ImageID`)
-);
-
-
-
 --
 -- Dumping routines for database 'eyecameradb'
 --
@@ -508,4 +480,57 @@ DELIMITER ;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2023-07-20 13:34:57
+
+-- Add a DateofBirth column to the patients table 
+ALTER TABLE eyecameradb.patients
+ADD DateofBirth DATE;
+
+
+-- Add ImageName and DateCreated columns to the patientimages table 
+ALTER TABLE eyecameradb.patientimages
+ADD ImageName VARCHAR(50),
+ADD DateCreated DATETIME; -- OR TIMESTAMP 
+
+-- Add UseCount column to the imagetags table 
+ALTER TABLE eyecameradb.imagetags
+ADD UseCount INT; 
+
+-- Add a new table imagenotes with columns NoteId, Note, NoteCreatedAt, and ImageID columns 
+DROP TABLE IF EXISTS `imagenotes`;
+CREATE TABLE `imagenotes` (
+    `NoteID` INT NOT NULL AUTO_INCREMENT,
+    `Note` TEXT,
+    `NoteCreatedAt` DATE, 
+    `ImageID` INT DEFAULT NULL, 
+    PRIMARY KEY (`NoteID`),
+    KEY `ImageID` (`ImageID`),
+    CONSTRAINT `imagenotes_ibfk_1` FOREIGN KEY (`ImageID`) REFERENCES `patientimages` (`ImageID`)
+);
+
+
+-- Populate with 10 patients and patientimages tables with data
+INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('John', 'Smith', '1980-01-01');
+INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Jane', 'Doe', '1985-01-01');
+INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Bob', 'Jones', '1990-01-01');
+INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Sally', 'Smith', '1995-01-01');
+INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Joe', 'Doe', '2000-01-01');
+INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('John', 'Jones', '2005-01-01');
+INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Jane', 'Smith', '2010-01-01');
+INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Bob', 'Doe', '2015-01-01');
+INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Sally', 'Jones', '2020-01-01');
+INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Joe', 'Smith', '2025-01-01');
+
+-- INSERT INTO patientimages (PatientID, ImageData, IsRightEye, Annotation, ImageName, DateCreated) VALUES 
+-- (1, NULL, 1, 'This is a test annotation', 'Test Image', '2021-07-20 13:34:57'),
+-- (1, NULL, 0, 'This is a test annotation', 'Test Image', '2021-07-20 13:34:57'),
+-- (2, NULL, 1, 'This is a test annotation', 'Test Image', '2021-07-20 13:34:57'),
+-- (2, NULL, 0, 'This is a test annotation', 'Test Image', '2021-07-20 13:34:57'),
+-- (3, NULL, 1, 'This is a test annotation', 'Test Image', '2021-07-20 13:34:57'),
+-- (3, NULL, 0, 'This is a test annotation', 'Test Image', '2021-07-20 13:34:57'),
+-- (4, NULL, 1, 'This is a test annotation', 'Test Image', '2021-07-20 13:34:57'),
+-- (4, NULL, 0, 'This is a test annotation', 'Test Image', '2021-07-20 13:34:57'),
+-- (5, NULL, 1, 'This is a test annotation', 'Test Image', '2021-07-20 13:34:57'),
+-- (5, NULL, 0, 'This is a test annotation', 'Test Image', '2021-07-20 13:34:57');
+
+
 
