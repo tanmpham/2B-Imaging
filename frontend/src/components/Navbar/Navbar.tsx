@@ -10,8 +10,8 @@ import Logo from '../shared/Logo/Logo'
 // import format from 'date-fns/format'
 
 import { useCurrentPatientContext } from '@/context/current-patient-context'
-import 'react-date-range/dist/styles.css'
-import 'react-date-range/dist/theme/default.css'
+// import 'react-date-range/dist/styles.css'
+// import 'react-date-range/dist/theme/default.css'
 import { Button } from '../shared/Buttons/Button'
 
 const style = {
