@@ -37,12 +37,17 @@ CORS(
 db_config = {
     "host": "localhost",
     "user": "root",
-    "password": "your_password",
+    "password": appConfig["sql-pass"],
     "database": "eyecameradb",
 }
 
 # connection = mysql.connector.connect(**db_config)
 # cursor = connection.cursor()
+
+# sql_query = f"""SELECT * FROM eyecameradb.patientimages;"""
+# cursor.execute(sql_query)
+
+# print(cursor.fetchall())
 
 # # Commit changes and close the connection
 # connection.commit()
