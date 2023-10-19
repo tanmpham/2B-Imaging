@@ -2,6 +2,8 @@
 
 ## Setup instructions:
 
+Download NodeJs Windows Installer (LTS Version) <a href='https://nodejs.org/en/download'>https://nodejs.org/en/download</a>
+
 #### Install dependencies and run the front-end app locally
 
 ```powershell
