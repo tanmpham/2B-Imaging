@@ -22,8 +22,9 @@ function MediaItem({ id, src, video, tag, setPreviewData }: Props) {
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     switch (e.detail) {
       case 1:
-        setPreviewData((prev) => ({ ...prev, id: id }))
-        setPreviewData((prev) => ({ ...prev, src: id }))
+        ;() => {
+          setPreviewData({ id: id, src: 'hi' })
+        }
         break
       case 2:
         if (video) {
