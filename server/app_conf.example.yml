@@ -1,0 +1,4 @@
+version: 1
+client-frontend-url: localhost:3000
+client-backend-url: localhost:4200
+sql-pass: <your_password>
