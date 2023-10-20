@@ -165,7 +165,10 @@ function Navbar() {
               })
             }}
           />
-          <Button size="custom" className="text-[14px] px-[.4rem]">
+          <Button
+            size="custom"
+            className="text-[14px] pl-[.5rem] pr-[.2rem] py-[.1rem] hover:translate-x-[.2rem] transition-transform ease-linear"
+          >
             Select Date <BsArrowRightShort className="text-[26px]" />
           </Button>
         </div>
