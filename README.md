@@ -26,7 +26,7 @@ Run the script `eyecameradb.sql`and`server/update-images.py`
 ```powershell
 cd server
 pip install -r requirements.txt
-py apps.py
+py app.py
 ```
 
 #### Client back-end
