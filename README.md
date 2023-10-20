@@ -19,7 +19,8 @@ Create app_conf.yml files for both server and client folder (content is based on
 
 #### Server back-end
 
-Please run the script `eyecameradb.sql` and `server/update-images.py` before doing this step.
+Create app_conf.yml files for both `server` and `client` folder (content is based on app_conf.example.yml).
+Run the script `eyecameradb.sql`and`server/update-images.py`
 
 ```powershell
 cd server
