@@ -21,11 +21,12 @@ Create app_conf.yml files for both server and client folder (content is based on
 
 Create app_conf.yml files for both `server` and `client` folder (content is based on app_conf.example.yml).
 <br/>
-Run the script `eyecameradb.sql`and`server/update-images.py`
+Run the script `eyecameradb.sql`
 
 ```powershell
 cd server
 pip install -r requirements.txt
+py update-images.py
 py app.py
 ```
 
@@ -34,6 +35,8 @@ py app.py
 ```powershell
 cd client
 pip install -r requirements.txt
+py create_tables.py
+py update-images.py
 py app.py
 ```
 
