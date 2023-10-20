@@ -30,9 +30,7 @@ function CompareBox({ compareList, updateCompareList }: Props) {
             className={`${style.image} bg-black`}
           >
             <BsFillTrash3Fill
-              id={src}
-              onClick={deleteList}
-              className={`hidden group-hover:block group-hover:text-red-500 z-[20]`}
+              className={`hidden group-hover:block group-hover:text-red-500 pointer-events-none`}
             />
             <div className={`block group-hover:hidden`}>{src}</div>
           </button>

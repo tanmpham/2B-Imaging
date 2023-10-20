@@ -7,7 +7,7 @@ import { useState } from 'react'
 
 interface Props {}
 function VideoPage({}: Props) {
-  const [compareList, setCompareList] = useState([''])
+  const [compareList, setCompareList] = useState<string[] | never[]>([])
 
   const updateCompareList = (src: string, method: string) => {
     if (method === 'add') {
@@ -25,6 +25,7 @@ function VideoPage({}: Props) {
         <MediaList
           className="max-h-[78vh] px-[80px] pt-[15px]"
           updateCompareList={updateCompareList}
+          compareList={compareList}
         />
         <div className={`w-full flex items-center justify-between px-[40px]`}>
           <CompareBox
