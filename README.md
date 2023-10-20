@@ -4,7 +4,7 @@
 
 Download NodeJs Windows Installer (LTS Version) <a href='https://nodejs.org/en/download'>https://nodejs.org/en/download</a>
 
-#### Install dependencies and run the front-end app locally
+### Install dependencies and run the front-end app locally
 
 ```powershell
 cd frontend
@@ -13,15 +13,21 @@ yarn install
 yarn dev
 ```
 
-#### Install dependencies, set up, and run the back-end app locally
+### Install dependencies, set up, and run the back-end app locally
 
 Create app_conf.yml files for both server and client folder (content is based on app_conf.example.yml).
+
+#### Server back-end
+
+Please run the script <strong> eyecameradb.sql</strong> and <strong>server/update-images.py</strong> before going next step.
 
 ```powershell
 cd server
 pip install -r requirements.txt
 py apps.py
 ```
+
+#### Client back-end
 
 ```powershell
 cd client
