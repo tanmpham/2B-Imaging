@@ -63,7 +63,7 @@ function MediaItem({
         }
         break
       case 3:
-        console.log('triple click')
+        // console.log('triple click')
         break
     }
   }

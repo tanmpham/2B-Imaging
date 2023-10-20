@@ -62,8 +62,8 @@ function Navbar() {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setSelectedDate(range)
-    console.log(currentPatient)
-    console.log(selectedDate)
+    // console.log(currentPatient)
+    // console.log(selectedDate)
   }
 
   const ref = useRef(null)

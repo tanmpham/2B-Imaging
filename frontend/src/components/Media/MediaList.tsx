@@ -1,3 +1,4 @@
+import { ImageDto } from '@/interfaces/image.dto'
 import { Dispatch, SetStateAction } from 'react'
 import MediaItem from './MediaItem'
 
@@ -7,10 +8,16 @@ interface Props {
   className?: string
   updateCompareList?: (src: string, method: string) => void
   compareList?: string[]
+  images: ImageDto[]
 }
 
 const style = {
   date: `col-span-2 text-center text-grey_2 font-[300]`,
+}
+
+const fileType = (filename: string) => {
+  const parts = filename.split('.')
+  return parts[parts.length - 1]
 }
 
 function MediaList({
@@ -19,7 +26,9 @@ function MediaList({
   setPreviewData,
   className,
   updateCompareList,
+  images,
 }: Props) {
+  // console.log(fileType(images[0].ImageName))
   return (
     <div
       className={`${className} grid grid-cols-2 gap-x-[28px] gap-y-[28px] justify-start overflow-y-auto`}

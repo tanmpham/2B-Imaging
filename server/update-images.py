@@ -1,12 +1,16 @@
 import os
 import mysql.connector
+import yaml
+
+with open("app_conf.yml", "r") as f:
+    appConfig = yaml.safe_load(f.read())
 
 image_folder_path = "patientimages"
 image_names = os.listdir(image_folder_path)
 db_config = {
     "host": "localhost",
     "user": "root",
-    "password": "your_password",
+    "password": appConfig["sql-pass"],
     "database": "eyecameradb",
 }
 
@@ -39,16 +43,16 @@ Annotation = [
 ]
 
 DateCreated = [
-    "2021-07-20 13:34:57",
-    "2021-07-20 13:34:57",
-    "2021-07-20 13:34:57",
-    "2021-07-20 13:34:57",
-    "2021-07-20 13:34:57",
-    "2021-07-20 13:34:57",
-    "2021-07-20 13:34:57",
-    "2021-07-20 13:34:57",
-    "2021-07-20 13:34:57",
-    "2021-07-20 13:34:57",
+    "2023-04-20 13:34:57",
+    "2023-04-20 14:34:57",
+    "2023-04-20 15:34:57",
+    "2023-04-20 16:34:57",
+    "2023-07-20 21:34:57",
+    "2023-07-20 13:34:57",
+    "2023-10-20 13:34:57",
+    "2023-10-20 13:34:57",
+    "2023-10-20 13:34:57",
+    "2023-10-20 13:34:57",
 ]
 
 for i in range(len(PatientID)):
