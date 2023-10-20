@@ -7,22 +7,31 @@ import { useState } from 'react'
 
 interface Props {}
 function ImagePage({}: Props) {
-  const [previewData, setPreviewData] = useState({
-    src: '',
-    id: '',
-  })
+  const [compareList, setCompareList] = useState<string[] | never[]>([])
+
+  const updateCompareList = (src: string, method: string) => {
+    if (method === 'add') {
+      setCompareList((prev) => [...prev, src])
+    }
+
+    if (method === 'delete') {
+      setCompareList(compareList.filter((item) => item !== src))
+    }
+  }
+
   return (
     <div className="flex text-white">
       <div className={`bg-grey_1 space-y-[30px]`}>
         <MediaList
           className="max-h-[78vh] px-[80px] pt-[15px]"
-          setPreviewData={setPreviewData}
-          previewData={previewData}
+          updateCompareList={updateCompareList}
+          compareList={compareList}
         />
-        <div
-          className={`w-full flex items-center justify-between pl-[39px] pr-[55px]`}
-        >
-          <CompareBox />
+        <div className={`w-full flex items-center justify-between px-[40px]`}>
+          <CompareBox
+            compareList={compareList}
+            updateCompareList={updateCompareList}
+          />
           <DeleteConfirmBox />
         </div>
       </div>
