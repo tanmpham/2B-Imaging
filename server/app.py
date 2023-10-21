@@ -257,7 +257,7 @@ def get_notes_for_image():
     notes = [{"NoteID": note[0], "Note": note[1], "NoteCreatedAt": note[2], "ImageID": note[3]} for note in query_result]
     return {"notes": notes}
 
-# THIS IS FOR AMANDA's TASKS
+# set up api for patient images
 # Fetch all patients
 @app.route("/patients", methods=["GET"])
 def get_all_patients():
