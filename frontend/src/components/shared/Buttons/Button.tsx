@@ -13,8 +13,7 @@ const buttonVariants = cva(
         custom: '',
       },
       size: {
-        default:
-          'px-[.6rem] py-[.2rem] text-[13px] lg:text-base hover:scale-[1.02]',
+        default: 'px-[.6rem] py-[.2rem] text-[13px] lg:text-base',
         custom: '',
       },
     },

@@ -39,7 +39,7 @@ def fetchAll():
 
     cursor = connection.cursor()
 
-    sql_query = f"""SELECT * FROM patientimages ORDER BY DateCreated;"""
+    sql_query = f"""SELECT * FROM patientimages ORDER BY DateCreated DESC;"""
     cursor.execute(sql_query)
     query_result = cursor.fetchall()
 
@@ -50,19 +50,23 @@ def fetchAll():
 
     responseData = []
 
-    for image in query_result:
-        responseData.append(
-            {
-                "ImageID": image[0],
-                "PatientID": image[1],
-                "ImageData": image[2],
-                "IsRightEye": image[3],
-                "Annotation": image[4],
-                "ThumbnailData": image[5],
-                "ImageName": image[6],
-                "DateCreated": image[7],
-            }
-        )
+    for i, image in enumerate(query_result):
+        dateLabel = image[7]
+        mediaList = {image[7]: {}}
+
+        if i == 0:
+            responseData.append(
+                {
+                    "ImageID": image[0],
+                    "PatientID": image[1],
+                    "ImageData": image[2],
+                    "IsRightEye": image[3],
+                    "Annotation": image[4],
+                    "ThumbnailData": image[5],
+                    "ImageName": image[6],
+                    "DateCreated": dateLabel,
+                }
+            )
 
     return responseData
 

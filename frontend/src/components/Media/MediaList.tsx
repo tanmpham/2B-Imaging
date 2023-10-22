@@ -1,5 +1,8 @@
+'use client'
+
 import { ImageDto } from '@/interfaces/image.dto'
-import { Dispatch, SetStateAction } from 'react'
+import { format } from 'date-fns'
+import { Dispatch, SetStateAction, useState } from 'react'
 import MediaItem from './MediaItem'
 
 interface Props {
@@ -29,6 +32,21 @@ function MediaList({
   images,
 }: Props) {
   // console.log(fileType(images[0].ImageName))
+
+  const x = format(new Date(images[0].DateCreated.split(' ')[0]), 'MM/dd/yyyy')
+  const y = format(new Date(images[1].DateCreated.split(' ')[0]), 'MM/dd/yyyy')
+
+  console.log(x === y)
+
+  console.log(x)
+  console.log(y)
+
+  // const [imagesList, setImagesList] = useState<
+  //   null[] | [{ date: string; imagesGroup: ImageDto[] }]
+  // >([])
+
+  images.map((image) => {})
+
   return (
     <div
       className={`${className} grid grid-cols-2 gap-x-[28px] gap-y-[28px] justify-start overflow-y-auto`}

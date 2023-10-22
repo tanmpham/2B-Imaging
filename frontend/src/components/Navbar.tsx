@@ -20,7 +20,7 @@ import { Button } from './shared/Buttons/Button'
 
 const style = {
   label: `ml-[2rem] hover:text-green_2 cursor-pointer group-hover:text-green_2`,
-  input: `w-full outline-none px-[1rem] h-[28px] text-black text-[12px] font-semibold rounded-[var(--rounded-default)] mt-[.4rem] hover:scale-[1.02] transition-transform ease-linear`,
+  input: `w-full outline-none px-[1rem] h-[28px] text-black text-[12px] font-semibold rounded-[var(--rounded-default)] mt-[.4rem] transition-transform ease-linear`,
 }
 
 function Navbar() {
@@ -128,7 +128,7 @@ function Navbar() {
         </div>
         <Button
           form="patientSelection"
-          className={`mt-[.4rem] ml-[1rem] w-fit`}
+          className={`mt-[.4rem] ml-[1rem] w-fit hover:translate-x-[.2rem]`}
         >
           Search
         </Button>
