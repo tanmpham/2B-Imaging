@@ -1,7 +1,7 @@
 import os
 import mysql.connector
 
-image_folder_path = "patientimages"
+image_folder_path = "server\patientimages"
 image_names = os.listdir(image_folder_path)
 db_config = {
     "host": "localhost",
