@@ -17,11 +17,6 @@ const style = {
   date: `col-span-2 text-center text-grey_2 font-[300]`,
 }
 
-// const fileType = (filename: string) => {
-//   const parts = filename.split('.')
-//   return parts[parts.length - 1]
-// }
-
 function MediaList({
   compareList,
   setPreviewData,
@@ -29,11 +24,6 @@ function MediaList({
   updateCompareList,
   images,
 }: Props) {
-  // console.log(fileType(images[0].ImageName))
-
-  // const x = format(new Date(images[0].DateCreated.split(' ')[0]), 'MM/dd/yyyy')
-  // const y = format(new Date(images[0].DateCreated.split(' ')[0]), 'MM/dd/yyyy')
-
   return (
     <div
       className={`${className} grid grid-cols-2 gap-x-[28px] gap-y-[28px] justify-start overflow-y-auto`}
@@ -54,6 +44,7 @@ function MediaList({
             setPreviewData={setPreviewData}
             updateCompareList={updateCompareList}
             compareList={compareList}
+            fileName={ImageName}
           />
         </Fragment>
       ))}
