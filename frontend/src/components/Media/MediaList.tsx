@@ -1,8 +1,8 @@
 'use client'
 
 import { ImageDto } from '@/interfaces/image.dto'
-import { format } from 'date-fns'
-import { Dispatch, Fragment, SetStateAction, useState } from 'react'
+// import { format } from 'date-fns'
+import { Dispatch, Fragment, SetStateAction } from 'react'
 import MediaItem from './MediaItem'
 
 interface Props {
@@ -17,10 +17,10 @@ const style = {
   date: `col-span-2 text-center text-grey_2 font-[300]`,
 }
 
-const fileType = (filename: string) => {
-  const parts = filename.split('.')
-  return parts[parts.length - 1]
-}
+// const fileType = (filename: string) => {
+//   const parts = filename.split('.')
+//   return parts[parts.length - 1]
+// }
 
 function MediaList({
   compareList,
