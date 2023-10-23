@@ -7,4 +7,5 @@ export interface ImageDto {
   IsRightEye: number
   PatientID: number
   ThumbnailData: null
+  FileType: string
 }

@@ -14,6 +14,7 @@ function Home({ images }: Props) {
   const [previewData, setPreviewData] = useState({
     src: '',
     id: 0,
+    fileType: '',
   })
 
   return (
@@ -24,7 +25,11 @@ function Home({ images }: Props) {
         className="bg-grey_1 max-h-screen ml-[78px] pt-[90px] pb-[40px] pr-[20px]"
         setPreviewData={setPreviewData}
       />
-      <Preview src={previewData.src} id={previewData.id} />
+      <Preview
+        src={previewData.src}
+        id={previewData.id}
+        fileType={previewData.fileType}
+      />
     </div>
   )
 }

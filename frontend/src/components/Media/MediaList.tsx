@@ -6,7 +6,9 @@ import { Dispatch, Fragment, SetStateAction } from 'react'
 import MediaItem from './MediaItem'
 
 interface Props {
-  setPreviewData?: Dispatch<SetStateAction<{ src: string; id: number }>>
+  setPreviewData?: Dispatch<
+    SetStateAction<{ src: string; id: number; fileType: string }>
+  >
   className?: string
   updateCompareList?: (src: string, method: string) => void
   compareList?: string[]
@@ -28,7 +30,7 @@ function MediaList({
     <div
       className={`${className} grid grid-cols-2 gap-x-[28px] gap-y-[28px] justify-start overflow-y-auto`}
     >
-      {images.map(({ ImageID, DateCreated, ImageName }, idx) => (
+      {images.map(({ ImageID, DateCreated, ImageName, FileType }, idx) => (
         <Fragment key={ImageID}>
           {idx === 0 && (
             <div className={style.date}>{DateCreated.split(' ')[0]}</div>
@@ -44,7 +46,7 @@ function MediaList({
             setPreviewData={setPreviewData}
             updateCompareList={updateCompareList}
             compareList={compareList}
-            fileName={ImageName}
+            fileType={FileType}
           />
         </Fragment>
       ))}

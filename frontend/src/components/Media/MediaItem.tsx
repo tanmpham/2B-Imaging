@@ -1,6 +1,5 @@
 'use client'
 
-import { fileType } from '@/utils/fileType'
 import { usePathname, useRouter } from 'next/navigation'
 import { Dispatch, SetStateAction } from 'react'
 import toast from 'react-hot-toast'
@@ -12,11 +11,13 @@ interface Props {
   src?: string
   video?: boolean
   tag?: boolean
-  setPreviewData?: Dispatch<SetStateAction<{ src: string; id: number }>>
+  setPreviewData?: Dispatch<
+    SetStateAction<{ src: string; id: number; fileType: string }>
+  >
   id: number
   updateCompareList?: (src: string, method: string) => void
   compareList?: string[]
-  fileName: string
+  fileType: string
 }
 
 const style = {
@@ -31,7 +32,7 @@ function MediaItem({
   setPreviewData,
   updateCompareList,
   compareList,
-  fileName,
+  fileType,
 }: Props) {
   const router = useRouter()
   const pathname = usePathname()
@@ -43,7 +44,7 @@ function MediaItem({
     switch (e.detail) {
       case 1:
         if (setPreviewData && src) {
-          setPreviewData({ id: id, src: src })
+          setPreviewData({ id: id, src: src, fileType: fileType })
         }
 
         break
@@ -81,13 +82,13 @@ function MediaItem({
     >
       {src && (
         <>
-          {fileType(fileName) === 'jpg' && (
+          {fileType === 'jpg' && (
             <Img
               className="group-hover:opacity-[.4] transition-opacity ease-linear"
               src={src}
             />
           )}
-          {fileType(fileName) === 'mp4' && (
+          {fileType === 'mp4' && (
             <video className="object-cover group-hover:opacity-[.4] transition-opacity ease-linear">
               <source src={`${src}#t=0.6`} type="video/mp4" />
             </video>
@@ -95,7 +96,7 @@ function MediaItem({
         </>
       )}
 
-      {fileType(fileName) === 'mp4' && (
+      {fileType === 'mp4' && (
         <BsCameraReels
           className={`${style.icon} text-stone-300 hover:text-stone-400 left-[1rem]`}
         />

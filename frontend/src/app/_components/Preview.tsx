@@ -1,12 +1,12 @@
 import Img from '@/components/shared/Img/Img'
 import { toasterStyle } from '@/constants/toasterStyle'
-import { fileType } from '@/utils/fileType'
 import toast from 'react-hot-toast'
 import Tilt from 'react-parallax-tilt'
 
 interface Props {
   src?: string
   id: number
+  fileType: string
 }
 
 function Initial() {
@@ -30,7 +30,7 @@ function Initial() {
   )
 }
 
-function Preview({ src, id }: Props) {
+function Preview({ src, id, fileType }: Props) {
   return (
     <>
       {!src ? (
@@ -44,8 +44,8 @@ function Preview({ src, id }: Props) {
           <div
             className={`relative w-[600px] h-[400px] mt-[130px] bg-grey_2 flex items-center justify-center text-stone-600 text-[80px]`}
           >
-            {fileType(src) === 'jpg' && <Img src={src} />}
-            {fileType(src) === 'mp4' && (
+            {fileType === 'jpg' && <Img src={src} />}
+            {fileType === 'mp4' && (
               <video controls>
                 <source src={src} />
               </video>

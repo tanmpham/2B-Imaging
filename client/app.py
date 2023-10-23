@@ -51,6 +51,8 @@ def fetchAll():
     images = []
 
     for image in query_result:
+        parts = image[6].split(".")
+        fileType = parts[len(parts) - 1]
         images.append(
             {
                 "ImageID": image[0],
@@ -60,6 +62,7 @@ def fetchAll():
                 "Annotation": image[4],
                 "ThumbnailData": image[5],
                 "ImageName": image[6],
+                "FileType": fileType,
                 "DateCreated": image[7],
             }
         )
