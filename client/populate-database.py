@@ -1,21 +1,12 @@
 import sqlite3
 import os
+import random
 
 image_folder_path = "patientimages"
 image_names = os.listdir(image_folder_path)
 
 conn = sqlite3.connect("eyecameradb.sqlite")
 c = conn.cursor()
-
-# # Reset AUTO_INCREMENT (Use with caution!)
-# #reset_auto_increment_query = "ALTER TABLE patientimages AUTO_INCREMENT = 1"
-# #cursor.execute(reset_auto_increment_query)
-
-
-# # Insert image names into the 'patientimages' table
-# for image_name in image_names:
-#     sql_query = "INSERT INTO patientimages (ImageName) VALUES (%s)"
-#     cursor.execute(sql_query, (image_name,))
 
 PatientID = [8, 3, 2, 7, 5, 10, 10, 6, 1, 9, 4]
 IsRightEye = [0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0]
@@ -51,6 +42,21 @@ for i in range(len(PatientID)):
     sql_query = f"""INSERT INTO patientimages (PatientID, IsRightEye, Annotation, ImageName, DateCreated) VALUES
                 ('{PatientID[i]}', '{IsRightEye[i]}', '{Annotation[i]}', '{image_names[i]}', '{DateCreated[i]}')"""
     c.execute(sql_query)
+
+# Loop through ImageIDs from 1 to 10 and insert notes
+for image_id in range(1, 11):  # 1 to 10 inclusive
+    note = f"Automatically generated note for image {image_id}"
+    sql_insert_note_query = "INSERT INTO imagenotes (Note, NoteCreatedAt, ImageID) VALUES (?, CURRENT_TIMESTAMP, ?)"
+    c.execute(sql_insert_note_query, (note, image_id))
+
+# Loop through ImageIDs from 1 to 10 and insert tags
+for image_id in range(1, 11):  # 1 to 10 inclusive
+    tag_name = f"Automatically generated tag for image {image_id}"
+    use_count = random.randint(1, 10)
+    sql_insert_tag_query = (
+        "INSERT INTO imagetags (Tag, UseCount, ImageID) VALUES (?, ?, ?)"
+    )
+    c.execute(sql_insert_tag_query, (tag_name, use_count, image_id))
 
 
 # Commit changes and close the connection
