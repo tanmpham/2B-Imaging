@@ -5,13 +5,14 @@ import { Dispatch, SetStateAction } from 'react'
 import toast from 'react-hot-toast'
 import { BsCameraReels } from 'react-icons/bs'
 import { HiHashtag } from 'react-icons/hi2'
+import Img from '../shared/Img/Img'
 
 interface Props {
   src?: string
   video?: boolean
   tag?: boolean
-  setPreviewData?: Dispatch<SetStateAction<{ src: string; id: string }>>
-  id: string
+  setPreviewData?: Dispatch<SetStateAction<{ src: string; id: number }>>
+  id: number
   updateCompareList?: (src: string, method: string) => void
   compareList?: string[]
 }
@@ -38,8 +39,8 @@ function MediaItem({
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     switch (e.detail) {
       case 1:
-        if (setPreviewData) {
-          setPreviewData({ id: id, src: 'hi' })
+        if (setPreviewData && src) {
+          setPreviewData({ id: id, src: src })
         }
 
         break
@@ -48,8 +49,8 @@ function MediaItem({
           if (compareList?.length && compareList.length > 5) {
             toast.error('Reached limit 6 images to compare.')
           } else {
-            if (!compareList?.includes(id)) {
-              updateCompareList(id, 'add')
+            if (src && !compareList?.includes(src)) {
+              updateCompareList(src, 'add')
             } else {
               toast.error('Item is already selected.')
             }
@@ -75,6 +76,8 @@ function MediaItem({
         !src && 'bg-grey_2'
       } hover:translate-y-[-.2rem] transition-transform ease-linear`}
     >
+      {src && <Img src={src} />}
+
       {video && (
         <BsCameraReels
           className={`${style.icon} text-stone-700 hover:text-black left-[1rem]`}

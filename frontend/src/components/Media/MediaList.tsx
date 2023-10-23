@@ -2,12 +2,11 @@
 
 import { ImageDto } from '@/interfaces/image.dto'
 import { format } from 'date-fns'
-import { Dispatch, SetStateAction, useState } from 'react'
+import { Dispatch, Fragment, SetStateAction, useState } from 'react'
 import MediaItem from './MediaItem'
 
 interface Props {
-  setPreviewData?: Dispatch<SetStateAction<{ src: string; id: string }>>
-  previewData?: { src: string; id: string }
+  setPreviewData?: Dispatch<SetStateAction<{ src: string; id: number }>>
   className?: string
   updateCompareList?: (src: string, method: string) => void
   compareList?: string[]
@@ -25,7 +24,6 @@ const fileType = (filename: string) => {
 
 function MediaList({
   compareList,
-  previewData,
   setPreviewData,
   className,
   updateCompareList,
@@ -33,117 +31,32 @@ function MediaList({
 }: Props) {
   // console.log(fileType(images[0].ImageName))
 
-  const x = format(new Date(images[0].DateCreated.split(' ')[0]), 'MM/dd/yyyy')
-  const y = format(new Date(images[1].DateCreated.split(' ')[0]), 'MM/dd/yyyy')
-
-  console.log(x === y)
-
-  console.log(x)
-  console.log(y)
-
-  // const [imagesList, setImagesList] = useState<
-  //   null[] | [{ date: string; imagesGroup: ImageDto[] }]
-  // >([])
-
-  images.map((image) => {})
+  // const x = format(new Date(images[0].DateCreated.split(' ')[0]), 'MM/dd/yyyy')
+  // const y = format(new Date(images[0].DateCreated.split(' ')[0]), 'MM/dd/yyyy')
 
   return (
     <div
       className={`${className} grid grid-cols-2 gap-x-[28px] gap-y-[28px] justify-start overflow-y-auto`}
     >
-      <div className={style.date}>03/01/2023</div>
-      <MediaItem
-        id={'1'}
-        setPreviewData={setPreviewData}
-        updateCompareList={updateCompareList}
-        compareList={compareList}
-        video
-        tag
-      />
-      <MediaItem
-        id={'2'}
-        setPreviewData={setPreviewData}
-        updateCompareList={updateCompareList}
-        compareList={compareList}
-      />
-      <MediaItem
-        id={'3'}
-        setPreviewData={setPreviewData}
-        updateCompareList={updateCompareList}
-        compareList={compareList}
-      />
-      <MediaItem
-        id={'4'}
-        setPreviewData={setPreviewData}
-        updateCompareList={updateCompareList}
-        compareList={compareList}
-        video
-        tag
-      />
-      <div className={style.date}>02/01/2023</div>
-      <MediaItem
-        id={'5'}
-        setPreviewData={setPreviewData}
-        updateCompareList={updateCompareList}
-        compareList={compareList}
-      />
-      <MediaItem
-        id={'6'}
-        setPreviewData={setPreviewData}
-        updateCompareList={updateCompareList}
-        compareList={compareList}
-        tag
-      />
-      <MediaItem
-        id={'7'}
-        setPreviewData={setPreviewData}
-        updateCompareList={updateCompareList}
-        compareList={compareList}
-        video
-        tag
-      />
-      <MediaItem
-        id={'8'}
-        setPreviewData={setPreviewData}
-        updateCompareList={updateCompareList}
-        compareList={compareList}
-        video
-        tag
-      />
-      <MediaItem
-        id={'9'}
-        setPreviewData={setPreviewData}
-        updateCompareList={updateCompareList}
-        compareList={compareList}
-      />
-      <MediaItem
-        id={'10'}
-        setPreviewData={setPreviewData}
-        updateCompareList={updateCompareList}
-        compareList={compareList}
-        tag
-      />
-      <div className={style.date}>01/01/2023</div>
-      <MediaItem
-        id={'11'}
-        setPreviewData={setPreviewData}
-        updateCompareList={updateCompareList}
-        compareList={compareList}
-      />
-      <MediaItem
-        id={'12'}
-        setPreviewData={setPreviewData}
-        updateCompareList={updateCompareList}
-        compareList={compareList}
-      />
-      <MediaItem
-        id={'13'}
-        setPreviewData={setPreviewData}
-        updateCompareList={updateCompareList}
-        compareList={compareList}
-        video
-        tag
-      />
+      {images.map(({ ImageID, DateCreated, ImageName }, idx) => (
+        <Fragment key={ImageID}>
+          {idx === 0 && (
+            <div className={style.date}>{DateCreated.split(' ')[0]}</div>
+          )}
+          {idx > 0 &&
+            DateCreated.split(' ')[0] !==
+              images[idx - 1].DateCreated.split(' ')[0] && (
+              <div className={style.date}>{DateCreated.split(' ')[0]}</div>
+            )}
+          <MediaItem
+            id={ImageID}
+            src={`${process.env.NEXT_PUBLIC_CLIENT_API}/gallery/${ImageName}`}
+            setPreviewData={setPreviewData}
+            updateCompareList={updateCompareList}
+            compareList={compareList}
+          />
+        </Fragment>
+      ))}
     </div>
   )
 }

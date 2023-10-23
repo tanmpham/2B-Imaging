@@ -1,7 +1,4 @@
-import Image from 'next/image'
-import React from 'react'
-
-type Props = {
+interface Props {
   src: string
   alt?: string
   className?: string
@@ -9,11 +6,9 @@ type Props = {
 
 function Img({ src, alt = 'image', className }: Props) {
   return (
-    <Image
+    <img
       alt={alt}
       src={src}
-      fill
-      sizes="100%"
       className={`w-full h-full object-cover ${className}`}
     />
   )

@@ -1,3 +1,4 @@
+import { ImageDto } from '@/interfaces/image.dto'
 import Home from './_components/Home'
 
 async function getAllImages() {
@@ -14,7 +15,7 @@ async function getAllImages() {
 }
 
 async function page() {
-  const images = await getAllImages()
+  const images = (await getAllImages()) as ImageDto[]
 
   return <Home images={images} />
 }

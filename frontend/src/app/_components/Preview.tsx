@@ -1,10 +1,11 @@
+import Img from '@/components/shared/Img/Img'
 import { toasterStyle } from '@/constants/toasterStyle'
 import toast from 'react-hot-toast'
 import Tilt from 'react-parallax-tilt'
 
 interface Props {
   src?: string
-  id: string
+  id: number
 }
 
 function Initial() {
@@ -40,9 +41,9 @@ function Preview({ src, id }: Props) {
       ) : (
         <div className="mx-auto space-y-[24px]">
           <div
-            className={`w-[600px] h-[400px] mt-[130px] bg-grey_2 flex items-center justify-center text-stone-600 text-[80px]`}
+            className={`relative w-[600px] h-[400px] mt-[130px] bg-grey_2 flex items-center justify-center text-stone-600 text-[80px]`}
           >
-            img
+            <Img src={src} />
           </div>
 
           <div className="space-y-[24px]">
