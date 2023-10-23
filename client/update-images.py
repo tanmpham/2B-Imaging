@@ -17,9 +17,10 @@ c = conn.cursor()
 #     sql_query = "INSERT INTO patientimages (ImageName) VALUES (%s)"
 #     cursor.execute(sql_query, (image_name,))
 
-PatientID = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5]
-IsRightEye = [0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0]
+PatientID = [8, 3, 2, 7, 5, 10, 10, 6, 1, 9, 4]
+IsRightEye = [0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0]
 Annotation = [
+    "This is a test annotation",
     "This is a test annotation",
     "This is a test annotation",
     "This is a test annotation",
@@ -38,6 +39,7 @@ DateCreated = [
     "2023-04-20 15:34:57",
     "2023-04-20 16:34:57",
     "2023-07-20 21:34:57",
+    "2023-07-20 13:34:57",
     "2023-07-20 13:34:57",
     "2023-10-20 13:34:57",
     "2023-10-20 13:34:57",

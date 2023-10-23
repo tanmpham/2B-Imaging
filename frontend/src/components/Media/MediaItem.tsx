@@ -18,7 +18,7 @@ interface Props {
 }
 
 const style = {
-  icon: `text-[34px] cursor-pointer active:scale-95 hover:scale-[1.04] transition-transform ease-linear z-10 absolute bottom-[1rem]`,
+  icon: `text-[34px] cursor-pointer active:scale-95 hover:translate-x-[.2rem] transition-transform ease-linear z-10 absolute bottom-[1rem]`,
 }
 
 function MediaItem({
@@ -74,13 +74,18 @@ function MediaItem({
       onClick={handleClick}
       className={`relative w-[200px] h-[200px] ${
         !src && 'bg-grey_2'
-      } hover:translate-y-[-.2rem] transition-transform ease-linear`}
+      } hover:translate-y-[-.2rem] transition-transform ease-linear group`}
     >
-      {src && <Img src={src} />}
+      {src && (
+        <Img
+          className="group-hover:opacity-[.4] transition-opacity ease-linear"
+          src={src}
+        />
+      )}
 
       {video && (
         <BsCameraReels
-          className={`${style.icon} text-stone-700 hover:text-black left-[1rem]`}
+          className={`${style.icon} text-stone-300 hover:text-stone-400 left-[1rem]`}
         />
       )}
 
