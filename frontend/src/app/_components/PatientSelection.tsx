@@ -69,8 +69,8 @@ function PatientSelection({ patients }: Props) {
                 key={PatientID}
                 id={`${PatientID}`}
                 onClick={handleSelect}
-                className={`hover:bg-gray-400 hover:text-black ${
-                  patientSelected == PatientID && 'bg-gray-400 text-black'
+                className={`hover:bg-stone-600 ${
+                  patientSelected == PatientID && 'bg-stone-600'
                 } active:scale-[.98] transition-all ease-linear`}
               >
                 <td
