@@ -291,7 +291,10 @@ def get_one_patient(patient_id):
     if query_result is None:
         return {"message": "Patient not found"}, 404
 
-    patient = {"PatientID": query_result[0], "FirstName": query_result[1], "LastName": query_result[2], # ... other fields
+    patient = {"PatientID": query_result[0],
+               "FirstName": query_result[1],
+               "LastName": query_result[2],
+               "DateofBirth": query_result[3]
               }
     return {"patient": patient}
 
