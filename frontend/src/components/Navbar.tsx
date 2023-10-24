@@ -143,7 +143,7 @@ function Navbar() {
 
       <div className={`mt-[4rem] flex flex-col space-y-[40px] justify-between`}>
         <Link href="/tags">
-          <HiHashtag className="text-6xl ml-[1rem] cursor-pointer hover:text-green_2 active:scale-95 transition-transform ease-in" />
+          <HiHashtag className="text-6xl ml-[1rem] cursor-pointer hover:text-green_2 hover:translate-x-[.2rem] transition-transform ease-in" />
         </Link>
 
         <VscCalendar
@@ -151,7 +151,7 @@ function Navbar() {
             setStartDate(new Date())
             setEndDate(new Date())
           }}
-          className="text-6xl ml-[1rem] cursor-pointer hover:text-green_2 active:scale-95 transition-transform ease-in"
+          className="text-6xl ml-[1rem] cursor-pointer hover:text-green_2 hover:translate-x-[.2rem] transition-transform ease-in"
         />
 
         <div className="flex flex-col space-y-[1rem] items-center">
