@@ -1,14 +1,17 @@
+import { ImageDto } from '@/interfaces/image.dto'
 import GalleryPage from './_component/GalleryPage'
 
+import { getAllImages } from '@/functions'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Images | 2B Imaging',
+  title: 'Gallery | 2B Imaging',
   description: 'Copyright © 2023 2B Imaging. All rights reserved.',
 }
 
 interface Props {}
-function page({}: Props) {
-  return <GalleryPage />
+async function page({}: Props) {
+  const images = (await getAllImages()) as ImageDto[]
+  return <GalleryPage images={images} />
 }
 export default page

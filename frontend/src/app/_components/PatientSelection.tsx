@@ -21,6 +21,7 @@ const style = {
 }
 
 function PatientSelection({ patients }: Props) {
+  const { currentPatient } = useCurrentPatientContext()
   const [patientSelected, setPatientSelected] = useState(-1)
   const ref = useRef(null)
 
@@ -37,11 +38,9 @@ function PatientSelection({ patients }: Props) {
       toast('Please select a patient.', toasterStyle)
     } else {
       toast.success('Patient Selected!', toasterStyle)
-      router.push(`/gallery/${patientSelected}`)
+      router.push(`/gallery?patient-id=${patientSelected}`)
     }
   }
-
-  const { currentPatient } = useCurrentPatientContext()
   // console.log(currentPatient)
 
   return (
