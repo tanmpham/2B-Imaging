@@ -10,6 +10,7 @@ interface Props {
   src?: string
   id: number
   fileType: string
+  IsRightEye: number
 }
 
 function Initial() {
@@ -33,7 +34,11 @@ function Initial() {
   )
 }
 
-function Preview({ src, id, fileType }: Props) {
+const style = {
+  title: `text-stone-400 font-semibold`,
+}
+
+function Preview({ src, id, fileType, IsRightEye }: Props) {
   const [patient, setPatient] = useState<PatientDto>({
     PatientID: -1,
     LastName: '',
@@ -59,7 +64,7 @@ function Preview({ src, id, fileType }: Props) {
     getPatient()
   }, [id])
 
-  // console.log(patient)
+  console.log(patient)
   return (
     <>
       {!src ? (
@@ -83,22 +88,37 @@ function Preview({ src, id, fileType }: Props) {
 
           <div className="space-y-[24px]">
             <div>
-              <div>Patient ID: {id}</div>
-              <div>Last Name: {patient.LastName}</div>
-              <div>First Name:{patient.FirstName}</div>
               <div>
-                Date of Birth:{' '}
+                <span className={style.title}>Patient ID:</span> {id}
+              </div>
+              <div>
+                <span className={style.title}>Last Name:</span>{' '}
+                {patient.LastName}
+              </div>
+              <div>
+                <span className={style.title}>First Name:</span>{' '}
+                {patient.FirstName}
+              </div>
+              <div>
+                <span className={style.title}>Date of Birth:</span>{' '}
                 {patient.DateofBirth &&
                   format(new Date(patient.DateofBirth), 'MM/dd/yyyy')}
               </div>
             </div>
 
             <div>
-              <div>OD/OS (right / left eye):</div>
-              <div>tags#:</div>
+              <div>
+                <span className={style.title}>OD/OS (right / left eye):</span>{' '}
+                {IsRightEye ? 'Oculus Sinister' : 'Oculus Dextrus'}
+              </div>
+              <div>
+                <span className={style.title}>tags#:</span>
+              </div>
             </div>
 
-            <div>notes:</div>
+            <div>
+              <span className={style.title}>notes:</span>
+            </div>
           </div>
         </div>
       )}

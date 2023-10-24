@@ -135,4 +135,29 @@ def get_one_patient(patient_id):
     return patient
 
 
+# Get tags for a specific image
+@app.route("/tags", methods=["GET"])
+def get_tags_for_image():
+    image_id = request.args.get("image-id")
+
+    if not image_id:
+        return {"message": "ImageID is required"}, 400
+
+    connection = mysql.connector.connect(**db_config)
+    cursor = connection.cursor()
+
+    sql_query = """SELECT * FROM imagetags WHERE ImageID = %s;"""
+    cursor.execute(sql_query, (image_id,))
+
+    query_result = cursor.fetchall()
+    cursor.close()
+    connection.close()
+
+    tags = [
+        {"TagID": tag[0], "ImageID": tag[1], "Tag": tag[2], "UseCount": tag[3]}
+        for tag in query_result
+    ]
+    return {"tags": tags}
+
+
 app.run(host="0.0.0.0", port=4000, debug=True)

@@ -8,7 +8,12 @@ import MediaItem from './MediaItem'
 
 interface Props {
   setPreviewData?: Dispatch<
-    SetStateAction<{ src: string; id: number; fileType: string }>
+    SetStateAction<{
+      src: string
+      id: number
+      fileType: string
+      IsRightEye: number
+    }>
   >
   className?: string
   updateCompareList?: (src: string, method: string) => void
@@ -31,30 +36,37 @@ function MediaList({
     <div
       className={`${className} grid grid-cols-2 gap-x-[28px] gap-y-[28px] justify-start overflow-y-auto`}
     >
-      {images.map(({ ImageID, DateCreated, ImageName, FileType }, idx) => (
-        <Fragment key={ImageID}>
-          {idx === 0 && (
-            <div className={style.date}>
-              {format(new Date(DateCreated), 'MMM eo, yyyy')}
-            </div>
-          )}
-          {idx > 0 &&
-            DateCreated.split(' ')[0] !==
-              images[idx - 1].DateCreated.split(' ')[0] && (
+      {images.map(
+        (
+          { ImageID, DateCreated, ImageName, FileType, IsRightEye, PatientID },
+          idx
+        ) => (
+          <Fragment key={ImageID}>
+            {idx === 0 && (
               <div className={style.date}>
                 {format(new Date(DateCreated), 'MMM eo, yyyy')}
               </div>
             )}
-          <MediaItem
-            id={ImageID}
-            src={`${process.env.NEXT_PUBLIC_CLIENT_API}/gallery/${ImageName}`}
-            setPreviewData={setPreviewData}
-            updateCompareList={updateCompareList}
-            compareList={compareList}
-            fileType={FileType}
-          />
-        </Fragment>
-      ))}
+            {idx > 0 &&
+              DateCreated.split(' ')[0] !==
+                images[idx - 1].DateCreated.split(' ')[0] && (
+                <div className={style.date}>
+                  {format(new Date(DateCreated), 'MMM eo, yyyy')}
+                </div>
+              )}
+            <MediaItem
+              id={ImageID}
+              src={`${process.env.NEXT_PUBLIC_CLIENT_API}/gallery/${ImageName}`}
+              setPreviewData={setPreviewData}
+              updateCompareList={updateCompareList}
+              compareList={compareList}
+              fileType={FileType}
+              IsRightEye={IsRightEye}
+              patientID={PatientID}
+            />
+          </Fragment>
+        )
+      )}
     </div>
   )
 }

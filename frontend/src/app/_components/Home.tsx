@@ -17,6 +17,7 @@ function Home({ images, patients }: Props) {
     src: '',
     id: 0,
     fileType: '',
+    IsRightEye: -1,
   })
 
   return (
@@ -31,6 +32,7 @@ function Home({ images, patients }: Props) {
         src={previewData.src}
         id={previewData.id}
         fileType={previewData.fileType}
+        IsRightEye={previewData.IsRightEye}
       />
     </div>
   )

@@ -2,6 +2,7 @@ import { getAPatient } from '@/functions'
 import { PatientDto } from '@/interfaces/patient.dto'
 import { NextResponse } from 'next/server'
 
+export const revalidate = 0
 export async function GET(
   req: Request,
   { params }: { params: { patientId: string } }

@@ -1,23 +1,30 @@
 'use client'
 
+import { toasterStyle } from '@/constants/toasterStyle'
 import { usePathname, useRouter } from 'next/navigation'
 import { Dispatch, SetStateAction } from 'react'
 import toast from 'react-hot-toast'
 import { BsCameraReels } from 'react-icons/bs'
 import { HiHashtag } from 'react-icons/hi2'
 import Img from '../shared/Img/Img'
-import { toasterStyle } from '@/constants/toasterStyle'
 
 interface Props {
   src?: string
   tag?: boolean
   setPreviewData?: Dispatch<
-    SetStateAction<{ src: string; id: number; fileType: string }>
+    SetStateAction<{
+      src: string
+      id: number
+      fileType: string
+      IsRightEye: number
+    }>
   >
   id: number
   updateCompareList?: (src: string, method: string) => void
   compareList?: string[]
   fileType: string
+  IsRightEye: number
+  patientID: number
 }
 
 const style = {
@@ -32,6 +39,8 @@ function MediaItem({
   updateCompareList,
   compareList,
   fileType,
+  IsRightEye,
+  patientID,
 }: Props) {
   const router = useRouter()
   const pathname = usePathname()
@@ -42,7 +51,12 @@ function MediaItem({
     switch (e.detail) {
       case 1:
         if (setPreviewData && src) {
-          setPreviewData({ id: id, src: src, fileType: fileType })
+          setPreviewData({
+            id: patientID,
+            src: src,
+            fileType: fileType,
+            IsRightEye: IsRightEye,
+          })
         }
 
         break
