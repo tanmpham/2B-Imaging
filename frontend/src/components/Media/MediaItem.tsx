@@ -6,6 +6,7 @@ import toast from 'react-hot-toast'
 import { BsCameraReels } from 'react-icons/bs'
 import { HiHashtag } from 'react-icons/hi2'
 import Img from '../shared/Img/Img'
+import { toasterStyle } from '@/constants/toasterStyle'
 
 interface Props {
   src?: string
@@ -48,12 +49,12 @@ function MediaItem({
       case 2:
         if (isMediaPage && updateCompareList) {
           if (compareList?.length && compareList.length > 5) {
-            toast.error('Reached limit 6 images to compare.')
+            toast.error('Reached limit 6 images to compare.', toasterStyle)
           } else {
             if (src && !compareList?.includes(src)) {
               updateCompareList(src, 'add')
             } else {
-              toast.error('Item is already selected.')
+              toast.error('Item is already selected.', toasterStyle)
             }
           }
         } else {

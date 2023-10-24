@@ -1,6 +1,7 @@
 'use client'
 
 import { Button } from '@/components/shared/Buttons/Button'
+import { toasterStyle } from '@/constants/toasterStyle'
 import { PatientDto } from '@/interfaces/patient.dto'
 import { closeOnClickOutside } from '@/utils/closeOnClickOutside'
 import { format } from 'date-fns'
@@ -14,7 +15,7 @@ interface Props {
 
 const style = {
   thead: 'min-w-[150px]',
-  td: 'border-t border-dashed border-white py-[.5rem] hover:bg-gray-600 hover:text-white transition-colors ease-linear',
+  td: 'border-t border-dashed border-white py-[.5rem] ease-linear',
 }
 
 function PatientSelection({ patients }: Props) {
@@ -31,14 +32,18 @@ function PatientSelection({ patients }: Props) {
   const router = useRouter()
   const handleClick = () => {
     if (patientSelected === '') {
-      toast.error('Please select a patient.')
+      toast.error('Please select a patient.', toasterStyle)
     } else {
+      toast.success('Patient Selected!', toasterStyle)
       router.push(`/gallery/${patientSelected}`)
     }
   }
 
   return (
-    <div ref={ref} className="h-screen overflow-y-auto mt-[100px] ml-[30px]">
+    <div
+      ref={ref}
+      className="max-h-screen h-fit overflow-y-auto mt-[100px] ml-[30px]"
+    >
       <table className="border-collapse w-[480px] text-center">
         <thead>
           <tr>
@@ -62,9 +67,9 @@ function PatientSelection({ patients }: Props) {
               key={PatientID}
               id={PatientID}
               onClick={handleSelect}
-              className={`hover:bg-gray-400 hover:text-black transition-colors ease-linear ${
+              className={`hover:bg-gray-400 hover:text-black ${
                 patientSelected == PatientID && 'bg-gray-400 text-black'
-              }`}
+              } active:scale-[.98] transition-all ease-linear`}
             >
               <td className={style.td}>{PatientID}</td>
               <td className={style.td}>{LastName}</td>
