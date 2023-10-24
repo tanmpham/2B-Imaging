@@ -15,7 +15,7 @@ interface Props {
 
 const style = {
   thead: 'min-w-[150px]',
-  td: 'border-t border-dashed border-white py-[.5rem] ease-linear',
+  td: 'border-t border-dashed border-white py-[.5rem] ease-linear max-w-[150px] overflow-x-auto',
 }
 
 function PatientSelection({ patients }: Props) {
@@ -32,7 +32,7 @@ function PatientSelection({ patients }: Props) {
   const router = useRouter()
   const handleClick = () => {
     if (patientSelected === '') {
-      toast.error('Please select a patient.', toasterStyle)
+      toast('Please select a patient.', toasterStyle)
     } else {
       toast.success('Patient Selected!', toasterStyle)
       router.push(`/gallery/${patientSelected}`)
@@ -44,7 +44,7 @@ function PatientSelection({ patients }: Props) {
       ref={ref}
       className="max-h-screen h-fit overflow-y-auto mt-[100px] ml-[30px]"
     >
-      <table className="border-collapse w-[480px] text-center">
+      <table className="border-collapse w-[510px] text-center">
         <thead>
           <tr>
             <th
