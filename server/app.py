@@ -110,4 +110,29 @@ def get_all_patients():
     return patients
 
 
+# Fetch a single patient by ID
+@app.route("/patients/<int:patient_id>", methods=["GET"])
+def get_one_patient(patient_id):
+    connection = mysql.connector.connect(**db_config)
+    cursor = connection.cursor()
+
+    sql_query = """SELECT * FROM patients WHERE PatientID = %s;"""
+    cursor.execute(sql_query, (patient_id,))
+
+    query_result = cursor.fetchone()
+    cursor.close()
+    connection.close()
+
+    if query_result is None:
+        return {"message": "Patient not found"}, 404
+
+    patient = {
+        "PatientID": query_result[0],
+        "FirstName": query_result[1],
+        "LastName": query_result[2],
+        "DateofBirth": query_result[3],
+    }
+    return patient
+
+
 app.run(host="0.0.0.0", port=4000, debug=True)

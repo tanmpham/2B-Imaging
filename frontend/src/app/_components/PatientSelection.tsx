@@ -2,6 +2,7 @@
 
 import { Button } from '@/components/shared/Buttons/Button'
 import { toasterStyle } from '@/constants/toasterStyle'
+import { useCurrentPatientContext } from '@/context/current-patient-context'
 import { PatientDto } from '@/interfaces/patient.dto'
 import { closeOnClickOutside } from '@/utils/closeOnClickOutside'
 import { format } from 'date-fns'
@@ -16,28 +17,32 @@ interface Props {
 const style = {
   thead: 'min-w-[150px]',
   td: 'border-t border-dashed border-white py-[.5rem] ease-linear max-w-[150px] overflow-x-auto',
+  td__active: `bg-stone-300 text-black`,
 }
 
 function PatientSelection({ patients }: Props) {
-  const [patientSelected, setPatientSelected] = useState('')
+  const [patientSelected, setPatientSelected] = useState(-1)
   const ref = useRef(null)
 
   const handleSelect = (e: MouseEvent<HTMLTableRowElement>) => {
-    setPatientSelected(e.currentTarget.id)
+    setPatientSelected(Number(e.currentTarget.id))
     closeOnClickOutside(ref, () => {
-      setPatientSelected('')
+      setPatientSelected(-1)
     })
   }
 
   const router = useRouter()
   const handleClick = () => {
-    if (patientSelected === '') {
+    if (patientSelected === -1) {
       toast('Please select a patient.', toasterStyle)
     } else {
       toast.success('Patient Selected!', toasterStyle)
       router.push(`/gallery/${patientSelected}`)
     }
   }
+
+  const { currentPatient } = useCurrentPatientContext()
+  // console.log(currentPatient)
 
   return (
     <div
@@ -65,16 +70,53 @@ function PatientSelection({ patients }: Props) {
           {patients.map(({ PatientID, LastName, FirstName, DateofBirth }) => (
             <tr
               key={PatientID}
-              id={PatientID}
+              id={`${PatientID}`}
               onClick={handleSelect}
               className={`hover:bg-gray-400 hover:text-black ${
                 patientSelected == PatientID && 'bg-gray-400 text-black'
               } active:scale-[.98] transition-all ease-linear`}
             >
-              <td className={style.td}>{PatientID}</td>
-              <td className={style.td}>{LastName}</td>
-              <td className={style.td}>{FirstName}</td>
-              <td className={style.td}>
+              <td
+                className={`${style.td} ${
+                  currentPatient.PatientID === PatientID && style.td__active
+                }`}
+              >
+                {PatientID}
+              </td>
+              <td
+                className={`${style.td} ${
+                  currentPatient.LastName.length > 0 &&
+                  LastName.substring(
+                    0,
+                    currentPatient.LastName.length
+                  ).toUpperCase() === currentPatient.LastName.toUpperCase() &&
+                  style.td__active
+                }`}
+              >
+                {LastName}
+              </td>
+              <td
+                className={`${style.td} ${
+                  currentPatient.FirstName.length > 0 &&
+                  FirstName.substring(
+                    0,
+                    currentPatient.FirstName.length
+                  ).toUpperCase() === currentPatient.FirstName.toUpperCase() &&
+                  style.td__active
+                }`}
+              >
+                {FirstName}
+              </td>
+              <td
+                className={`${style.td} ${
+                  currentPatient.DateofBirth.length > 0 &&
+                  format(new Date(DateofBirth), 'yyyy-MM-dd').substring(
+                    0,
+                    currentPatient.DateofBirth.length
+                  ) === currentPatient.DateofBirth &&
+                  style.td__active
+                }`}
+              >
                 {format(new Date(DateofBirth), 'MM/dd/yyyy')}
               </td>
             </tr>

@@ -114,13 +114,13 @@ CREATE TABLE `imagenotes` (
 INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('John', 'Smith', '1980-01-01');
 INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Jane', 'Doe', '1985-01-01');
 INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Bob', 'Jones', '1990-01-01');
-INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Sally', 'Smith', '1995-01-01');
+INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Sally', 'Stiffany', '1995-01-01');
 INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Joe', 'Doe', '2000-01-01');
 INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('John', 'Jones', '2005-01-01');
-INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Jane', 'Smith', '2010-01-01');
+INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Jane', 'Shaw', '2010-01-01');
 INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Bob', 'Doe', '2015-01-01');
 INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Sally', 'Jones', '2020-01-01');
-INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Joe', 'Smith', '2025-01-01');
+INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Joe', 'Shaw', '2025-01-01');
 
 --
 -- Dumping routines for database 'eyecameradb'

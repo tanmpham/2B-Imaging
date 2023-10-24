@@ -1,5 +1,5 @@
 export interface PatientDto {
-  PatientID: string
+  PatientID: number
   LastName: string
   FirstName: string
   DateofBirth: string

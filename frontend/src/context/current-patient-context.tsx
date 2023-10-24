@@ -28,7 +28,7 @@ const CurrentPatientContext = createContext<CurrentPatientContextType | null>(
 
 export default function CurrentPatientContextProvider({ children }: Props) {
   const [currentPatient, setCurrentPatient] = useState<PatientDto>({
-    PatientID: '',
+    PatientID: -1,
     LastName: '',
     FirstName: '',
     DateofBirth: '',

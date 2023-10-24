@@ -53,10 +53,17 @@ function Navbar() {
   }
 
   const updateData = (e: ChangeEvent<HTMLInputElement>) => {
-    setCurrentPatient({
-      ...currentPatient,
-      [e.target.id]: e.target.value,
-    })
+    if (e.target.id === 'PatientID') {
+      setCurrentPatient({
+        ...currentPatient,
+        [e.target.id]: Number(e.target.value),
+      })
+    } else {
+      setCurrentPatient({
+        ...currentPatient,
+        [e.target.id]: e.target.value,
+      })
+    }
   }
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {

@@ -1,5 +1,8 @@
 import Img from '@/components/shared/Img/Img'
 import { toasterStyle } from '@/constants/toasterStyle'
+import { PatientDto } from '@/interfaces/patient.dto'
+import { format } from 'date-fns'
+import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import Tilt from 'react-parallax-tilt'
 
@@ -31,6 +34,32 @@ function Initial() {
 }
 
 function Preview({ src, id, fileType }: Props) {
+  const [patient, setPatient] = useState<PatientDto>({
+    PatientID: -1,
+    LastName: '',
+    FirstName: '',
+    DateofBirth: '',
+  })
+  useEffect(() => {
+    const getPatient = async () => {
+      if (id !== 0) {
+        try {
+          const res = await fetch(`api/patients/${id}`)
+          if (!res.ok) {
+            toast.error('Failed to fetch data', toasterStyle)
+          }
+          const patientData = (await res.json()) as PatientDto
+          setPatient(patientData)
+        } catch (error) {
+          console.error('Failed to fetch patient:', error)
+        }
+      }
+    }
+
+    getPatient()
+  }, [id])
+
+  // console.log(patient)
   return (
     <>
       {!src ? (
@@ -55,9 +84,13 @@ function Preview({ src, id, fileType }: Props) {
           <div className="space-y-[24px]">
             <div>
               <div>Patient ID: {id}</div>
-              <div>Last Name:</div>
-              <div>First Name:</div>
-              <div>DOB:</div>
+              <div>Last Name: {patient.LastName}</div>
+              <div>First Name:{patient.FirstName}</div>
+              <div>
+                Date of Birth:{' '}
+                {patient.DateofBirth &&
+                  format(new Date(patient.DateofBirth), 'MM/dd/yyyy')}
+              </div>
             </div>
 
             <div>
