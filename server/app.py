@@ -297,7 +297,7 @@ def get_one_patient(patient_id):
     patient = {"PatientID": query_result[0], "FirstName": query_result[1], "LastName": query_result[2], "DateofBirth": query_result[3]}
     return {"patient": patient}
 
-@app.route("/patients/filter", methods=["GET"])
+@app.route("/patients/", methods=["GET"])
 def filter_patients(first_name=None, last_name=None, dob=None):
     connection = mysql.connector.connect(**db_config)
     cursor = connection.cursor()
