@@ -66,8 +66,9 @@ try:
                     ('{PatientID[i]}', '{IsRightEye[i]}', '{Annotation[i]}', '{image_names[i]}', '{DateCreated[i]}')"""
             cursor.execute(sql_query)
 
-        # Loop through ImageIDs from 1 to 10 and insert notes
-        for image_id in range(1, 11):  # 1 to 10 inclusive
+        for i in range(1, 11):
+            # Insert notes
+            image_id = random.randint(1, 11)
             note = f"Automatically generated note for image {image_id}"
             sql_insert_note_query = "INSERT INTO imagenotes (Note, NoteCreatedAt, ImageID) VALUES (%s, CURRENT_TIMESTAMP, %s)"
             # Loop through ImageIDs from 1 to 10 and insert tags

@@ -35,7 +35,7 @@ function Initial() {
 }
 
 const style = {
-  title: `text-stone-400 font-semibold`,
+  title: `text-stone-300 font-semibold`,
 }
 
 function Preview({ src, id, fileType, IsRightEye }: Props) {
@@ -64,7 +64,7 @@ function Preview({ src, id, fileType, IsRightEye }: Props) {
     getPatient()
   }, [id])
 
-  console.log(patient)
+  // console.log(patient)
   return (
     <>
       {!src ? (

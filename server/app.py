@@ -157,7 +157,7 @@ def get_tags_for_image():
         {"TagID": tag[0], "ImageID": tag[1], "Tag": tag[2], "UseCount": tag[3]}
         for tag in query_result
     ]
-    return {"tags": tags}
+    return tags
 
 
 app.run(host="0.0.0.0", port=4000, debug=True)

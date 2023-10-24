@@ -44,90 +44,91 @@ function PatientSelection({ patients }: Props) {
   // console.log(currentPatient)
 
   return (
-    <div
-      ref={ref}
-      className="max-h-screen h-fit overflow-y-auto mt-[100px] ml-[30px]"
-    >
-      <table className="border-collapse w-[510px] text-center">
-        <thead>
-          <tr>
-            <th
-              className={`py-[.4rem] min-w-[60px] border-r-[1px] border-white`}
-            >
-              ID
-            </th>
-            <th className={`${style.thead} border-r-[1px] border-white`}>
-              Last
-            </th>
-            <th className={`${style.thead} border-r-[1px] border-white`}>
-              First
-            </th>
-            <th className={`${style.thead}`}>DOB</th>
-          </tr>
-        </thead>
-        <tbody>
-          {patients.map(({ PatientID, LastName, FirstName, DateofBirth }) => (
-            <tr
-              key={PatientID}
-              id={`${PatientID}`}
-              onClick={handleSelect}
-              className={`hover:bg-gray-400 hover:text-black ${
-                patientSelected == PatientID && 'bg-gray-400 text-black'
-              } active:scale-[.98] transition-all ease-linear`}
-            >
-              <td
-                className={`${style.td} ${
-                  currentPatient.PatientID === PatientID && style.td__active
-                }`}
+    <div ref={ref} className="mt-[100px] ml-[30px]">
+      <div className={`overflow-y-auto max-h-[70vh]`}>
+        <table className="border-collapse w-[510px] text-center">
+          <thead>
+            <tr>
+              <th
+                className={`py-[.4rem] min-w-[60px] border-r-[1px] border-white`}
               >
-                {PatientID}
-              </td>
-              <td
-                className={`${style.td} ${
-                  currentPatient.LastName.length > 0 &&
-                  LastName.substring(
-                    0,
-                    currentPatient.LastName.length
-                  ).toUpperCase() === currentPatient.LastName.toUpperCase() &&
-                  style.td__active
-                }`}
-              >
-                {LastName}
-              </td>
-              <td
-                className={`${style.td} ${
-                  currentPatient.FirstName.length > 0 &&
-                  FirstName.substring(
-                    0,
-                    currentPatient.FirstName.length
-                  ).toUpperCase() === currentPatient.FirstName.toUpperCase() &&
-                  style.td__active
-                }`}
-              >
-                {FirstName}
-              </td>
-              <td
-                className={`${style.td} ${
-                  currentPatient.DateofBirth.length > 0 &&
-                  format(new Date(DateofBirth), 'yyyy-MM-dd').substring(
-                    0,
-                    currentPatient.DateofBirth.length
-                  ) === currentPatient.DateofBirth &&
-                  style.td__active
-                }`}
-              >
-                {format(new Date(DateofBirth), 'MM/dd/yyyy')}
-              </td>
+                ID
+              </th>
+              <th className={`${style.thead} border-r-[1px] border-white`}>
+                Last
+              </th>
+              <th className={`${style.thead} border-r-[1px] border-white`}>
+                First
+              </th>
+              <th className={`${style.thead}`}>DOB</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {patients.map(({ PatientID, LastName, FirstName, DateofBirth }) => (
+              <tr
+                key={PatientID}
+                id={`${PatientID}`}
+                onClick={handleSelect}
+                className={`hover:bg-gray-400 hover:text-black ${
+                  patientSelected == PatientID && 'bg-gray-400 text-black'
+                } active:scale-[.98] transition-all ease-linear`}
+              >
+                <td
+                  className={`${style.td} ${
+                    currentPatient.PatientID === PatientID && style.td__active
+                  }`}
+                >
+                  {PatientID}
+                </td>
+                <td
+                  className={`${style.td} ${
+                    currentPatient.LastName.length > 0 &&
+                    LastName.substring(
+                      0,
+                      currentPatient.LastName.length
+                    ).toUpperCase() === currentPatient.LastName.toUpperCase() &&
+                    style.td__active
+                  }`}
+                >
+                  {LastName}
+                </td>
+                <td
+                  className={`${style.td} ${
+                    currentPatient.FirstName.length > 0 &&
+                    FirstName.substring(
+                      0,
+                      currentPatient.FirstName.length
+                    ).toUpperCase() ===
+                      currentPatient.FirstName.toUpperCase() &&
+                    style.td__active
+                  }`}
+                >
+                  {FirstName}
+                </td>
+                <td
+                  className={`${style.td} ${
+                    currentPatient.DateofBirth.length > 0 &&
+                    format(new Date(DateofBirth), 'yyyy-MM-dd').substring(
+                      0,
+                      currentPatient.DateofBirth.length
+                    ) === currentPatient.DateofBirth &&
+                    style.td__active
+                  }`}
+                >
+                  {format(new Date(DateofBirth), 'MM/dd/yyyy')}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
-      <div className={`w-[480px] flex justify-end mt-[1rem]`}>
+      <div className={`w-[470px] flex justify-end mt-[1rem]`}>
         <Button
           onClick={() => {
             handleClick()
           }}
+          className="hover:translate-x-[.2rem] transition-transform ease-in"
         >
           Select
         </Button>

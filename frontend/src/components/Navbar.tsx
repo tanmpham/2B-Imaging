@@ -93,6 +93,9 @@ function Navbar() {
           <input
             id="PatientID"
             type="text"
+            value={
+              currentPatient.PatientID !== -1 ? currentPatient.PatientID : ''
+            }
             onChange={updateData}
             className={style.input}
           />
@@ -105,6 +108,7 @@ function Navbar() {
           <input
             id="LastName"
             type="text"
+            value={currentPatient.LastName}
             onChange={updateData}
             className={style.input}
           />
@@ -117,6 +121,7 @@ function Navbar() {
           <input
             id="FirstName"
             type="text"
+            value={currentPatient.FirstName}
             onChange={updateData}
             className={style.input}
           />
@@ -129,6 +134,11 @@ function Navbar() {
           <input
             id="DateofBirth"
             type="date"
+            value={
+              currentPatient.DateofBirth
+                ? format(new Date(currentPatient.DateofBirth), 'yyyy-MM-dd')
+                : ''
+            }
             onChange={updateData}
             className={style.input}
           />
