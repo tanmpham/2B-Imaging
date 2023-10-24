@@ -1,0 +1,4 @@
+version: 1
+client-frontend-url: localhost:3000
+server-url: localhost:4000
+sqlite-file: eyecameradb.sqlite

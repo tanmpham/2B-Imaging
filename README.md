@@ -2,7 +2,9 @@
 
 ## Setup instructions:
 
-#### Install dependencies and run the front-end app locally
+Download NodeJs Windows Installer (LTS Version) <a href='https://nodejs.org/en/download'>https://nodejs.org/en/download</a>
+
+### Install dependencies and run the front-end app locally
 
 ```powershell
 cd frontend
@@ -11,12 +13,31 @@ yarn install
 yarn dev
 ```
 
-#### Install dependencies and run the back-end server app locally
+### Install dependencies, set up, and run the back-end app locally
+
+Create app_conf.yml files for both server and client folder (content is based on app_conf.example.yml).
+
+#### Server back-end
+
+Create app_conf.yml files for both `server` and `client` folder (content is based on app_conf.example.yml).
+<br/>
+Run the script `eyecameradb.sql`
 
 ```powershell
 cd server
 pip install -r requirements.txt
-py server.py
+py update-images.py
+py app.py
+```
+
+#### Client back-end
+
+```powershell
+cd client
+pip install -r requirements.txt
+py create_tables.py
+py update-images.py
+py app.py
 ```
 
 ### Technologies used:
