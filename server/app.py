@@ -5,7 +5,7 @@ import yaml
 import mysql.connector
 import os 
 
-relative_path = "2B-Imaging/server/app_conf.example.yml"
+relative_path = "2B-Imaging\server\\app_conf.example.yml"
 app_conf_path = os.path.abspath(relative_path)
 
 with open(app_conf_path, "r") as f:
@@ -296,6 +296,37 @@ def get_one_patient(patient_id):
 
     patient = {"PatientID": query_result[0], "FirstName": query_result[1], "LastName": query_result[2], "DateofBirth": query_result[3]}
     return {"patient": patient}
+
+@app.route("/patients/filter", methods=["GET"])
+def filter_patients(first_name=None, last_name=None, dob=None):
+    connection = mysql.connector.connect(**db_config)
+    cursor = connection.cursor()
+
+    first = request.args.get(first_name)
+    last = request.args.get(last_name)
+    birth_date = request.args.get(dob)
+
+    sql_query = """SELECT * FROM patients WHERE 1=1"""
+
+    if first:
+        sql_query += """ AND FirstName = %s"""
+    if last:
+        sql_query += """ AND LastName = %s"""
+    if birth_date:
+        sql_query += """ AND DateofBirth = %s"""
+    
+    cursor.execute(sql_query, (first_name, last_name, dob,))
+    
+    query_result = cursor.fetchall()
+    cursor.close()
+    connection.close()
+
+    if query_result is None:
+        return {"message": "Patient not found"}, 404
+
+    patients = [{"PatientID": patient[0], "FirstName": patient[1], "LastName": patient[2], "DateofBirth": patient[3]}
+                for patient in query_result]
+    return {"patients": patients}
 
 
 app.run(host="0.0.0.0", port=4000, debug=True)
