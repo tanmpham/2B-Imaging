@@ -16,6 +16,7 @@ import 'react-date-range/dist/theme/default.css'
 import { useCurrentPatientContext } from '@/context/current-patient-context'
 import { closeOnClickOutside } from '@/utils/closeOnClickOutside'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { Button } from './shared/Buttons/Button'
 
 const style = {
@@ -54,10 +55,17 @@ function Navbar() {
 
   const updateData = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.id === 'PatientID') {
-      setCurrentPatient({
-        ...currentPatient,
-        [e.target.id]: Number(e.target.value),
-      })
+      if (e.target.value === '') {
+        setCurrentPatient({
+          ...currentPatient,
+          [e.target.id]: -1,
+        })
+      } else {
+        setCurrentPatient({
+          ...currentPatient,
+          [e.target.id]: Number(e.target.value),
+        })
+      }
     } else {
       setCurrentPatient({
         ...currentPatient,
@@ -74,6 +82,9 @@ function Navbar() {
   }
 
   const ref = useRef(null)
+
+  const pathname = usePathname()
+  const isMediaPage = pathname.split('/')[1] === 'gallery'
 
   return (
     <div className="w-[12vw] bg-navBg h-screen p-[22px] text-white">
@@ -92,9 +103,11 @@ function Navbar() {
           </label>
           <input
             id="PatientID"
-            type="text"
+            type="number"
             value={
-              currentPatient.PatientID !== -1 ? currentPatient.PatientID : ''
+              currentPatient.PatientID !== -1
+                ? `${currentPatient.PatientID}`
+                : ''
             }
             onChange={updateData}
             className={style.input}
@@ -131,17 +144,28 @@ function Navbar() {
           <label htmlFor="DateofBirth" className={style.label}>
             DOB
           </label>
-          <input
-            id="DateofBirth"
-            type="date"
-            value={
-              currentPatient.DateofBirth
-                ? format(new Date(currentPatient.DateofBirth), 'yyyy-MM-dd')
-                : ''
-            }
-            onChange={updateData}
-            className={style.input}
-          />
+
+          {isMediaPage ? (
+            <input
+              id="DateofBirth"
+              type="date"
+              value={
+                currentPatient.DateofBirth
+                  ? format(new Date(currentPatient.DateofBirth), 'yyyy-MM-dd')
+                  : ''
+              }
+              readOnly
+              onChange={updateData}
+              className={style.input}
+            />
+          ) : (
+            <input
+              id="DateofBirth"
+              type="date"
+              onChange={updateData}
+              className={style.input}
+            />
+          )}
         </div>
         <Button
           form="patientSelection"
