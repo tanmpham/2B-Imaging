@@ -1,22 +1,12 @@
+import { getAllImages, getAllPatients } from '@/functions'
 import { ImageDto } from '@/interfaces/image.dto'
+import { PatientDto } from '@/interfaces/patient.dto'
 import Home from './_components/Home'
-
-async function getAllImages() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_CLIENT_API}/patientimages`)
-  // The return value is *not* serialized
-  // You can return Date, Map, Set, etc.
-
-  if (!res.ok) {
-    // This will activate the closest `error.js` Error Boundary
-    throw new Error('Failed to fetch data')
-  }
-
-  return res.json()
-}
 
 async function page() {
   const images = (await getAllImages()) as ImageDto[]
+  const patients = (await getAllPatients()) as PatientDto[]
 
-  return <Home images={images} />
+  return <Home patients={patients} images={images} />
 }
 export default page

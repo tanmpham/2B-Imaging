@@ -1,30 +1,91 @@
-// Local Component. Can only use in "/" route (excluding sub routes)
+'use client'
 
 import { Button } from '@/components/shared/Buttons/Button'
+import { PatientDto } from '@/interfaces/patient.dto'
+import { closeOnClickOutside } from '@/utils/closeOnClickOutside'
+import { format } from 'date-fns'
+import { useRouter } from 'next/navigation'
+import { MouseEvent, useRef, useState } from 'react'
+import toast from 'react-hot-toast'
 
-type Props = {}
-
-const style = {
-  row: {
-    line: `h-[16px] w-[1px] bg-white`,
-    container: `mt-[100px] ml-[50px] h-fit flex items-center gap-x-[3.4rem]`,
-  },
+interface Props {
+  patients: PatientDto[]
 }
 
-function PatientSelection({}: Props) {
-  return (
-    <div className="relative">
-      <div className={style.row.container}>
-        <div className="">ID</div>
-        <div className={style.row.line} />
-        <div className="">Last</div>
-        <div className={style.row.line} />
-        <div className="">First</div>
-        <div className={style.row.line} />
-        <div>DOB</div>
-      </div>
+const style = {
+  thead: 'min-w-[150px]',
+  td: 'border-t border-dashed border-white py-[.5rem] hover:bg-gray-600 hover:text-white transition-colors ease-linear',
+}
 
-      <Button className="absolute bottom-0 right-0 mb-[60px]">Select</Button>
+function PatientSelection({ patients }: Props) {
+  const [patientSelected, setPatientSelected] = useState('')
+  const ref = useRef(null)
+
+  const handleSelect = (e: MouseEvent<HTMLTableRowElement>) => {
+    setPatientSelected(e.currentTarget.id)
+    closeOnClickOutside(ref, () => {
+      setPatientSelected('')
+    })
+  }
+
+  const router = useRouter()
+  const handleClick = () => {
+    if (patientSelected === '') {
+      toast.error('Please select a patient.')
+    } else {
+      router.push(`/gallery/${patientSelected}`)
+    }
+  }
+
+  return (
+    <div ref={ref} className="h-screen overflow-y-auto mt-[100px] ml-[30px]">
+      <table className="border-collapse w-[480px] text-center">
+        <thead>
+          <tr>
+            <th
+              className={`py-[.4rem] min-w-[60px] border-r-[1px] border-white`}
+            >
+              ID
+            </th>
+            <th className={`${style.thead} border-r-[1px] border-white`}>
+              Last
+            </th>
+            <th className={`${style.thead} border-r-[1px] border-white`}>
+              First
+            </th>
+            <th className={`${style.thead}`}>DOB</th>
+          </tr>
+        </thead>
+        <tbody>
+          {patients.map(({ PatientID, LastName, FirstName, DateofBirth }) => (
+            <tr
+              key={PatientID}
+              id={PatientID}
+              onClick={handleSelect}
+              className={`hover:bg-gray-400 hover:text-black transition-colors ease-linear ${
+                patientSelected == PatientID && 'bg-gray-400 text-black'
+              }`}
+            >
+              <td className={style.td}>{PatientID}</td>
+              <td className={style.td}>{LastName}</td>
+              <td className={style.td}>{FirstName}</td>
+              <td className={style.td}>
+                {format(new Date(DateofBirth), 'MM/dd/yyyy')}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      <div className={`w-[480px] flex justify-end mt-[1rem]`}>
+        <Button
+          onClick={() => {
+            handleClick()
+          }}
+        >
+          Select
+        </Button>
+      </div>
     </div>
   )
 }

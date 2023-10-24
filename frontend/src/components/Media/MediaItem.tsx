@@ -9,7 +9,6 @@ import Img from '../shared/Img/Img'
 
 interface Props {
   src?: string
-  video?: boolean
   tag?: boolean
   setPreviewData?: Dispatch<
     SetStateAction<{ src: string; id: number; fileType: string }>
@@ -27,7 +26,6 @@ const style = {
 function MediaItem({
   id,
   src,
-  video,
   tag,
   setPreviewData,
   updateCompareList,
@@ -37,8 +35,7 @@ function MediaItem({
   const router = useRouter()
   const pathname = usePathname()
 
-  const isMediaPage =
-    pathname.split('/')[1] === 'images' || pathname.split('/')[1] === 'videos'
+  const isMediaPage = pathname.split('/')[1] === 'gallery'
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     switch (e.detail) {
@@ -60,11 +57,7 @@ function MediaItem({
             }
           }
         } else {
-          if (video) {
-            router.push(`/videos/${id}`)
-          } else {
-            router.push(`/images/${id}`)
-          }
+          router.push(`/gallery/${id}`)
         }
         break
       case 3:
@@ -84,7 +77,9 @@ function MediaItem({
         <>
           {fileType === 'jpg' && (
             <Img
-              className="group-hover:opacity-[.4] transition-opacity ease-linear"
+              className={`${
+                tag && 'group-hover:opacity-[.4]'
+              } transition-opacity ease-linear`}
               src={src}
             />
           )}

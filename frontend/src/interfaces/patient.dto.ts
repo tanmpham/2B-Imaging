@@ -1,6 +1,6 @@
 export interface PatientDto {
-  id: string
-  last: string
-  first: string
-  dob: string
+  PatientID: string
+  LastName: string
+  FirstName: string
+  DateofBirth: string
 }

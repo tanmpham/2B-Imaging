@@ -3,10 +3,13 @@
 import CompareBox from '@/components/CompareBox'
 import DeleteConfirmBox from '@/components/DeleteConfirmBox'
 import MediaList from '@/components/Media/MediaList'
+import { ImageDto } from '@/interfaces/image.dto'
 import { useState } from 'react'
 
-interface Props {}
-function VideoPage({}: Props) {
+interface Props {
+  images: ImageDto[]
+}
+function GalleryIdPage({ images }: Props) {
   const [compareList, setCompareList] = useState<string[] | never[]>([])
 
   const updateCompareList = (src: string, method: string) => {
@@ -26,6 +29,7 @@ function VideoPage({}: Props) {
           className="max-h-[78vh] px-[80px] pt-[15px]"
           updateCompareList={updateCompareList}
           compareList={compareList}
+          images={images}
         />
         <div className={`w-full flex items-center justify-between px-[40px]`}>
           <CompareBox
@@ -38,4 +42,4 @@ function VideoPage({}: Props) {
     </div>
   )
 }
-export default VideoPage
+export default GalleryIdPage

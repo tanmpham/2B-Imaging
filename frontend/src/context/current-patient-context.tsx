@@ -11,9 +11,11 @@ import {
 } from 'react'
 import { Toaster } from 'react-hot-toast'
 
-type Props = { children: ReactNode }
+interface Props {
+  children: ReactNode
+}
 
-type CurrentPatientContextType = {
+interface CurrentPatientContextType {
   currentPatient: PatientDto
   setCurrentPatient: Dispatch<SetStateAction<PatientDto>>
   selectedDate: string
@@ -26,10 +28,10 @@ const CurrentPatientContext = createContext<CurrentPatientContextType | null>(
 
 export default function CurrentPatientContextProvider({ children }: Props) {
   const [currentPatient, setCurrentPatient] = useState<PatientDto>({
-    id: '',
-    last: '',
-    first: '',
-    dob: '',
+    PatientID: '',
+    LastName: '',
+    FirstName: '',
+    DateofBirth: '',
   })
 
   const [selectedDate, setSelectedDate] = useState('')

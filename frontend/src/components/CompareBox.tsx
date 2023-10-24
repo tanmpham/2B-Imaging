@@ -2,6 +2,7 @@
 
 import { MouseEvent } from 'react'
 import { BsFillTrash3Fill } from 'react-icons/bs'
+import Img from './shared/Img/Img'
 
 const style = {
   image: `w-[50px] h-[50px] flex items-center justify-center group text-[18px] text-white hover:translate-y-[-.1rem] transition-transform ease-linear`,
@@ -30,9 +31,10 @@ function CompareBox({ compareList, updateCompareList }: Props) {
             className={`${style.image} bg-black`}
           >
             <BsFillTrash3Fill
-              className={`hidden group-hover:block group-hover:text-red-500 pointer-events-none`}
+              className={`hidden group-hover:block text-red-500 pointer-events-none`}
             />
-            <div className={`block group-hover:hidden`}>{src}</div>
+
+            <Img src={src} className={`block group-hover:hidden`} />
           </button>
         ))}
       </div>

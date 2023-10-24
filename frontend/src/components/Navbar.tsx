@@ -80,11 +80,11 @@ function Navbar() {
         className="flex flex-col gap-y-[1rem]"
       >
         <div className="group">
-          <label htmlFor="id" className={style.label}>
+          <label htmlFor="PatientID" className={style.label}>
             ID
           </label>
           <input
-            id="id"
+            id="PatientID"
             type="text"
             onChange={updateData}
             className={style.input}
@@ -92,11 +92,11 @@ function Navbar() {
         </div>
 
         <div className="group">
-          <label htmlFor="last" className={style.label}>
+          <label htmlFor="LastName" className={style.label}>
             Last
           </label>
           <input
-            id="last"
+            id="LastName"
             type="text"
             onChange={updateData}
             className={style.input}
@@ -104,11 +104,11 @@ function Navbar() {
         </div>
 
         <div className="group">
-          <label htmlFor="first" className={style.label}>
+          <label htmlFor="FirstName" className={style.label}>
             First
           </label>
           <input
-            id="first"
+            id="FirstName"
             type="text"
             onChange={updateData}
             className={style.input}
@@ -116,11 +116,11 @@ function Navbar() {
         </div>
 
         <div className="group">
-          <label htmlFor="dob" className={style.label}>
+          <label htmlFor="DateofBirth" className={style.label}>
             DOB
           </label>
           <input
-            id="dob"
+            id="DateofBirth"
             type="date"
             onChange={updateData}
             className={style.input}
