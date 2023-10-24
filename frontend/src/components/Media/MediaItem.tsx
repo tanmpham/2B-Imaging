@@ -19,12 +19,12 @@ interface Props {
       IsRightEye: number
     }>
   >
-  id: number
   updateCompareList?: (src: string, method: string) => void
   compareList?: string[]
   fileType: string
   IsRightEye: number
   patientID: number
+  id: number
 }
 
 const style = {
@@ -94,7 +94,7 @@ function MediaItem({
             <Img
               className={`${
                 tag && 'group-hover:opacity-[.4]'
-              } transition-opacity ease-linear`}
+              } transition-opacity ease-linear rounded-[6px]`}
               src={src}
             />
           )}

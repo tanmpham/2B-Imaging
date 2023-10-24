@@ -1,5 +1,6 @@
 'use client'
 
+import { fileType } from '@/utils'
 import { MouseEvent } from 'react'
 import { BsFillTrash3Fill } from 'react-icons/bs'
 import Img from './shared/Img/Img'
@@ -28,13 +29,19 @@ function CompareBox({ compareList, updateCompareList }: Props) {
             id={src}
             key={idx}
             onClick={deleteList}
-            className={`${style.image} bg-black`}
+            className={`${style.image} bg-transparent hover:bg-black`}
           >
             <BsFillTrash3Fill
               className={`hidden group-hover:block text-red-500 pointer-events-none`}
             />
 
-            <Img src={src} className={`block group-hover:hidden`} />
+            {fileType(src) !== 'mp4' ? (
+              <Img src={src} className={`block group-hover:hidden`} />
+            ) : (
+              <video className={`block group-hover:hidden`}>
+                <source src={`${src}#t=0.6`} />
+              </video>
+            )}
           </button>
         ))}
       </div>

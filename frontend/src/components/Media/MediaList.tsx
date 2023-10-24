@@ -15,6 +15,12 @@ interface Props {
       IsRightEye: number
     }>
   >
+  previewData?: {
+    src: string
+    id: number
+    fileType: string
+    IsRightEye: number
+  }
   className?: string
   updateCompareList?: (src: string, method: string) => void
   compareList?: string[]
@@ -28,6 +34,7 @@ const style = {
 function MediaList({
   compareList,
   setPreviewData,
+  previewData,
   className,
   updateCompareList,
   images,
@@ -55,7 +62,6 @@ function MediaList({
                 </div>
               )}
             <MediaItem
-              id={ImageID}
               src={`${process.env.NEXT_PUBLIC_CLIENT_API}/gallery/${ImageName}`}
               setPreviewData={setPreviewData}
               updateCompareList={updateCompareList}
@@ -63,6 +69,7 @@ function MediaList({
               fileType={FileType}
               IsRightEye={IsRightEye}
               patientID={PatientID}
+              id={ImageID}
             />
           </Fragment>
         )

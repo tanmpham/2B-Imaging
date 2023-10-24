@@ -30,13 +30,20 @@ function GalleryPage({ images }: Props) {
   const { currentPatient, setCurrentPatient } = useCurrentPatientContext()
 
   const searchParams = useSearchParams()
-  const search = searchParams.get('patient-id')
+  const params = {
+    patientId: searchParams.get('patient-id'),
+    firstname: searchParams.get('firstname'),
+    lastname: searchParams.get('lastname'),
+    dob: searchParams.get('dob'),
+  }
+
+  //console.log(params)
 
   useEffect(() => {
-    if (search) {
-      const getPatient = async () => {
+    const getPatient = async () => {
+      if (params.patientId) {
         try {
-          const res = await fetch(`api/patients/${search}`)
+          const res = await fetch(`api/patients/${params.patientId}`)
           if (!res.ok) {
             toast.error('Failed to fetch data', toasterStyle)
           }
@@ -46,9 +53,10 @@ function GalleryPage({ images }: Props) {
           console.error('Failed to fetch patient:', error)
         }
       }
-      getPatient()
-      // console.log(currentPatient)
     }
+    getPatient()
+
+    // console.log(currentPatient)
   }, [])
 
   return (

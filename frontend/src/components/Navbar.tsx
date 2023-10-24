@@ -16,7 +16,7 @@ import 'react-date-range/dist/theme/default.css'
 import { useCurrentPatientContext } from '@/context/current-patient-context'
 import { closeOnClickOutside } from '@/utils/closeOnClickOutside'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { Button } from './shared/Buttons/Button'
 
 const style = {
@@ -74,17 +74,26 @@ function Navbar() {
     }
   }
 
+  const router = useRouter()
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setSelectedDate(range)
-    // console.log(currentPatient)
-    // console.log(selectedDate)
+    const { PatientID, FirstName, LastName, DateofBirth } = currentPatient
+    router.push(
+      `/gallery?${
+        PatientID && PatientID !== -1 ? `patient-id=${PatientID}` : ''
+      }${FirstName && `&firstname=${FirstName}`}${
+        LastName && `&lastname=${LastName}`
+      }${DateofBirth && `&dob=${DateofBirth}`}`
+    )
   }
 
   const ref = useRef(null)
 
   const pathname = usePathname()
   const isMediaPage = pathname.split('/')[1] === 'gallery'
+
+  const [dob, setDob] = useState('')
 
   return (
     <div className="w-[12vw] bg-navBg h-screen p-[22px] text-white">
@@ -147,22 +156,23 @@ function Navbar() {
 
           {isMediaPage ? (
             <input
-              id="DateofBirth"
-              type="date"
               value={
                 currentPatient.DateofBirth
                   ? format(new Date(currentPatient.DateofBirth), 'yyyy-MM-dd')
                   : ''
               }
               readOnly
-              onChange={updateData}
               className={style.input}
             />
           ) : (
             <input
               id="DateofBirth"
               type="date"
-              onChange={updateData}
+              value={dob}
+              onChange={(e) => {
+                setDob(e.target.value)
+                updateData(e)
+              }}
               className={style.input}
             />
           )}

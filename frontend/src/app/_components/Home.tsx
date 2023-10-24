@@ -27,6 +27,7 @@ function Home({ images, patients }: Props) {
         images={images}
         className="bg-grey_1 max-h-screen ml-[30px] pt-[90px] pb-[40px] pr-[20px]"
         setPreviewData={setPreviewData}
+        previewData={previewData}
       />
       <Preview
         src={previewData.src}

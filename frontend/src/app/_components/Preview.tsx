@@ -16,9 +16,9 @@ interface Props {
 function Initial() {
   return (
     <Tilt
-      scale={0.94}
-      tiltMaxAngleX={10}
-      tiltMaxAngleY={10}
+      scale={0.98}
+      tiltMaxAngleX={2}
+      tiltMaxAngleY={2}
       transitionSpeed={450}
       className="w-fit h-fit"
     >
@@ -76,9 +76,9 @@ function Preview({ src, id, fileType, IsRightEye }: Props) {
       ) : (
         <div className="mx-auto space-y-[24px]">
           <div
-            className={`relative w-[600px] h-[400px] mt-[130px] bg-grey_2 flex items-center justify-center text-stone-600 text-[80px]`}
+            className={`relative w-[600px] h-[400px] mt-[130px] flex items-center justify-center text-stone-600 text-[80px]`}
           >
-            {fileType === 'jpg' && <Img src={src} />}
+            {fileType === 'jpg' && <Img src={src} className="rounded-[10px]" />}
             {fileType === 'mp4' && (
               <video controls>
                 <source src={src} />

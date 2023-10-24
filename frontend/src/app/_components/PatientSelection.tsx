@@ -44,7 +44,7 @@ function PatientSelection({ patients }: Props) {
   // console.log(currentPatient)
 
   return (
-    <div ref={ref} className="mt-[100px] ml-[30px]">
+    <div ref={ref} className="mt-[100px] ml-[30px] h-fit">
       <div className={`overflow-y-auto max-h-[70vh]`}>
         <table className="border-collapse w-[510px] text-center">
           <thead>
