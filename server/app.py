@@ -65,6 +65,8 @@ def fetchAll():
     responseData = []
 
     for image in query_result:
+        parts = image[6].split(".")
+        fileType = parts[len(parts) - 1]
         responseData.append(
             {
                 "ImageID": image[0],
@@ -74,11 +76,38 @@ def fetchAll():
                 "Annotation": image[4],
                 "ThumbnailData": image[5],
                 "ImageName": image[6],
+                "FileType": fileType,
                 "DateCreated": image[7],
             }
         )
 
     return responseData
+
+
+# set up api for patient images
+# Fetch all patients
+@app.route("/patients", methods=["GET"])
+def get_all_patients():
+    connection = mysql.connector.connect(**db_config)
+    cursor = connection.cursor()
+
+    sql_query = """SELECT * FROM patients;"""
+    cursor.execute(sql_query)
+
+    query_result = cursor.fetchall()
+    cursor.close()
+    connection.close()
+
+    patients = [
+        {
+            "PatientID": patient[0],
+            "FirstName": patient[1],
+            "LastName": patient[2],
+            "DateofBirth": patient[3],
+        }
+        for patient in query_result
+    ]
+    return patients
 
 
 app.run(host="0.0.0.0", port=4000, debug=True)

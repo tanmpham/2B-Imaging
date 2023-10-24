@@ -2,6 +2,7 @@
 
 import { ImageDto } from '@/interfaces/image.dto'
 // import { format } from 'date-fns'
+import { format } from 'date-fns'
 import { Dispatch, Fragment, SetStateAction } from 'react'
 import MediaItem from './MediaItem'
 
@@ -33,12 +34,16 @@ function MediaList({
       {images.map(({ ImageID, DateCreated, ImageName, FileType }, idx) => (
         <Fragment key={ImageID}>
           {idx === 0 && (
-            <div className={style.date}>{DateCreated.split(' ')[0]}</div>
+            <div className={style.date}>
+              {format(new Date(DateCreated), 'MMM eo, yyyy')}
+            </div>
           )}
           {idx > 0 &&
             DateCreated.split(' ')[0] !==
               images[idx - 1].DateCreated.split(' ')[0] && (
-              <div className={style.date}>{DateCreated.split(' ')[0]}</div>
+              <div className={style.date}>
+                {format(new Date(DateCreated), 'MMM eo, yyyy')}
+              </div>
             )}
           <MediaItem
             id={ImageID}
