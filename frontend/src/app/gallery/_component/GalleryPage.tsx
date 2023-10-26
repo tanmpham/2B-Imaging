@@ -70,7 +70,7 @@ function GalleryPage({ images }: Props) {
           compareList={compareList}
           images={images}
         />
-        <div className={`w-full flex items-center justify-between px-[40px]`}>
+        <div className={`w-full flex items-center justify-evenly`}>
           <CompareBox
             compareList={compareList}
             updateCompareList={updateCompareList}
