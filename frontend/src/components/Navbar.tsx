@@ -177,12 +177,29 @@ function Navbar() {
             />
           )}
         </div>
-        <Button
-          form="patientSelection"
-          className={`mt-[.4rem] ml-[1rem] w-fit hover:translate-x-[.2rem]`}
-        >
-          Search
-        </Button>
+        <div className="flex items-center gap-x-[.8rem]">
+          <Button
+            form="patientSelection"
+            className={`mt-[.4rem] ml-[1rem] w-fit hover:translate-y-[-.14rem]`}
+          >
+            Search
+          </Button>
+          <Button
+            onClick={() => {
+              setCurrentPatient({
+                PatientID: -1,
+                LastName: '',
+                FirstName: '',
+                DateofBirth: '',
+              })
+            }}
+            form=""
+            variant={'error'}
+            className={`mt-[.4rem] w-fit hover:translate-y-[-.14rem]`}
+          >
+            Clear
+          </Button>
+        </div>
       </form>
 
       <div className={`mt-[4rem] flex flex-col space-y-[40px] justify-between`}>
