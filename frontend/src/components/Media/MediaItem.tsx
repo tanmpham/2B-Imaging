@@ -72,7 +72,7 @@ function MediaItem({
             }
           }
         } else {
-          router.push(`/gallery/${id}`)
+          router.push(`/gallery?patient-id=${patientID}`)
         }
         break
       case 3:

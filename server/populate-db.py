@@ -72,7 +72,7 @@ try:
             note = f"Automatically generated note for image {image_id}"
             sql_insert_note_query = "INSERT INTO imagenotes (Note, NoteCreatedAt, ImageID) VALUES (%s, CURRENT_TIMESTAMP, %s)"
             # Loop through ImageIDs from 1 to 10 and insert tags
-            tag_name = f"Automatically generated tag for image {image_id}"
+            tag_name = f"tag_{i}"
             use_count = random.randint(1, 11)  # Initialize use count
             sql_insert_tag_query = (
                 "INSERT INTO imagetags (Tag, UseCount, ImageID) VALUES (%s, %s, %s)"

@@ -135,6 +135,26 @@ def get_one_patient(patient_id):
     return patient
 
 
+# Get all tags
+@app.route("/tags", methods=["GET"])
+def get_tags():
+    connection = mysql.connector.connect(**db_config)
+    cursor = connection.cursor()
+
+    sql_query = """SELECT * FROM imagetags;"""
+    cursor.execute(sql_query)
+
+    query_result = cursor.fetchall()
+    cursor.close()
+    connection.close()
+
+    tags = [
+        {"TagID": tag[0], "ImageID": tag[1], "Tag": tag[2], "UseCount": tag[3]}
+        for tag in query_result
+    ]
+    return tags
+
+
 # Get tags for a specific image
 @app.route("/tags", methods=["GET"])
 def get_tags_for_image():
