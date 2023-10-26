@@ -2,7 +2,9 @@
 
 import CompareBox from '@/components/CompareBox'
 import DeleteConfirmBox from '@/components/DeleteConfirmBox'
+import ImageCanvas from '@/components/ImageCanvas'
 import MediaList from '@/components/Media/MediaList'
+import VideoView from '@/components/VideoView'
 import { toasterStyle } from '@/constants/toasterStyle'
 import { useGlobalContext } from '@/context/global-context'
 import { ImageDto } from '@/interfaces/image.dto'
@@ -27,7 +29,7 @@ function GalleryPage({ images }: Props) {
     }
   }
 
-  const { currentPatient, setCurrentPatient } = useGlobalContext()
+  const { currentPatient, setCurrentPatient, previewMedia } = useGlobalContext()
 
   const searchParams = useSearchParams()
   const params = {
@@ -76,6 +78,8 @@ function GalleryPage({ images }: Props) {
           <DeleteConfirmBox />
         </div>
       </div>
+
+      {previewMedia.fileType === 'mp4' ? <VideoView /> : <ImageCanvas />}
     </div>
   )
 }

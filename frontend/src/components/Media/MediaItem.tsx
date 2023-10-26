@@ -41,18 +41,15 @@ function MediaItem({
 
   const { setPreviewMedia } = useGlobalContext()
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (src) {
+      setPreviewMedia({
+        id: patientID,
+        src: src,
+        fileType: fileType,
+        IsRightEye: IsRightEye,
+      })
+    }
     switch (e.detail) {
-      case 1:
-        if (src) {
-          setPreviewMedia({
-            id: patientID,
-            src: src,
-            fileType: fileType,
-            IsRightEye: IsRightEye,
-          })
-        }
-
-        break
       case 2:
         if (isMediaPage && updateCompareList) {
           if (compareList?.length && compareList.length > 5) {
