@@ -1,17 +1,13 @@
 import Img from '@/components/shared/Img/Img'
 import { toasterStyle } from '@/constants/toasterStyle'
+import { useGlobalContext } from '@/context/global-context'
 import { PatientDto } from '@/interfaces/patient.dto'
 import { format } from 'date-fns'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import Tilt from 'react-parallax-tilt'
 
-interface Props {
-  src?: string
-  id: number
-  fileType: string
-  IsRightEye: number
-}
+interface Props {}
 
 function Initial() {
   return (
@@ -38,13 +34,15 @@ const style = {
   title: `text-stone-300 font-semibold`,
 }
 
-function Preview({ src, id, fileType, IsRightEye }: Props) {
+function Preview() {
   const [patient, setPatient] = useState<PatientDto>({
     PatientID: -1,
     LastName: '',
     FirstName: '',
     DateofBirth: '',
   })
+  const { previewMedia } = useGlobalContext()
+  const { id, src, fileType, IsRightEye } = previewMedia
   useEffect(() => {
     const getPatient = async () => {
       if (id !== 0) {

@@ -10,6 +10,9 @@ const buttonVariants = cva(
       variant: {
         primary:
           'text-white border-white hover:border-green_2 hover:text-green_2',
+        success: `text-white border-white hover:border-lime-400 hover:text-lime-400`,
+        warning: `text-white border-white hover:border-amber-400 hover:text-amber-400`,
+        archive: `text-white border-white hover:border-yellow-400 hover:text-yellow-400`,
         error: `text-white border-white hover:border-red-600 hover:text-red-600`,
         custom: '',
       },

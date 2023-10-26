@@ -1,6 +1,7 @@
 'use client'
 
 import { PatientDto } from '@/interfaces/patient.dto'
+import { PreviewMedia } from '@/interfaces/preview-media'
 import {
   Dispatch,
   ReactNode,
@@ -15,18 +16,18 @@ interface Props {
   children: ReactNode
 }
 
-interface CurrentPatientContextType {
+interface GlobalContextType {
   currentPatient: PatientDto
   setCurrentPatient: Dispatch<SetStateAction<PatientDto>>
   selectedDate: string
   setSelectedDate: Dispatch<SetStateAction<string>>
+  previewMedia: PreviewMedia
+  setPreviewMedia: Dispatch<SetStateAction<PreviewMedia>>
 }
 
-const CurrentPatientContext = createContext<CurrentPatientContextType | null>(
-  null
-)
+const GlobalContext = createContext<GlobalContextType | null>(null)
 
-export default function CurrentPatientContextProvider({ children }: Props) {
+export default function GlobalContextProvider({ children }: Props) {
   const [currentPatient, setCurrentPatient] = useState<PatientDto>({
     PatientID: -1,
     LastName: '',
@@ -34,29 +35,38 @@ export default function CurrentPatientContextProvider({ children }: Props) {
     DateofBirth: '',
   })
 
+  const [previewMedia, setPreviewMedia] = useState<PreviewMedia>({
+    src: '',
+    id: 0,
+    fileType: '',
+    IsRightEye: -1,
+  })
+
   const [selectedDate, setSelectedDate] = useState('')
 
   return (
-    <CurrentPatientContext.Provider
+    <GlobalContext.Provider
       value={{
         currentPatient,
         setCurrentPatient,
         selectedDate,
         setSelectedDate,
+        previewMedia,
+        setPreviewMedia,
       }}
     >
       <Toaster />
       {children}
-    </CurrentPatientContext.Provider>
+    </GlobalContext.Provider>
   )
 }
 
-export function useCurrentPatientContext() {
-  const context = useContext(CurrentPatientContext)
+export function useGlobalContext() {
+  const context = useContext(GlobalContext)
 
   if (context === null) {
     throw new Error(
-      'useCurrentPatientContext must be used within an CurrentPatientContextProvider'
+      'useGlobalContext must be used within an GlobalContextProvider'
     )
   }
 

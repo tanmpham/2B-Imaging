@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/shared/Buttons/Button'
 import { toasterStyle } from '@/constants/toasterStyle'
-import { useCurrentPatientContext } from '@/context/current-patient-context'
+import { useGlobalContext } from '@/context/global-context'
 import { PatientDto } from '@/interfaces/patient.dto'
 import { closeOnClickOutside } from '@/utils/closeOnClickOutside'
 import { format } from 'date-fns'
@@ -21,7 +21,7 @@ const style = {
 }
 
 function PatientSelection({ patients }: Props) {
-  const { currentPatient } = useCurrentPatientContext()
+  const { currentPatient } = useGlobalContext()
   const [patientSelected, setPatientSelected] = useState(-1)
   const ref = useRef(null)
 
@@ -123,12 +123,12 @@ function PatientSelection({ patients }: Props) {
         </table>
       </div>
 
-      <div className={`w-[470px] flex justify-end mt-[1rem]`}>
+      <div className={`flex justify-end mt-[1rem] gap-x-[.8rem]`}>
         <Button
           onClick={() => {
             handleClick()
           }}
-          className="hover:translate-x-[.2rem] transition-transform ease-in"
+          className="hover:translate-y-[-.2rem] transition-transform ease-in"
         >
           Select
         </Button>

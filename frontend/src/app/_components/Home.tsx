@@ -13,28 +13,14 @@ interface Props {
 }
 
 function Home({ images, patients }: Props) {
-  const [previewData, setPreviewData] = useState({
-    src: '',
-    id: 0,
-    fileType: '',
-    IsRightEye: -1,
-  })
-
   return (
     <div className="w-[88vw] h-full flex text-white bg-black">
       <PatientSelection patients={patients} />
       <MediaList
         images={images}
         className="bg-grey_1 max-h-screen ml-[30px] pt-[90px] pb-[40px] pr-[20px]"
-        setPreviewData={setPreviewData}
-        previewData={previewData}
       />
-      <Preview
-        src={previewData.src}
-        id={previewData.id}
-        fileType={previewData.fileType}
-        IsRightEye={previewData.IsRightEye}
-      />
+      <Preview />
     </div>
   )
 }

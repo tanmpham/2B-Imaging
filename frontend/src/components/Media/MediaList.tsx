@@ -7,7 +7,7 @@ import { Dispatch, Fragment, SetStateAction } from 'react'
 import MediaItem from './MediaItem'
 
 interface Props {
-  setPreviewData?: Dispatch<
+  setPreviewMedia?: Dispatch<
     SetStateAction<{
       src: string
       id: number
@@ -15,7 +15,7 @@ interface Props {
       IsRightEye: number
     }>
   >
-  previewData?: {
+  previewMedia?: {
     src: string
     id: number
     fileType: string
@@ -33,8 +33,6 @@ const style = {
 
 function MediaList({
   compareList,
-  setPreviewData,
-  previewData,
   className,
   updateCompareList,
   images,
@@ -63,7 +61,6 @@ function MediaList({
               )}
             <MediaItem
               src={`${process.env.NEXT_PUBLIC_CLIENT_API}/gallery/${ImageName}`}
-              setPreviewData={setPreviewData}
               updateCompareList={updateCompareList}
               compareList={compareList}
               fileType={FileType}

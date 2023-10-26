@@ -13,7 +13,7 @@ import { DateRange, RangeKeyDict } from 'react-date-range'
 import 'react-date-range/dist/styles.css'
 import 'react-date-range/dist/theme/default.css'
 
-import { useCurrentPatientContext } from '@/context/current-patient-context'
+import { useGlobalContext } from '@/context/global-context'
 import { closeOnClickOutside } from '@/utils/closeOnClickOutside'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
@@ -26,7 +26,7 @@ const style = {
 
 function Navbar() {
   const { currentPatient, setCurrentPatient, selectedDate, setSelectedDate } =
-    useCurrentPatientContext()
+    useGlobalContext()
   const [startDate, setStartDate] = useState<Date>(new Date())
   const [endDate, setEndDate] = useState<Date>(new Date())
   const [isCalOpen, setIsCalOpen] = useState(false)

@@ -4,7 +4,7 @@ import CompareBox from '@/components/CompareBox'
 import DeleteConfirmBox from '@/components/DeleteConfirmBox'
 import MediaList from '@/components/Media/MediaList'
 import { toasterStyle } from '@/constants/toasterStyle'
-import { useCurrentPatientContext } from '@/context/current-patient-context'
+import { useGlobalContext } from '@/context/global-context'
 import { ImageDto } from '@/interfaces/image.dto'
 import { PatientDto } from '@/interfaces/patient.dto'
 import { useSearchParams } from 'next/navigation'
@@ -27,7 +27,7 @@ function GalleryPage({ images }: Props) {
     }
   }
 
-  const { currentPatient, setCurrentPatient } = useCurrentPatientContext()
+  const { currentPatient, setCurrentPatient } = useGlobalContext()
 
   const searchParams = useSearchParams()
   const params = {

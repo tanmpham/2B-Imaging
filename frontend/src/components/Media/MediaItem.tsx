@@ -1,6 +1,7 @@
 'use client'
 
 import { toasterStyle } from '@/constants/toasterStyle'
+import { useGlobalContext } from '@/context/global-context'
 import { usePathname, useRouter } from 'next/navigation'
 import { Dispatch, SetStateAction } from 'react'
 import toast from 'react-hot-toast'
@@ -11,14 +12,6 @@ import Img from '../shared/Img/Img'
 interface Props {
   src?: string
   tag?: boolean
-  setPreviewData?: Dispatch<
-    SetStateAction<{
-      src: string
-      id: number
-      fileType: string
-      IsRightEye: number
-    }>
-  >
   updateCompareList?: (src: string, method: string) => void
   compareList?: string[]
   fileType: string
@@ -35,7 +28,6 @@ function MediaItem({
   id,
   src,
   tag,
-  setPreviewData,
   updateCompareList,
   compareList,
   fileType,
@@ -47,11 +39,12 @@ function MediaItem({
 
   const isMediaPage = pathname.split('/')[1] === 'gallery'
 
+  const { setPreviewMedia } = useGlobalContext()
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     switch (e.detail) {
       case 1:
-        if (setPreviewData && src) {
-          setPreviewData({
+        if (src) {
+          setPreviewMedia({
             id: patientID,
             src: src,
             fileType: fileType,
@@ -74,9 +67,6 @@ function MediaItem({
         } else {
           router.push(`/gallery?patient-id=${patientID}`)
         }
-        break
-      case 3:
-        // console.log('triple click')
         break
     }
   }
