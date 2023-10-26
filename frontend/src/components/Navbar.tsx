@@ -13,10 +13,12 @@ import { DateRange, RangeKeyDict } from 'react-date-range'
 import 'react-date-range/dist/styles.css'
 import 'react-date-range/dist/theme/default.css'
 
+import { toasterStyle } from '@/constants/toasterStyle'
 import { useGlobalContext } from '@/context/global-context'
 import { closeOnClickOutside } from '@/utils/closeOnClickOutside'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
+import toast from 'react-hot-toast'
 import { Button } from './shared/Buttons/Button'
 
 const style = {
@@ -79,13 +81,22 @@ function Navbar() {
     e.preventDefault()
     setSelectedDate(range)
     const { PatientID, FirstName, LastName, DateofBirth } = currentPatient
-    router.push(
-      `/gallery?${
-        PatientID && PatientID !== -1 ? `patient-id=${PatientID}` : ''
-      }${FirstName && `&firstname=${FirstName}`}${
-        LastName && `&lastname=${LastName}`
-      }${DateofBirth && `&dob=${DateofBirth}`}`
-    )
+    if (
+      PatientID === -1 &&
+      FirstName === '' &&
+      LastName === '' &&
+      DateofBirth === ''
+    ) {
+      toast.error('Please fill in at least 1 field.', toasterStyle)
+    } else {
+      router.push(
+        `/gallery?${
+          PatientID && PatientID !== -1 ? `patient-id=${PatientID}` : ''
+        }${FirstName && `&firstname=${FirstName}`}${
+          LastName && `&lastname=${LastName}`
+        }${DateofBirth && `&dob=${DateofBirth}`}`
+      )
+    }
   }
 
   const ref = useRef(null)

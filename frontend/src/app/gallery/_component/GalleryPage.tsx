@@ -65,7 +65,7 @@ function GalleryPage({ images }: Props) {
     <div className="flex text-white">
       <div className={`bg-grey_1 space-y-[30px]`}>
         <MediaList
-          className="max-h-[78vh] px-[80px] pt-[15px]"
+          className="max-h-[78vh] px-[60px] pt-[15px]"
           updateCompareList={updateCompareList}
           compareList={compareList}
           images={images}
