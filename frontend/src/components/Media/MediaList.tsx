@@ -3,7 +3,7 @@
 import { ImageDto } from '@/interfaces/image.dto'
 // import { format } from 'date-fns'
 import { format } from 'date-fns'
-import { Dispatch, Fragment, SetStateAction } from 'react'
+import { Dispatch, DragEvent, Fragment, SetStateAction } from 'react'
 import MediaItem from './MediaItem'
 
 interface Props {
@@ -25,6 +25,7 @@ interface Props {
   updateCompareList?: (src: string, method: string) => void
   compareList?: string[]
   images: ImageDto[]
+  handleOnDrag?: (e: DragEvent, item: { id: string; fileName: string }) => void
 }
 
 const style = {
@@ -36,6 +37,7 @@ function MediaList({
   className,
   updateCompareList,
   images,
+  handleOnDrag,
 }: Props) {
   return (
     <div
@@ -59,6 +61,7 @@ function MediaList({
                   {format(new Date(DateCreated), 'MMM eo, yyyy')}
                 </div>
               )}
+
             <MediaItem
               src={`${process.env.NEXT_PUBLIC_CLIENT_API}/gallery/${ImageName}`}
               updateCompareList={updateCompareList}
@@ -67,6 +70,8 @@ function MediaList({
               IsRightEye={IsRightEye}
               patientID={PatientID}
               id={ImageID}
+              handleOnDrag={handleOnDrag}
+              imageName={ImageName}
             />
           </Fragment>
         )

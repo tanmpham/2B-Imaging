@@ -173,6 +173,7 @@ function Navbar() {
                   : ''
               }
               readOnly
+              id="DateofBirth"
               className={style.input}
             />
           ) : (

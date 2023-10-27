@@ -55,6 +55,7 @@ function Preview() {
           setPatient(patientData)
         } catch (error) {
           console.error('Failed to fetch patient:', error)
+          toast.error('Failed to fetch data', toasterStyle)
         }
       }
     }

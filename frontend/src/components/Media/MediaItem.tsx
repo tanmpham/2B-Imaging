@@ -3,7 +3,7 @@
 import { toasterStyle } from '@/constants/toasterStyle'
 import { useGlobalContext } from '@/context/global-context'
 import { usePathname, useRouter } from 'next/navigation'
-import { Dispatch, SetStateAction } from 'react'
+import { Dispatch, DragEvent, SetStateAction } from 'react'
 import toast from 'react-hot-toast'
 import { BsCameraReels } from 'react-icons/bs'
 import { HiHashtag } from 'react-icons/hi2'
@@ -18,6 +18,8 @@ interface Props {
   IsRightEye: number
   patientID: number
   id: number
+  handleOnDrag?: (e: DragEvent, item: { id: string; fileName: string }) => void
+  imageName: string
 }
 
 const style = {
@@ -33,6 +35,8 @@ function MediaItem({
   fileType,
   IsRightEye,
   patientID,
+  handleOnDrag,
+  imageName,
 }: Props) {
   const router = useRouter()
   const pathname = usePathname()
@@ -71,9 +75,13 @@ function MediaItem({
   return (
     <button
       onClick={handleClick}
-      className={`relative w-[200px] h-[200px] ${
+      draggable
+      onDragStart={(e) => {
+        handleOnDrag && handleOnDrag(e, { id: String(id), fileName: imageName })
+      }}
+      className={`relative z-[20] w-[200px] h-[200px] ${
         !src && 'bg-grey_2'
-      } hover:translate-y-[-.2rem] transition-transform ease-linear group`}
+      } hover:translate-y-[-.2rem] border-2 border-transparent hover:border-white rounded-[6px] transition-all ease-linear group`}
     >
       {src && (
         <>
