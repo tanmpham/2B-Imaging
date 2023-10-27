@@ -41,7 +41,7 @@ function MediaList({
 }: Props) {
   return (
     <div
-      className={`${className} grid grid-cols-2 gap-x-[28px] gap-y-[28px] justify-start overflow-y-auto`}
+      className={`${className} grid grid-cols-2 gap-x-[28px] gap-y-[23px] justify-start overflow-y-auto`}
     >
       {images.map(
         (

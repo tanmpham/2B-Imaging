@@ -20,6 +20,17 @@ function DeleteConfirmBox({
 }: Props) {
   const [isDragOver, setIsDragOver] = useState(false)
   const ref = useRef(null)
+  function inActiveClose() {
+    closeOnClickOutside(ref, () => {
+      setIsConfirming(false)
+      clearMediaDrop()
+    })
+    closeOnPressEsc(ref, () => {
+      setIsConfirming(false)
+      clearMediaDrop()
+    })
+    setIsDragOver(false)
+  }
   return (
     <div
       onDragOver={(e) => {
@@ -32,26 +43,10 @@ function DeleteConfirmBox({
         ref={ref}
         onDrop={(e) => {
           handleOnDrop__delete(e)
-          setIsDragOver(false)
-          closeOnClickOutside(ref, () => {
-            setIsConfirming(false)
-            clearMediaDrop()
-          })
-          closeOnPressEsc(ref, () => {
-            setIsConfirming(false)
-            clearMediaDrop()
-          })
+          inActiveClose()
         }}
         onDragLeave={() => {
-          setIsDragOver(false)
-          closeOnClickOutside(ref, () => {
-            setIsConfirming(false)
-            clearMediaDrop()
-          })
-          closeOnPressEsc(ref, () => {
-            setIsConfirming(false)
-            clearMediaDrop()
-          })
+          inActiveClose()
         }}
         className={`relative z-10 text-[20px] h-[100px] w-[240px] flex items-center justify-center text-center bg-red_1 border-t-[2px] border-b-[2px] border-dashed cursor-pointer hover:border-red-600 hover:text-white transition-all ease-linear ${
           isDragOver
@@ -72,26 +67,10 @@ function DeleteConfirmBox({
       <div
         onDrop={(e) => {
           handleOnDrop__delete(e)
-          setIsDragOver(false)
-          closeOnClickOutside(ref, () => {
-            setIsConfirming(false)
-            clearMediaDrop()
-          })
-          closeOnPressEsc(ref, () => {
-            setIsConfirming(false)
-            clearMediaDrop()
-          })
+          inActiveClose()
         }}
         onDragLeave={() => {
-          setIsDragOver(false)
-          closeOnClickOutside(ref, () => {
-            setIsConfirming(false)
-            clearMediaDrop()
-          })
-          closeOnPressEsc(ref, () => {
-            setIsConfirming(false)
-            clearMediaDrop()
-          })
+          inActiveClose()
         }}
         className="absolute top-[-10rem] left-[-17rem] h-[330px] w-[540px]"
       />
