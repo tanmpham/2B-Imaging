@@ -9,12 +9,14 @@ interface Props {
   isConfirming: boolean
   setIsConfirming: Dispatch<SetStateAction<boolean>>
   fileName: string
+  clearMediaDrop: () => void
 }
 function DeleteConfirmBox({
   handleOnDrop__delete,
   isConfirming,
   setIsConfirming,
   fileName,
+  clearMediaDrop,
 }: Props) {
   const [isDragOver, setIsDragOver] = useState(false)
   const ref = useRef(null)
@@ -33,18 +35,22 @@ function DeleteConfirmBox({
           setIsDragOver(false)
           closeOnClickOutside(ref, () => {
             setIsConfirming(false)
+            clearMediaDrop()
           })
           closeOnPressEsc(ref, () => {
             setIsConfirming(false)
+            clearMediaDrop()
           })
         }}
         onDragLeave={() => {
           setIsDragOver(false)
           closeOnClickOutside(ref, () => {
             setIsConfirming(false)
+            clearMediaDrop()
           })
           closeOnPressEsc(ref, () => {
             setIsConfirming(false)
+            clearMediaDrop()
           })
         }}
         className={`relative z-10 text-[20px] h-[100px] w-[240px] flex items-center justify-center text-center bg-red_1 border-t-[2px] border-b-[2px] border-dashed cursor-pointer hover:border-red-600 hover:text-white transition-all ease-linear ${

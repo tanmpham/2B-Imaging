@@ -69,6 +69,11 @@ function GalleryPage({ images }: Props) {
     id: '',
     fileName: '',
   })
+
+  function clearMediaDrop() {
+    setMediaDrop({ id: '', fileName: '' })
+  }
+
   const [isConfirming, setIsConfirming] = useState(false)
 
   function handleOnDrag(e: DragEvent, item: { id: string; fileName: string }) {
@@ -81,7 +86,7 @@ function GalleryPage({ images }: Props) {
     setIsConfirming(true)
   }
 
-  //console.log(mediaDrop)
+  // console.log(mediaDrop)
 
   return (
     <>
@@ -107,6 +112,7 @@ function GalleryPage({ images }: Props) {
                 isConfirming={isConfirming}
                 setIsConfirming={setIsConfirming}
                 handleOnDrop__delete={handleOnDrop__delete}
+                clearMediaDrop={clearMediaDrop}
               />
             </div>
           </div>
