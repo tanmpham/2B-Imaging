@@ -73,9 +73,25 @@ function DeleteConfirmBox({
         onDrop={(e) => {
           handleOnDrop__delete(e)
           setIsDragOver(false)
+          closeOnClickOutside(ref, () => {
+            setIsConfirming(false)
+            clearMediaDrop()
+          })
+          closeOnPressEsc(ref, () => {
+            setIsConfirming(false)
+            clearMediaDrop()
+          })
         }}
         onDragLeave={() => {
           setIsDragOver(false)
+          closeOnClickOutside(ref, () => {
+            setIsConfirming(false)
+            clearMediaDrop()
+          })
+          closeOnPressEsc(ref, () => {
+            setIsConfirming(false)
+            clearMediaDrop()
+          })
         }}
         className="absolute top-[-10rem] left-[-17rem] h-[330px] w-[540px]"
       />
