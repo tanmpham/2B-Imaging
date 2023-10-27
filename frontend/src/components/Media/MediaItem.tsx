@@ -18,7 +18,10 @@ interface Props {
   IsRightEye: number
   patientID: number
   id: number
-  handleOnDrag?: (e: DragEvent, item: { id: string; fileName: string }) => void
+  handleOnDrag?: (
+    e: DragEvent,
+    item: { id: string; fileName: string; src: string }
+  ) => void
   imageName: string
 }
 
@@ -77,7 +80,9 @@ function MediaItem({
       onClick={handleClick}
       draggable
       onDragStart={(e) => {
-        handleOnDrag && handleOnDrag(e, { id: String(id), fileName: imageName })
+        handleOnDrag && src
+          ? handleOnDrag(e, { id: String(id), fileName: imageName, src: src })
+          : ''
       }}
       className={`relative z-[20] w-[200px] h-[200px] ${
         !src && 'bg-grey_2'

@@ -1,7 +1,7 @@
 'use client'
 
 import { fileType } from '@/utils'
-import { MouseEvent } from 'react'
+import { DragEvent, MouseEvent } from 'react'
 import { BsFillTrash3Fill } from 'react-icons/bs'
 import Img from './shared/Img/Img'
 
@@ -12,14 +12,25 @@ const style = {
 interface Props {
   compareList: string[]
   updateCompareList: (src: string, method: string) => void
+  handleOnDrop__compare: (e: DragEvent) => void
 }
-function CompareBox({ compareList, updateCompareList }: Props) {
+function CompareBox({
+  compareList,
+  updateCompareList,
+  handleOnDrop__compare,
+}: Props) {
   const deleteList = (e: MouseEvent<HTMLButtonElement>) => {
     updateCompareList((e.target as HTMLButtonElement).id, 'delete')
   }
 
   return (
-    <div className="z-[20] w-[240px] h-[160px] rounded-[6px] bg-blue_2 flex flex-col items-center">
+    <div
+      onDrop={handleOnDrop__compare}
+      onDragOver={(e) => {
+        e.preventDefault()
+      }}
+      className="z-[20] w-[240px] h-[160px] rounded-[6px] bg-blue_2 flex flex-col items-center"
+    >
       <div className={`text-black text-[13px] font-semibold`}>Compare</div>
       <div
         className={`grid grid-cols-3 gap-y-[1rem] gap-x-[1.4rem] justify-center pt-[.4rem]`}

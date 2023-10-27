@@ -25,7 +25,10 @@ interface Props {
   updateCompareList?: (src: string, method: string) => void
   compareList?: string[]
   images: ImageDto[]
-  handleOnDrag?: (e: DragEvent, item: { id: string; fileName: string }) => void
+  handleOnDrag?: (
+    e: DragEvent,
+    item: { id: string; fileName: string; src: string }
+  ) => void
 }
 
 const style = {

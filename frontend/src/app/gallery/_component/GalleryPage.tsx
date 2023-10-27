@@ -76,14 +76,24 @@ function GalleryPage({ images }: Props) {
 
   const [isConfirming, setIsConfirming] = useState(false)
 
-  function handleOnDrag(e: DragEvent, item: { id: string; fileName: string }) {
-    e.dataTransfer.setData('mediaDrop', `${item.id},${item.fileName}`)
+  function handleOnDrag(
+    e: DragEvent,
+    item: { id: string; fileName: string; src: string }
+  ) {
+    e.dataTransfer.setData(
+      'mediaDrop',
+      `${item.id},${item.fileName},${item.src}`
+    )
   }
 
   function handleOnDrop__delete(e: DragEvent) {
     const item = e.dataTransfer.getData('mediaDrop').split(',')
     setMediaDrop({ id: item[0], fileName: item[1] })
     setIsConfirming(true)
+  }
+  function handleOnDrop__compare(e: DragEvent) {
+    const item = e.dataTransfer.getData('mediaDrop').split(',')
+    updateCompareList(item[2], 'add')
   }
 
   // console.log(mediaDrop)
@@ -106,6 +116,7 @@ function GalleryPage({ images }: Props) {
               <CompareBox
                 compareList={compareList}
                 updateCompareList={updateCompareList}
+                handleOnDrop__compare={handleOnDrop__compare}
               />
               <DeleteConfirmBox
                 fileName={mediaDrop.fileName}

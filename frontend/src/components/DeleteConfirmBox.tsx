@@ -33,10 +33,6 @@ function DeleteConfirmBox({
   }
   return (
     <div
-      onDragOver={(e) => {
-        e.preventDefault()
-        setIsDragOver(true)
-      }}
       className={`relative w-[240px] h-[160px] flex items-center justify-center`}
     >
       <div
@@ -47,6 +43,10 @@ function DeleteConfirmBox({
         }}
         onDragLeave={() => {
           inActiveClose()
+        }}
+        onDragOver={(e) => {
+          e.preventDefault()
+          setIsDragOver(true)
         }}
         className={`relative z-10 text-[20px] h-[100px] w-[240px] flex items-center justify-center text-center bg-red_1 border-t-[2px] border-b-[2px] border-dashed cursor-pointer hover:border-red-600 hover:text-white transition-all ease-linear ${
           isDragOver
@@ -72,7 +72,11 @@ function DeleteConfirmBox({
         onDragLeave={() => {
           inActiveClose()
         }}
-        className="absolute top-[-10rem] left-[-17rem] h-[330px] w-[540px]"
+        onDragOver={(e) => {
+          e.preventDefault()
+          setIsDragOver(true)
+        }}
+        className="absolute top-[-4rem] left-[-1.8rem] h-[230px] w-[300px]"
       />
     </div>
   )
