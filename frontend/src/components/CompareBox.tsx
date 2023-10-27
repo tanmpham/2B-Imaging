@@ -19,7 +19,7 @@ function CompareBox({ compareList, updateCompareList }: Props) {
   }
 
   return (
-    <div className="w-[240px] h-[160px] rounded-[6px] bg-blue_2 flex flex-col items-center">
+    <div className="z-[20] w-[240px] h-[160px] rounded-[6px] bg-blue_2 flex flex-col items-center">
       <div className={`text-black text-[13px] font-semibold`}>Compare</div>
       <div
         className={`grid grid-cols-3 gap-y-[1rem] gap-x-[1.4rem] justify-center pt-[.4rem]`}
