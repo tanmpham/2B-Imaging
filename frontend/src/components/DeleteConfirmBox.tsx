@@ -71,7 +71,7 @@ function DeleteConfirmBox({
         onDragLeave={() => {
           setIsDragOver(false)
         }}
-        className="absolute top-[-10rem] left-[-4rem] h-[400px] w-[420px]"
+        className="absolute top-[-10rem] left-[-17rem] h-[330px] w-[540px]"
       />
     </div>
   )
