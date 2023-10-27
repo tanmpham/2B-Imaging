@@ -18,18 +18,6 @@ interface Props {
   images: ImageDto[]
 }
 function GalleryPage({ images }: Props) {
-  const [compareList, setCompareList] = useState<string[] | never[]>([])
-
-  const updateCompareList = (src: string, method: string) => {
-    if (method === 'add') {
-      setCompareList((prev) => [...prev, src])
-    }
-
-    if (method === 'delete') {
-      setCompareList(compareList.filter((item) => item !== src))
-    }
-  }
-
   const { currentPatient, setCurrentPatient, previewMedia } = useGlobalContext()
 
   const searchParams = useSearchParams()
@@ -91,9 +79,31 @@ function GalleryPage({ images }: Props) {
     setMediaDrop({ id: item[0], fileName: item[1] })
     setIsConfirming(true)
   }
+
+  const [compareList, setCompareList] = useState<string[]>([])
+
+  const updateCompareList = (src: string, method: string) => {
+    if (method === 'add') {
+      setCompareList((prev) => [...prev, src])
+    }
+
+    if (method === 'delete') {
+      setCompareList(compareList.filter((item) => item !== src))
+    }
+  }
+
   function handleOnDrop__compare(e: DragEvent) {
     const item = e.dataTransfer.getData('mediaDrop').split(',')
-    updateCompareList(item[2], 'add')
+    const src = item[2]
+    if (compareList.length && compareList.length > 5) {
+      toast.error('Reached limit 6 images to compare.', toasterStyle)
+    } else {
+      if (!compareList.includes(src)) {
+        updateCompareList(src, 'add')
+      } else {
+        toast.error('Item is already selected.', toasterStyle)
+      }
+    }
   }
 
   // console.log(mediaDrop)
