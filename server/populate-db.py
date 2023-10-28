@@ -2,6 +2,7 @@ import os
 import mysql.connector
 import yaml
 import random
+import datetime
 from mysql.connector import Error
 
 with open("app_conf.yml", "r") as f:
@@ -26,44 +27,27 @@ try:
         reset_auto_increment_query = "ALTER TABLE patientimages AUTO_INCREMENT = 1"
         cursor.execute(reset_auto_increment_query)
 
-        # # Insert image names into the 'patientimages' table
-        # for image_name in image_names:
-        #     sql_query = "INSERT INTO patientimages (ImageName) VALUES (%s)"
-        #     cursor.execute(sql_query, (image_name,))
+        for i in range(len(image_names)):
+            PatientID = random.randint(1, 10)
+            IsRightEye = random.randint(0, 1)
+            Annotation = f"Image Annotation for Patient #{PatientID}"
+            start_date = datetime.date(2023, 6, 1)
+            end_date = datetime.date(2023, 10, 28)
 
-        PatientID = [8, 3, 2, 7, 5, 10, 10, 6, 1, 9, 4]
-        IsRightEye = [0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0]
-        Annotation = [
-            "This is a test annotation",
-            "This is a test annotation",
-            "This is a test annotation",
-            "This is a test annotation",
-            "This is a test annotation",
-            "This is a test annotation",
-            "This is a test annotation",
-            "This is a test annotation",
-            "This is a test annotation",
-            "This is a test annotation",
-            "This is a test annotation",
-        ]
+            date = start_date + datetime.timedelta(
+                days=random.randint(0, (end_date - start_date).days)
+            )
 
-        DateCreated = [
-            "2023-04-20 13:34:57",
-            "2023-04-20 14:34:57",
-            "2023-04-20 15:34:57",
-            "2023-04-20 16:34:57",
-            "2023-07-20 21:34:57",
-            "2023-07-20 13:34:57",
-            "2023-07-20 13:34:57",
-            "2023-10-20 13:34:57",
-            "2023-10-20 13:34:57",
-            "2023-10-20 13:34:57",
-            "2023-10-20 13:34:57",
-        ]
+            # Generate a random time between 00:00:00 and 23:59:59
+            time = datetime.time(
+                random.randint(0, 23), random.randint(0, 59), random.randint(0, 59)
+            )
 
-        for i in range(len(PatientID)):
+            # Combine the date and time into a datetime object
+            DateCreated = datetime.datetime.combine(date, time)
+
             sql_query = f"""INSERT INTO patientimages (PatientID, IsRightEye, Annotation, ImageName, DateCreated) VALUES
-                    ('{PatientID[i]}', '{IsRightEye[i]}', '{Annotation[i]}', '{image_names[i]}', '{DateCreated[i]}')"""
+                    ('{PatientID}', '{IsRightEye}', '{Annotation}', '{image_names[i]}', '{DateCreated}')"""
             cursor.execute(sql_query)
 
         for i in range(1, 11):

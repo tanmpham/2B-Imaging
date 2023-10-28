@@ -42,6 +42,8 @@ function MediaList({
   images,
   handleOnDrag,
 }: Props) {
+  console.log(format(new Date(images[1].DateCreated), 'MMM eo, yyyy'))
+  //console.log(images[1].DateCreated.split(' ').slice(0, 4).join(' '))
   return (
     <div
       className={`${className} grid grid-cols-2 gap-x-[28px] gap-y-[23px] justify-start overflow-y-auto`}
@@ -54,14 +56,16 @@ function MediaList({
           <Fragment key={ImageID}>
             {idx === 0 && (
               <div className={style.date}>
-                {format(new Date(DateCreated), 'MMM eo, yyyy')}
+                {format(new Date(DateCreated), 'MMM do, yyyy')}
               </div>
             )}
             {idx > 0 &&
-              DateCreated.split(' ')[0] !==
-                images[idx - 1].DateCreated.split(' ')[0] && (
+              DateCreated.split(' ').slice(0, 4).join(' ') !==
+                images[idx - 1].DateCreated.split(' ')
+                  .slice(0, 4)
+                  .join(' ') && (
                 <div className={style.date}>
-                  {format(new Date(DateCreated), 'MMM eo, yyyy')}
+                  {format(new Date(DateCreated), 'MMM do, yyyy')}
                 </div>
               )}
 

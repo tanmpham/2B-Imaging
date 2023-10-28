@@ -38,3 +38,5 @@ app_conf.yml
 *.sqlite
 
 __pycache__
+
+*patientimages/*.*

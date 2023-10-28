@@ -53,7 +53,9 @@ def fetchAll():
 
     cursor = connection.cursor()
 
-    sql_query = f"""SELECT * FROM eyecameradb.patientimages;"""
+    sql_query = (
+        f"""SELECT * FROM eyecameradb.patientimages ORDER BY DateCreated DESC;"""
+    )
     cursor.execute(sql_query)
     query_result = cursor.fetchall()
 
