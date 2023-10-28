@@ -13,9 +13,13 @@ yarn install
 yarn dev
 ```
 
-### Install dependencies, set up, and run the back-end app locally
+### Install dependencies, set up and run the back-end app locally
 
 Create app_conf.yml files for both server and client folder (content is based on app_conf.example.yml).
+
+<br/>
+
+`Note:` Please download the sample images sent from the sponsor, and copy them to the /patientimages folder.
 
 #### Server back-end
 
