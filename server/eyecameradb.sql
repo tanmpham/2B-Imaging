@@ -1,10 +1,10 @@
 CREATE DATABASE  IF NOT EXISTS `eyecameradb` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `eyecameradb`;
--- MySQL dump 10.13  Distrib 8.0.34, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.32, for Linux (x86_64)
 --
--- Host: 127.0.0.1    Database: eyecameradb
+-- Host: localhost    Database: eyecameradb
 -- ------------------------------------------------------
--- Server version	8.0.34
+-- Server version	8.0.34-0ubuntu0.23.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -18,6 +18,33 @@ USE `eyecameradb`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `imagenotes`
+--
+
+DROP TABLE IF EXISTS `imagenotes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `imagenotes` (
+  `NoteID` int NOT NULL AUTO_INCREMENT,
+  `Note` text,
+  `NoteCreatedAt` date DEFAULT NULL,
+  `ImageID` int DEFAULT NULL,
+  PRIMARY KEY (`NoteID`),
+  KEY `ImageID` (`ImageID`),
+  CONSTRAINT `imagenotes_ibfk_1` FOREIGN KEY (`ImageID`) REFERENCES `patientimages` (`ImageID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `imagenotes`
+--
+
+LOCK TABLES `imagenotes` WRITE;
+/*!40000 ALTER TABLE `imagenotes` DISABLE KEYS */;
+/*!40000 ALTER TABLE `imagenotes` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `imagetags`
 --
 
@@ -28,9 +55,47 @@ CREATE TABLE `imagetags` (
   `TagID` int NOT NULL AUTO_INCREMENT,
   `ImageID` int DEFAULT NULL,
   `Tag` varchar(50) DEFAULT NULL,
+  `UseCount` int DEFAULT NULL,
   PRIMARY KEY (`TagID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `imagetags`
+--
+
+LOCK TABLES `imagetags` WRITE;
+/*!40000 ALTER TABLE `imagetags` DISABLE KEYS */;
+/*!40000 ALTER TABLE `imagetags` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `imagetagslist`
+--
+
+DROP TABLE IF EXISTS `imagetagslist`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `imagetagslist` (
+  `ImageTagsListID` int NOT NULL AUTO_INCREMENT,
+  `ImageID` int NOT NULL,
+  `TagsID` int NOT NULL,
+  PRIMARY KEY (`ImageTagsListID`),
+  KEY `fk__idx` (`ImageID`),
+  KEY `fk_imagetagslist_1_idx` (`TagsID`),
+  CONSTRAINT `fk_imageidtagslist` FOREIGN KEY (`ImageID`) REFERENCES `patientimages` (`ImageID`),
+  CONSTRAINT `fk_imagetagslist_1` FOREIGN KEY (`TagsID`) REFERENCES `imagetags` (`TagID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `imagetagslist`
+--
+
+LOCK TABLES `imagetagslist` WRITE;
+/*!40000 ALTER TABLE `imagetagslist` DISABLE KEYS */;
+/*!40000 ALTER TABLE `imagetagslist` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `patientimages`
@@ -46,11 +111,22 @@ CREATE TABLE `patientimages` (
   `IsRightEye` tinyint DEFAULT NULL,
   `Annotation` text,
   `ThumbnailData` blob,
+  `ImageName` varchar(50) DEFAULT NULL,
+  `DateCreated` datetime DEFAULT NULL,
   PRIMARY KEY (`ImageID`),
   KEY `PatientID` (`PatientID`),
   CONSTRAINT `patientimages_ibfk_1` FOREIGN KEY (`PatientID`) REFERENCES `patients` (`PatientID`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `patientimages`
+--
+
+LOCK TABLES `patientimages` WRITE;
+/*!40000 ALTER TABLE `patientimages` DISABLE KEYS */;
+/*!40000 ALTER TABLE `patientimages` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `patients`
@@ -63,9 +139,30 @@ CREATE TABLE `patients` (
   `PatientID` int NOT NULL AUTO_INCREMENT,
   `FirstName` varchar(50) DEFAULT NULL,
   `LastName` varchar(50) DEFAULT NULL,
+  `DateofBirth` date DEFAULT NULL,
   PRIMARY KEY (`PatientID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `patients`
+--
+
+LOCK TABLES `patients` WRITE;
+/*!40000 ALTER TABLE `patients` DISABLE KEYS */;
+-- Populate with 10 patients and patientimages tables with data
+INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Tyler', 'Rogers', '1980-01-01');
+INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Grace', 'Higgins', '1985-01-01');
+INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Melanie', 'Watson', '1990-01-01');
+INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Sally', 'Stiffany', '1995-01-01');
+INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Hailey', 'Carter', '2000-01-01');
+INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Brad', 'Rogers', '2001-01-01');
+INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Penelope', 'Grant', '2002-01-01');
+INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Frederick', 'Warren', '1998-01-01');
+INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Sally', 'Jones', '2000-01-01');
+INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Sofia', 'Cooper', '1987-01-01');
+/*!40000 ALTER TABLE `patients` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `workqueue`
@@ -80,47 +177,21 @@ CREATE TABLE `workqueue` (
   `InsertDateTime` datetime NOT NULL,
   `Seen` tinyint DEFAULT NULL,
   PRIMARY KEY (`workId`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
--- Add a DateofBirth column to the patients table 
-ALTER TABLE eyecameradb.patients
-ADD DateofBirth DATE;
+--
+-- Dumping data for table `workqueue`
+--
 
+LOCK TABLES `workqueue` WRITE;
+/*!40000 ALTER TABLE `workqueue` DISABLE KEYS */;
+/*!40000 ALTER TABLE `workqueue` ENABLE KEYS */;
+UNLOCK TABLES;
 
--- Add ImageName and DateCreated columns to the patientimages table 
-ALTER TABLE eyecameradb.patientimages
-ADD ImageName VARCHAR(50),
-ADD DateCreated DATETIME; -- OR TIMESTAMP 
-
--- Add UseCount column to the imagetags table 
-ALTER TABLE eyecameradb.imagetags
-ADD UseCount INT; 
-
--- Add a new table imagenotes with columns NoteId, Note, NoteCreatedAt, and ImageID columns 
-DROP TABLE IF EXISTS `imagenotes`;
-CREATE TABLE `imagenotes` (
-    `NoteID` INT NOT NULL AUTO_INCREMENT,
-    `Note` TEXT,
-    `NoteCreatedAt` DATE, 
-    `ImageID` INT DEFAULT NULL, 
-    PRIMARY KEY (`NoteID`),
-    KEY `ImageID` (`ImageID`),
-    CONSTRAINT `imagenotes_ibfk_1` FOREIGN KEY (`ImageID`) REFERENCES `patientimages` (`ImageID`)
-);
-
-
--- Populate with 10 patients and patientimages tables with data
-INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('John', 'Smith', '1980-01-01');
-INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Jane', 'Doe', '1985-01-01');
-INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Bob', 'Jones', '1990-01-01');
-INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Sally', 'Stiffany', '1995-01-01');
-INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Joe', 'Doe', '2000-01-01');
-INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('John', 'Jones', '2005-01-01');
-INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Jane', 'Shaw', '2010-01-01');
-INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Bob', 'Doe', '2015-01-01');
-INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Sally', 'Jones', '2020-01-01');
-INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Joe', 'Shaw', '2025-01-01');
+--
+-- Dumping events for database 'eyecameradb'
+--
 
 --
 -- Dumping routines for database 'eyecameradb'
@@ -518,6 +589,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-07-20 13:34:57
-
-
+-- Dump completed on 2023-10-28  2:09:00
