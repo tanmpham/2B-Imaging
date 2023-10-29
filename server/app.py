@@ -279,13 +279,13 @@ def get_all_patients():
     return {"patients": patients}
 
 # Fetch a single patient by ID
-@app.route("/patients/<int:patient_id>", methods=["GET"])
-def get_one_patient(patient_id):
+@app.route("/patients/<int:PatientID>", methods=["GET"])
+def get_one_patient(PatientID):
     connection = mysql.connector.connect(**db_config)
     cursor = connection.cursor()
 
     sql_query = """SELECT * FROM patients WHERE PatientID = %s;"""
-    cursor.execute(sql_query, (patient_id,))
+    cursor.execute(sql_query, (PatientID,))
 
     query_result = cursor.fetchone()
     cursor.close()
@@ -328,5 +328,40 @@ def filter_patients(first_name=None, last_name=None, dob=None):
                 for patient in query_result]
     return {"patients": patients}
 
+@app.route("/patients", methods=["POST"])
+def create_patient():
+    connection = mysql.connector.connect(**db_config)
+    cursor = connection.cursor()
+
+    first_name = request.json["FirstName"]
+    last_name = request.json["LastName"]
+    date_of_birth = request.json["DateofBirth"]
+
+    sql_query = """INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES (%s, %s, %s);"""
+    cursor.execute(sql_query, (first_name, last_name, date_of_birth))
+
+    connection.commit()
+    cursor.close()
+    connection.close()
+
+    return {"message": "Patient added"}, 201
+
+@app.route("/patients/<int:PatientID>", methods=["PATCH"])
+def edit_patient(PatientID):
+    connection = mysql.connector.connect(**db_config)
+    cursor = connection.cursor()
+
+    first_name = request.json["FirstName"]
+    last_name = request.json["LastName"]
+    date_of_birth = request.json["DateofBirth"]
+
+    sql_query = """UPDATE patients SET FirstName = %s, LastName = %s, DateofBirth = %s WHERE PatientID = %s;"""
+    cursor.execute(sql_query, (first_name, last_name, date_of_birth, PatientID))
+    
+    connection.commit()
+    cursor.close()
+    connection.close()
+
+    return {"message": "Patient updated"}
 
 app.run(host="0.0.0.0", port=4000, debug=True)
