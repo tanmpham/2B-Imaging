@@ -1,12 +1,14 @@
 import os
 import mysql.connector
 
-image_folder_path = "patientimages"
+# image_folder_path = "server\patientimages"
+relative_path = "2B-Imaging\server\patientimages"
+image_folder_path = os.path.abspath(relative_path)
 image_names = os.listdir(image_folder_path)
 db_config = {
     "host": "localhost",
     "user": "root",
-    "password": "your_password",
+    "password": "Password123",
     "database": "eyecameradb",
 }
 
