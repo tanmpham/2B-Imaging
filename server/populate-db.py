@@ -63,7 +63,7 @@ try:
 
             cursor.execute(sql_insert_tag_query, (tag_name, use_count))
 
-            for j in range(1, use_count - 1):
+            for j in range(1, use_count + 1):
                 image_id = random.randint(1, len(image_names))
                 sql_query = (
                     "INSERT INTO imagetagslist (ImageID, TagsID) VALUES (%s, %s)"

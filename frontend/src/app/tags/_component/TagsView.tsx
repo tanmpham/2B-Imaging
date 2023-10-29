@@ -8,7 +8,7 @@ function TagsView({ tags }: Props) {
   return (
     <div className="relative h-[88%] w-[500px] bg-grey_3 rounded-[16px]">
       <div className={`relative pt-[4rem] px-[3rem]`}>
-        {tags.map(({ TagID, Tag, UseCount, ImageID }) => (
+        {tags.map(({ TagID, Tag, UseCount }) => (
           <div
             key={TagID}
             className="w-full flex justify-between items-center group"

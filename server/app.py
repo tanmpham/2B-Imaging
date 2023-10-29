@@ -151,8 +151,7 @@ def get_tags():
     connection.close()
 
     tags = [
-        {"TagID": tag[0], "ImageID": tag[1], "Tag": tag[2], "UseCount": tag[3]}
-        for tag in query_result
+        {"TagID": tag[0], "Tag": tag[2], "UseCount": tag[3]} for tag in query_result
     ]
     return tags
 
@@ -176,8 +175,7 @@ def get_tags_for_image():
     connection.close()
 
     tags = [
-        {"TagID": tag[0], "ImageID": tag[1], "Tag": tag[2], "UseCount": tag[3]}
-        for tag in query_result
+        {"TagID": tag[0], "Tag": tag[2], "UseCount": tag[3]} for tag in query_result
     ]
     return tags
 
