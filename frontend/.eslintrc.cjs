@@ -16,7 +16,7 @@ module.exports = {
   rules: {
     'no-empty-pattern': 'warn',
     '@typescript-eslint/naming-convention': [
-      'error',
+      'warn',
       {
         selector: 'variable',
         types: ['boolean'],

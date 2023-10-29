@@ -7,7 +7,7 @@ import { Dispatch, SetStateAction, useState } from 'react'
 
 interface Props {
   tags: TagDto[]
-  setTagsShowing: Dispatch<SetStateAction<number[]>>
+  setTagsShowing: Dispatch<SetStateAction<{ tagID: number; tag: string }[]>>
 }
 function TagsView({ tags, setTagsShowing }: Props) {
   return (
@@ -25,7 +25,11 @@ function TagsView({ tags, setTagsShowing }: Props) {
               <div className="text-grey_4 font-light group-hover:translate-x-[.2rem] group-hover:text-orange_1 transition-all ease-in">
                 {UseCount}
               </div>
-              <SlideSwitchBtn TagID={TagID} setTagsShowing={setTagsShowing} />
+              <SlideSwitchBtn
+                TagID={TagID}
+                Tag={Tag}
+                setTagsShowing={setTagsShowing}
+              />
             </div>
           </div>
         ))}

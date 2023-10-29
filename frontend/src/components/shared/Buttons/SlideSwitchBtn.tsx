@@ -4,7 +4,8 @@ import { Dispatch, SetStateAction, useState } from 'react'
 
 interface Props {
   TagID?: number
-  setTagsShowing: Dispatch<SetStateAction<number[]>>
+  Tag?: string
+  setTagsShowing: Dispatch<SetStateAction<{ tagID: number; tag: string }[]>>
 }
 
 const style = {
@@ -13,7 +14,7 @@ const style = {
     inactive: `bg-grey_4 justify-start`,
   },
 }
-function SlideSwitchBtn({ setTagsShowing, TagID }: Props) {
+function SlideSwitchBtn({ setTagsShowing, TagID, Tag }: Props) {
   const [isActive, setIsActive] = useState(false)
   return (
     <div
@@ -21,11 +22,13 @@ function SlideSwitchBtn({ setTagsShowing, TagID }: Props) {
         isActive ? style.container.active : style.container.inactive
       } active:scale-[0.94] transition-all ease-linear group`}
       onClick={() => {
-        if (TagID) {
+        if (TagID && Tag) {
           if (isActive) {
-            setTagsShowing((prev) => prev.filter((item) => item !== TagID))
+            setTagsShowing((prev) =>
+              prev.filter((item) => item.tagID !== TagID)
+            )
           } else {
-            setTagsShowing((prev) => [...prev, TagID])
+            setTagsShowing((prev) => [...prev, { tagID: TagID, tag: Tag }])
           }
         }
         setIsActive((prev) => !prev)

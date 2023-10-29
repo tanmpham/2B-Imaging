@@ -9,7 +9,9 @@ interface Props {
   tags: TagDto[]
 }
 function TagsPage({ tags }: Props) {
-  const [tagsShowing, setTagsShowing] = useState<number[]>([])
+  const [tagsShowing, setTagsShowing] = useState<
+    { tagID: number; tag: string }[]
+  >([])
 
   //console.log(tagsShowing)
 
@@ -19,7 +21,7 @@ function TagsPage({ tags }: Props) {
         <TagsView tags={tags} setTagsShowing={setTagsShowing} />
       </div>
 
-      <TagsDisplay />
+      <TagsDisplay tagsShowing={tagsShowing} />
     </div>
   )
 }
