@@ -297,25 +297,25 @@ def get_one_patient(PatientID):
     patient = {"PatientID": query_result[0], "FirstName": query_result[1], "LastName": query_result[2], "DateofBirth": query_result[3]}
     return {"patient": patient}
 
-@app.route("/patients/", methods=["GET"])
+@app.route("/patients", methods=["GET"])
 def filter_patients(first_name=None, last_name=None, dob=None):
     connection = mysql.connector.connect(**db_config)
     cursor = connection.cursor()
 
-    first = request.args.get(first_name)
-    last = request.args.get(last_name)
-    birth_date = request.args.get(dob)
+    firstname = request.args.get(first_name)
+    lastname = request.args.get(last_name)
+    birthdate = request.args.get(dob)
 
     sql_query = """SELECT * FROM patients WHERE 1=1"""
 
-    if first:
+    if firstname:
         sql_query += """ AND FirstName = %s"""
-    if last:
+    if lastname:
         sql_query += """ AND LastName = %s"""
-    if birth_date:
+    if birthdate:
         sql_query += """ AND DateofBirth = %s"""
     
-    cursor.execute(sql_query, (first_name, last_name, dob,))
+    cursor.execute(sql_query, (firstname, lastname, birthdate,))
     
     query_result = cursor.fetchall()
     cursor.close()
