@@ -1,3 +1,4 @@
+import { Button } from '@/components/shared/Buttons/Button'
 import SlideSwitchBtn from '@/components/shared/Buttons/SlideSwitchBtn'
 import { TagDto } from '@/interfaces/tag.dto'
 
@@ -6,8 +7,8 @@ interface Props {
 }
 function TagsView({ tags }: Props) {
   return (
-    <div className="relative h-[88%] w-[500px] bg-grey_3 rounded-[16px]">
-      <div className={`relative pt-[4rem] px-[3rem]`}>
+    <div className="h-[88%] w-[500px] bg-grey_3 rounded-[16px]">
+      <div className={`max-h-[88%] overflow-y-auto pt-[4rem] px-[3rem]`}>
         {tags.map(({ TagID, Tag, UseCount }) => (
           <div
             key={TagID}
@@ -24,6 +25,20 @@ function TagsView({ tags }: Props) {
             </div>
           </div>
         ))}
+      </div>
+
+      <div
+        className={`flex items-center gap-x-[.64rem] mt-[2rem] justify-end mr-[2rem]`}
+      >
+        <Button className="hover:translate-y-[-.2rem] transition-transform ease-in">
+          Add
+        </Button>
+        <Button
+          variant={'tag'}
+          className="hover:translate-y-[-.2rem] transition-transform ease-in"
+        >
+          Modify
+        </Button>
       </div>
     </div>
   )

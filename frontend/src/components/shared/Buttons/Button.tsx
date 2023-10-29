@@ -13,6 +13,7 @@ const buttonVariants = cva(
         success: `text-white border-white hover:border-lime-400 hover:text-lime-400`,
         warning: `text-white border-white hover:border-amber-400 hover:text-amber-400`,
         archive: `text-white border-white hover:border-yellow-400 hover:text-yellow-400`,
+        tag: `text-white border-white hover:border-orange_1 hover:text-orange_1`,
         error: `text-white border-white hover:border-red-600 hover:text-red-600`,
         custom: '',
       },
