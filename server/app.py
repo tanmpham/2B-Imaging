@@ -140,42 +140,30 @@ def get_one_patient(patient_id):
 # Get all tags
 @app.route("/tags", methods=["GET"])
 def get_tags():
-    connection = mysql.connector.connect(**db_config)
-    cursor = connection.cursor()
-
-    sql_query = """SELECT * FROM imagetags;"""
-    cursor.execute(sql_query)
-
-    query_result = cursor.fetchall()
-    cursor.close()
-    connection.close()
-
-    tags = [
-        {"TagID": tag[0], "Tag": tag[2], "UseCount": tag[3]} for tag in query_result
-    ]
-    return tags
-
-
-# Get tags for a specific image
-@app.route("/tags", methods=["GET"])
-def get_tags_for_image():
     image_id = request.args.get("image-id")
 
-    if not image_id:
-        return {"message": "ImageID is required"}, 400
-
     connection = mysql.connector.connect(**db_config)
     cursor = connection.cursor()
 
-    sql_query = """SELECT * FROM imagetags WHERE ImageID = %s;"""
-    cursor.execute(sql_query, (image_id,))
+    if not image_id:
+        sql_query = """SELECT imagetags.TagID, imagetags.Tag, imagetags.UseCount FROM imagetags;"""
+        cursor.execute(sql_query)
+    else:
+        sql_query = """
+          SELECT imagetags.TagID, imagetags.Tag, imagetags.UseCount
+          FROM imagetags
+          INNER JOIN imagetagslist ON imagetags.TagID = imagetagslist.TagsID
+          WHERE imagetagslist.ImageID = %s;
+        """
+        cursor.execute(sql_query, (image_id,))
 
     query_result = cursor.fetchall()
+
     cursor.close()
     connection.close()
 
     tags = [
-        {"TagID": tag[0], "Tag": tag[2], "UseCount": tag[3]} for tag in query_result
+        {"TagID": tag[0], "Tag": tag[1], "UseCount": tag[2]} for tag in query_result
     ]
     return tags
 
