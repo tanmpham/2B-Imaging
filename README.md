@@ -19,7 +19,7 @@ Create app_conf.yml files for both server and client folder (content is based on
 
 <br/>
 
-`Note:` Please download the sample images sent from the sponsor, and copy them to the /patientimages folder.
+`Note:` Please download the sample images sent from the sponsor, and copy them to the server/patientimages folder.
 
 #### Server back-end
 
