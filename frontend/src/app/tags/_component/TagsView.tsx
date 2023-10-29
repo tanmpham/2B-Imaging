@@ -1,11 +1,15 @@
+'use client'
+
 import { Button } from '@/components/shared/Buttons/Button'
 import SlideSwitchBtn from '@/components/shared/Buttons/SlideSwitchBtn'
 import { TagDto } from '@/interfaces/tag.dto'
+import { Dispatch, SetStateAction, useState } from 'react'
 
 interface Props {
   tags: TagDto[]
+  setTagsShowing: Dispatch<SetStateAction<number[]>>
 }
-function TagsView({ tags }: Props) {
+function TagsView({ tags, setTagsShowing }: Props) {
   return (
     <div className="h-[88%] w-[500px] bg-grey_3 rounded-[16px]">
       <div className={`max-h-[88%] overflow-y-auto pt-[4rem] px-[3rem]`}>
@@ -21,7 +25,7 @@ function TagsView({ tags }: Props) {
               <div className="text-grey_4 font-light group-hover:translate-x-[.2rem] group-hover:text-orange_1 transition-all ease-in">
                 {UseCount}
               </div>
-              <SlideSwitchBtn />
+              <SlideSwitchBtn TagID={TagID} setTagsShowing={setTagsShowing} />
             </div>
           </div>
         ))}

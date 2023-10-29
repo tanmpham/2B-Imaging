@@ -1,6 +1,11 @@
 'use client'
 
-import { useState } from 'react'
+import { Dispatch, SetStateAction, useState } from 'react'
+
+interface Props {
+  TagID?: number
+  setTagsShowing: Dispatch<SetStateAction<number[]>>
+}
 
 const style = {
   container: {
@@ -8,7 +13,7 @@ const style = {
     inactive: `bg-grey_4 justify-start`,
   },
 }
-function SlideSwitchBtn() {
+function SlideSwitchBtn({ setTagsShowing, TagID }: Props) {
   const [isActive, setIsActive] = useState(false)
   return (
     <div
@@ -16,6 +21,13 @@ function SlideSwitchBtn() {
         isActive ? style.container.active : style.container.inactive
       } active:scale-[0.94] transition-all ease-linear group`}
       onClick={() => {
+        if (TagID) {
+          if (isActive) {
+            setTagsShowing((prev) => prev.filter((item) => item !== TagID))
+          } else {
+            setTagsShowing((prev) => [...prev, TagID])
+          }
+        }
         setIsActive((prev) => !prev)
       }}
     >
