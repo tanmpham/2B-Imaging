@@ -362,6 +362,6 @@ def edit_patient(PatientID):
     cursor.close()
     connection.close()
 
-    return {"message": "Patient updated"}
+    return {"message": "Patient updated"}, 201
 
 app.run(host="0.0.0.0", port=4000, debug=True)
