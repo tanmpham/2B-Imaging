@@ -49,14 +49,24 @@ def hello():
 
 @app.route("/patientimages", methods=["GET"])
 def fetchAll():
-    connection = mysql.connector.connect(**db_config)
+    tag_id = request.args.get("tag-id")
 
+    connection = mysql.connector.connect(**db_config)
     cursor = connection.cursor()
 
-    sql_query = (
-        f"""SELECT * FROM eyecameradb.patientimages ORDER BY DateCreated DESC;"""
-    )
-    cursor.execute(sql_query)
+    if not tag_id:
+        sql_query = f"""SELECT * FROM patientimages ORDER BY DateCreated DESC;"""
+        cursor.execute(sql_query)
+    else:
+        # Get all images in a tag
+        sql_query = """
+        SELECT patientimages.ImageID, patientimages.ImageData, patientimages.IsRightEye, patientimages.Annotation, patientimages.ThumbnailData, patientimages.ImageName, patientimages.DateCreated
+        FROM patientimages
+        INNER JOIN imagetagslist ON patientimages.ImageID = imagetagslist.ImageID
+        WHERE imagetagslist.TagsID = %s;
+        """
+        cursor.execute(sql_query, (tag_id,))
+
     query_result = cursor.fetchall()
 
     # Commit changes and close the connection
@@ -137,7 +147,6 @@ def get_one_patient(patient_id):
     return patient
 
 
-# Get all tags
 @app.route("/tags", methods=["GET"])
 def get_tags():
     image_id = request.args.get("image-id")
@@ -146,9 +155,11 @@ def get_tags():
     cursor = connection.cursor()
 
     if not image_id:
+        # Get all tags
         sql_query = """SELECT imagetags.TagID, imagetags.Tag, imagetags.UseCount FROM imagetags;"""
         cursor.execute(sql_query)
     else:
+        # Get specific tags in an image
         sql_query = """
           SELECT imagetags.TagID, imagetags.Tag, imagetags.UseCount
           FROM imagetags
