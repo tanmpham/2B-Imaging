@@ -54,18 +54,27 @@ try:
             cursor.execute(sql_query)
 
         for i in range(1, 11):
-            # Insert notes
-            image_id = random.randint(1, 11)
-            note = f"Automatically generated note for image {image_id}"
-            sql_insert_note_query = "INSERT INTO imagenotes (Note, NoteCreatedAt, ImageID) VALUES (%s, CURRENT_TIMESTAMP, %s)"
-            # Loop through ImageIDs from 1 to 10 and insert tags
             tag_name = f"tag_{i}"
-            use_count = random.randint(1, 11)  # Initialize use count
+            use_count = random.randint(20, 50)
+
             sql_insert_tag_query = (
-                "INSERT INTO imagetags (Tag, UseCount, ImageID) VALUES (%s, %s, %s)"
+                "INSERT INTO imagetags (Tag, UseCount) VALUES (%s, %s)"
             )
+
+            cursor.execute(sql_insert_tag_query, (tag_name, use_count))
+
+            for j in range(1, use_count - 1):
+                image_id = random.randint(1, len(image_names))
+                sql_query = (
+                    "INSERT INTO imagetagslist (ImageID, TagsID) VALUES (%s, %s)"
+                )
+                cursor.execute(sql_query, (image_id, i))
+
+        for i in range(1, 200):
+            image_id = random.randint(1, len(image_names))
+            note = f"Automatically generated note #{id} for image {image_id}"
+            sql_insert_note_query = "INSERT INTO imagenotes (Note, NoteCreatedAt, ImageID) VALUES (%s, CURRENT_TIMESTAMP, %s)"
             cursor.execute(sql_insert_note_query, (note, image_id))
-            cursor.execute(sql_insert_tag_query, (tag_name, use_count, image_id))
 
         # Commit changes and close the connection
         connection.commit()
