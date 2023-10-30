@@ -271,7 +271,10 @@ def get_all_patients():
     cursor.close()
     connection.close()
 
-    patients = [{"PatientID": patient[0], "FirstName": patient[1], "LastName": patient[2], # ... other fields
+    patients = [{"PatientID": patient[0], 
+                 "FirstName": patient[1],
+                 "LastName": patient[2], 
+                 "DateofBirth": query_result[3]
                 } for patient in query_result]
     return {"patients": patients}
 
