@@ -20,7 +20,7 @@ const style = {
 }
 function TagsDisplay({ tagsShowing, currentTagID, setCurrentTagID }: Props) {
   const [currentImagesList, setCurrentImagesList] = useState<ImageDto[]>([])
-  console.log(currentImagesList)
+  //console.log(currentImagesList)
   useEffect(() => {
     if (tagsShowing.length > 0) {
       if (currentTagID === -1) {

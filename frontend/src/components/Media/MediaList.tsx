@@ -42,7 +42,7 @@ function MediaList({
   images,
   handleOnDrag,
 }: Props) {
-  console.log(format(new Date(images[1].DateCreated), 'MMM eo, yyyy'))
+  //console.log(format(new Date(images[1].DateCreated), 'MMM eo, yyyy'))
   //console.log(images[1].DateCreated.split(' ').slice(0, 4).join(' '))
   return (
     <div
