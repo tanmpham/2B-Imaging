@@ -15,7 +15,7 @@ yarn dev
 
 ### Install dependencies, set up and run the back-end app locally
 
-`Note:` Please download the sample images sent from the sponsor, and copy them to the server/patientimages folder (create the folder if not exist).
+`Note:` Please download the sample images sent from the sponsor, and copy them to the server/patientimages folder (create the patientimages folder if not exist).
 
 Run the script `server/eyecameradb.sql` inside MySQL Workbench.
 
