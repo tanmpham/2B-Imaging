@@ -15,19 +15,13 @@ yarn dev
 
 ### Install dependencies, set up and run the back-end app locally
 
-Create app_conf.yml files for both server and client folder (content is based on app_conf.example.yml).
+`Note:` Please download the sample images sent from the sponsor, and copy them to the server/patientimages folder (create the folder if not exist).
 
-<br/>
-
-`Note:` Please download the sample images sent from the sponsor, and copy them to the server/patientimages folder.
+Run the script `server/eyecameradb.sql` inside MySQL Workbench.
 
 #### Server back-end
 
-Create app_conf.yml files for both `server` and `client` folder (content is based on app_conf.example.yml).
-
-<br/>
-
-Run the script `server/eyecameradb.sql`
+Create a NEW app_conf.yml files (content is based on app_conf.example.yml).
 
 ```powershell
 cd server
@@ -37,6 +31,8 @@ py app.py
 ```
 
 #### Client back-end (OPTIONAL - for offline-purpose)
+
+Create a NEW app_conf.yml files (content is based on app_conf.example.yml).
 
 ```powershell
 cd client
