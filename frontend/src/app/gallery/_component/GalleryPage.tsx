@@ -113,8 +113,8 @@ function GalleryPage({ images }: Props) {
       {isLoading ? (
         <LoaderPage />
       ) : (
-        <div className="flex text-white">
-          <div className={`bg-grey_1 space-y-[30px]`}>
+        <div className="flex w-[88vw] text-white">
+          <div className={`bg-grey_1 space-y-[30px] shrink-0`}>
             <MediaList
               className="max-h-[78vh] px-[60px] pt-[15px]"
               updateCompareList={updateCompareList}
@@ -138,7 +138,8 @@ function GalleryPage({ images }: Props) {
             </div>
           </div>
 
-          {previewMedia.fileType === 'mp4' ? <VideoView /> : <ImageCanvas />}
+          {previewMedia.fileType === 'mp4' && <VideoView />}
+          {previewMedia.fileType === 'jpg' && <ImageCanvas />}
         </div>
       )}
     </>
