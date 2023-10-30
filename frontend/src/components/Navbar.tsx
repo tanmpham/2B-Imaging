@@ -107,7 +107,7 @@ function Navbar() {
   const [dob, setDob] = useState('')
 
   return (
-    <div className="w-[12vw] bg-navBg h-screen p-[22px] text-white">
+    <div className="w-[12vw] bg-navBg h-screen p-[22px] text-white flex flex-col justify-center">
       <Logo />
       <FaUserAlt className="ml-[1.4rem] my-[40px] text-4xl" />
 
