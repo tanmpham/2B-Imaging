@@ -36,7 +36,7 @@ py populate-db.py
 py app.py
 ```
 
-#### Client back-end (for offline-purpose)
+#### Client back-end (OPTIONAL - for offline-purpose)
 
 ```powershell
 cd client

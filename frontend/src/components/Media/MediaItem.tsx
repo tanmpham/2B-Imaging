@@ -45,6 +45,19 @@ function MediaItem({
   const pathname = usePathname()
 
   const isMediaPage = pathname.split('/')[1] === 'gallery'
+  const isTagPage = pathname.split('/')[1] === 'tags'
+
+  function updateCompareListFn() {
+    if (compareList?.length && compareList.length > 5) {
+      toast.error('Reached limit 6 images to compare.', toasterStyle)
+    } else {
+      if (src && !compareList?.includes(src) && updateCompareList) {
+        updateCompareList(src, 'add')
+      } else {
+        toast.error('Item is already selected.', toasterStyle)
+      }
+    }
+  }
 
   const { setPreviewMedia } = useGlobalContext()
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -57,20 +70,18 @@ function MediaItem({
       })
     }
     switch (e.detail) {
+      case 1:
+        if (isTagPage) {
+          updateCompareListFn()
+        }
+        break
       case 2:
         if (isMediaPage && updateCompareList) {
-          if (compareList?.length && compareList.length > 5) {
-            toast.error('Reached limit 6 images to compare.', toasterStyle)
-          } else {
-            if (src && !compareList?.includes(src)) {
-              updateCompareList(src, 'add')
-            } else {
-              toast.error('Item is already selected.', toasterStyle)
-            }
-          }
+          updateCompareListFn()
         } else {
           router.push(`/gallery?patient-id=${patientID}`)
         }
+
         break
     }
   }

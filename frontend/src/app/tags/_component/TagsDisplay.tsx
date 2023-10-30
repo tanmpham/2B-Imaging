@@ -1,8 +1,10 @@
 'use client'
 
+import CompareBox from '@/components/CompareBox'
+import MediaList from '@/components/Media/MediaList'
 import { toasterStyle } from '@/constants/toasterStyle'
 import { ImageDto } from '@/interfaces/image.dto'
-import { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import { Dispatch, DragEvent, SetStateAction, useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 
 interface Props {
@@ -40,6 +42,42 @@ function TagsDisplay({ tagsShowing, currentTagID, setCurrentTagID }: Props) {
       }
     }
   }, [currentTagID, setCurrentTagID, tagsShowing])
+
+  function handleOnDrag(
+    e: DragEvent,
+    item: { id: string; fileName: string; src: string }
+  ) {
+    e.dataTransfer.setData(
+      'mediaDrop',
+      `${item.id},${item.fileName},${item.src}`
+    )
+  }
+
+  const [compareList, setCompareList] = useState<string[]>([])
+
+  const updateCompareList = (src: string, method: string) => {
+    if (method === 'add') {
+      setCompareList((prev) => [...prev, src])
+    }
+
+    if (method === 'delete') {
+      setCompareList(compareList.filter((item) => item !== src))
+    }
+  }
+
+  function handleOnDrop__compare(e: DragEvent) {
+    const item = e.dataTransfer.getData('mediaDrop').split(',')
+    const src = item[2]
+    if (compareList.length && compareList.length > 5) {
+      toast.error('Reached limit 6 images to compare.', toasterStyle)
+    } else {
+      if (!compareList.includes(src)) {
+        updateCompareList(src, 'add')
+      } else {
+        toast.error('Item is already selected.', toasterStyle)
+      }
+    }
+  }
   return (
     <div className={`grow h-screen bg-grey_3 overflow-x-auto`}>
       <div className={`flex items-center text-[24px] mt-[.4rem] mx-[.4rem]`}>
@@ -59,6 +97,24 @@ function TagsDisplay({ tagsShowing, currentTagID, setCurrentTagID }: Props) {
           </div>
         ))}
       </div>
+
+      {currentImagesList.length > 0 && (
+        <div className="flex items-center gap-x-[4rem]">
+          <MediaList
+            className="max-h-[88vh] w-fit px-[2rem] mt-[1rem]"
+            images={currentImagesList}
+            updateCompareList={updateCompareList}
+            compareList={compareList}
+            handleOnDrag={handleOnDrag}
+          />
+
+          <CompareBox
+            compareList={compareList}
+            updateCompareList={updateCompareList}
+            handleOnDrop__compare={handleOnDrop__compare}
+          />
+        </div>
+      )}
     </div>
   )
 }
