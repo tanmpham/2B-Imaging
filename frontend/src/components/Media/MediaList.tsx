@@ -1,12 +1,34 @@
-import { Dispatch, SetStateAction } from 'react'
+'use client'
+
+import { ImageDto } from '@/interfaces/image.dto'
+// import { format } from 'date-fns'
+import { format } from 'date-fns'
+import { Dispatch, DragEvent, Fragment, SetStateAction } from 'react'
 import MediaItem from './MediaItem'
 
 interface Props {
-  setPreviewData?: Dispatch<SetStateAction<{ src: string; id: string }>>
-  previewData?: { src: string; id: string }
+  setPreviewMedia?: Dispatch<
+    SetStateAction<{
+      src: string
+      id: number
+      fileType: string
+      IsRightEye: number
+    }>
+  >
+  previewMedia?: {
+    src: string
+    id: number
+    fileType: string
+    IsRightEye: number
+  }
   className?: string
   updateCompareList?: (src: string, method: string) => void
   compareList?: string[]
+  images: ImageDto[]
+  handleOnDrag?: (
+    e: DragEvent,
+    item: { id: string; fileName: string; src: string }
+  ) => void
 }
 
 const style = {
@@ -15,108 +37,52 @@ const style = {
 
 function MediaList({
   compareList,
-  previewData,
-  setPreviewData,
   className,
   updateCompareList,
+  images,
+  handleOnDrag,
 }: Props) {
+  //console.log(format(new Date(images[1].DateCreated), 'MMM eo, yyyy'))
+  //console.log(images[1].DateCreated.split(' ').slice(0, 4).join(' '))
   return (
     <div
-      className={`${className} grid grid-cols-2 gap-x-[28px] gap-y-[28px] justify-start overflow-y-auto`}
+      className={`${className} grid grid-cols-2 gap-x-[28px] gap-y-[23px] justify-start overflow-y-auto`}
     >
-      <div className={style.date}>03/01/2023</div>
-      <MediaItem
-        id={'1'}
-        setPreviewData={setPreviewData}
-        updateCompareList={updateCompareList}
-        compareList={compareList}
-        video
-        tag
-      />
-      <MediaItem
-        id={'2'}
-        setPreviewData={setPreviewData}
-        updateCompareList={updateCompareList}
-        compareList={compareList}
-      />
-      <MediaItem
-        id={'3'}
-        setPreviewData={setPreviewData}
-        updateCompareList={updateCompareList}
-        compareList={compareList}
-      />
-      <MediaItem
-        id={'4'}
-        setPreviewData={setPreviewData}
-        updateCompareList={updateCompareList}
-        compareList={compareList}
-        video
-        tag
-      />
-      <div className={style.date}>02/01/2023</div>
-      <MediaItem
-        id={'5'}
-        setPreviewData={setPreviewData}
-        updateCompareList={updateCompareList}
-        compareList={compareList}
-      />
-      <MediaItem
-        id={'6'}
-        setPreviewData={setPreviewData}
-        updateCompareList={updateCompareList}
-        compareList={compareList}
-        tag
-      />
-      <MediaItem
-        id={'7'}
-        setPreviewData={setPreviewData}
-        updateCompareList={updateCompareList}
-        compareList={compareList}
-        video
-        tag
-      />
-      <MediaItem
-        id={'8'}
-        setPreviewData={setPreviewData}
-        updateCompareList={updateCompareList}
-        compareList={compareList}
-        video
-        tag
-      />
-      <MediaItem
-        id={'9'}
-        setPreviewData={setPreviewData}
-        updateCompareList={updateCompareList}
-        compareList={compareList}
-      />
-      <MediaItem
-        id={'10'}
-        setPreviewData={setPreviewData}
-        updateCompareList={updateCompareList}
-        compareList={compareList}
-        tag
-      />
-      <div className={style.date}>01/01/2023</div>
-      <MediaItem
-        id={'11'}
-        setPreviewData={setPreviewData}
-        updateCompareList={updateCompareList}
-        compareList={compareList}
-      />
-      <MediaItem
-        id={'12'}
-        setPreviewData={setPreviewData}
-        updateCompareList={updateCompareList}
-        compareList={compareList}
-      />
-      <MediaItem
-        id={'13'}
-        setPreviewData={setPreviewData}
-        updateCompareList={updateCompareList}
-        compareList={compareList}
-        video
-        tag
-      />
+      {images.map(
+        (
+          { ImageID, DateCreated, ImageName, FileType, IsRightEye, PatientID },
+          idx
+        ) => (
+          <Fragment key={ImageID}>
+            {idx === 0 && (
+              <div className={style.date}>
+                {format(new Date(DateCreated), 'MMM do, yyyy')}
+              </div>
+            )}
+            {idx > 0 &&
+              DateCreated.split(' ').slice(0, 4).join(' ') !==
+                images[idx - 1].DateCreated.split(' ')
+                  .slice(0, 4)
+                  .join(' ') && (
+                <div className={style.date}>
+                  {format(new Date(DateCreated), 'MMM do, yyyy')}
+                </div>
+              )}
+
+            <MediaItem
+              src={`${process.env.NEXT_PUBLIC_CLIENT_API}/gallery/${ImageName}`}
+              updateCompareList={updateCompareList}
+              compareList={compareList}
+              fileType={FileType}
+              IsRightEye={IsRightEye}
+              patientID={PatientID}
+              id={ImageID}
+              handleOnDrag={handleOnDrag}
+              imageName={ImageName}
+            />
+          </Fragment>
+        )
+      )}
     </div>
   )
 }

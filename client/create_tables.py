@@ -146,7 +146,7 @@ c.execute(
 )
 c.execute(
     """
-        INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Bob', 'Jones', '1990-01-01');
+    INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Bob', 'Jones', '1990-01-01');
     """
 )
 c.execute(
