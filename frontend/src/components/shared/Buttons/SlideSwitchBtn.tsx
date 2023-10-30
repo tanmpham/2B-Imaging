@@ -6,6 +6,7 @@ interface Props {
   TagID?: number
   Tag?: string
   setTagsShowing: Dispatch<SetStateAction<{ tagID: number; tag: string }[]>>
+  setCurrentTagID: Dispatch<SetStateAction<number>>
 }
 
 const style = {
@@ -14,7 +15,12 @@ const style = {
     inactive: `bg-grey_4 justify-start`,
   },
 }
-function SlideSwitchBtn({ setTagsShowing, TagID, Tag }: Props) {
+function SlideSwitchBtn({
+  setTagsShowing,
+  TagID,
+  Tag,
+  setCurrentTagID,
+}: Props) {
   const [isActive, setIsActive] = useState(false)
   return (
     <div
@@ -27,6 +33,7 @@ function SlideSwitchBtn({ setTagsShowing, TagID, Tag }: Props) {
             setTagsShowing((prev) =>
               prev.filter((item) => item.tagID !== TagID)
             )
+            setCurrentTagID(-1)
           } else {
             setTagsShowing((prev) => [...prev, { tagID: TagID, tag: Tag }])
           }

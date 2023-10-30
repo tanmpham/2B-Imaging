@@ -15,13 +15,25 @@ function TagsPage({ tags }: Props) {
 
   //console.log(tagsShowing)
 
+  const [currentTagID, setCurrentTagID] = useState(-1)
+
   return (
     <div className="text-white flex w-[88vw]">
-      <div className={`w-[580px] h-screen flex items-center justify-center`}>
-        <TagsView tags={tags} setTagsShowing={setTagsShowing} />
+      <div
+        className={`w-[580px] h-screen flex items-center justify-center shrink-0`}
+      >
+        <TagsView
+          tags={tags}
+          setTagsShowing={setTagsShowing}
+          setCurrentTagID={setCurrentTagID}
+        />
       </div>
 
-      <TagsDisplay tagsShowing={tagsShowing} />
+      <TagsDisplay
+        tagsShowing={tagsShowing}
+        currentTagID={currentTagID}
+        setCurrentTagID={setCurrentTagID}
+      />
     </div>
   )
 }

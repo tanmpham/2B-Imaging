@@ -8,8 +8,9 @@ import { Dispatch, SetStateAction, useState } from 'react'
 interface Props {
   tags: TagDto[]
   setTagsShowing: Dispatch<SetStateAction<{ tagID: number; tag: string }[]>>
+  setCurrentTagID: Dispatch<SetStateAction<number>>
 }
-function TagsView({ tags, setTagsShowing }: Props) {
+function TagsView({ tags, setTagsShowing, setCurrentTagID }: Props) {
   return (
     <div className="h-[88%] w-[500px] bg-grey_3 rounded-[16px]">
       <div className={`max-h-[88%] overflow-y-auto pt-[4rem] px-[3rem]`}>
@@ -26,6 +27,7 @@ function TagsView({ tags, setTagsShowing }: Props) {
                 {UseCount}
               </div>
               <SlideSwitchBtn
+                setCurrentTagID={setCurrentTagID}
                 TagID={TagID}
                 Tag={Tag}
                 setTagsShowing={setTagsShowing}

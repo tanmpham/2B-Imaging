@@ -60,7 +60,7 @@ def fetchAll():
     else:
         # Get all images in a tag
         sql_query = """
-        SELECT patientimages.ImageID, patientimages.ImageData, patientimages.IsRightEye, patientimages.Annotation, patientimages.ThumbnailData, patientimages.ImageName, patientimages.DateCreated
+        SELECT *
         FROM patientimages
         INNER JOIN imagetagslist ON patientimages.ImageID = imagetagslist.ImageID
         WHERE imagetagslist.TagsID = %s;
