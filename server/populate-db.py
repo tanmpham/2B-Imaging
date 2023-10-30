@@ -30,6 +30,7 @@ try:
         start_date = datetime.date(2023, 10, 20)
         end_date = datetime.date(2023, 10, 30)
 
+        # Populate Patient Images
         for i in range(len(image_names)):
             PatientID = random.randint(1, 10)
             IsRightEye = random.randint(0, 1)
@@ -53,6 +54,7 @@ try:
                     ('{PatientID}', '{IsRightEye}', '{Annotation}', '{image_names[i]}', '{DateCreated}')"""
             cursor.execute(sql_query)
 
+        # Populate Tags
         for i in range(1, 11):
             tag_name = f"tag_{i}"
             use_count = random.randint(20, 50)
@@ -75,6 +77,7 @@ try:
                 )
                 cursor.execute(sql_query, (image_id, i))
 
+        # Populate notes
         for i in range(1, 200):
             image_id = random.randint(1, len(image_names))
             note = f"Automatically generated note #{id} for image {image_id}"
