@@ -300,7 +300,7 @@ def get_notes_for_image():
     return {"notes": notes}
 
 
-# set up api for patient images
+# set up api for patient
 # Fetch all patients
 @app.route("/patients", methods=["GET"])
 def get_all_patients():
