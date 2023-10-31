@@ -2,6 +2,7 @@ import Img from '@/components/shared/Img/Img'
 import { toasterStyle } from '@/constants/toasterStyle'
 import { useGlobalContext } from '@/context/global-context'
 import { PatientDto } from '@/interfaces/patient.dto'
+import { TagDto } from '@/interfaces/tag.dto'
 import { format } from 'date-fns'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
@@ -43,8 +44,9 @@ function Preview() {
   })
   const { previewMedia } = useGlobalContext()
   const { id, src, fileType, IsRightEye } = previewMedia
+  const [tags, setTags] = useState<TagDto[]>([])
   useEffect(() => {
-    const getPatient = async () => {
+    async function getPatient() {
       if (id !== 0) {
         try {
           const res = await fetch(`api/patients/${id}`)
@@ -59,8 +61,24 @@ function Preview() {
         }
       }
     }
+    async function getTags() {
+      if (id !== 0) {
+        try {
+          const res = await fetch(`api/tags?image-id=${id}`)
+          if (!res.ok) {
+            toast.error('Failed to fetch data', toasterStyle)
+          }
+          const tagsData = (await res.json()) as TagDto[]
+          setTags(tagsData)
+        } catch (error) {
+          console.error('Failed to fetch patient:', error)
+          toast.error('Failed to fetch data', toasterStyle)
+        }
+      }
+    }
 
     getPatient()
+    getTags()
   }, [id])
 
   // console.log(patient)
@@ -107,7 +125,19 @@ function Preview() {
                 {IsRightEye ? 'Oculus Sinister' : 'Oculus Dextrus'}
               </div>
               <div>
-                <span className={style.title}>tags#:</span>
+                <span
+                  className={`${style.title} flex flex-wrap items-center gap-x-[.8rem]`}
+                >
+                  tags#:
+                  {tags.map(({ TagID, Tag }) => (
+                    <div
+                      key={TagID}
+                      className="font-light hover:text-orange_1 transition-colors ease-linear"
+                    >
+                      {Tag}
+                    </div>
+                  ))}
+                </span>
               </div>
             </div>
 

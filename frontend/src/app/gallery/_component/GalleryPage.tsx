@@ -32,8 +32,10 @@ function GalleryPage({ images }: Props) {
 
   const [isLoading, setIsLoading] = useState(true)
 
+  const [patientImages, setPatientImages] = useState<ImageDto[]>([])
+
   useEffect(() => {
-    const getPatient = async () => {
+    const getPatientData = async () => {
       if (params.patientId) {
         try {
           const res = await fetch(`api/patients/${params.patientId}`)
@@ -48,7 +50,25 @@ function GalleryPage({ images }: Props) {
       }
       setIsLoading(false)
     }
-    getPatient()
+    const getImagesByPatient = async () => {
+      if (params.patientId) {
+        try {
+          const res = await fetch(
+            `api/patientimages?patient-id=${params.patientId}`
+          )
+          if (!res.ok) {
+            toast.error('Failed to fetch data', toasterStyle)
+          }
+          const imageData = (await res.json()) as ImageDto[]
+          setPatientImages(imageData)
+        } catch (error) {
+          console.error('Failed to fetch patient:', error)
+        }
+      }
+      setIsLoading(false)
+    }
+    getImagesByPatient()
+    getPatientData()
 
     // console.log(currentPatient)
   }, [])
@@ -115,13 +135,24 @@ function GalleryPage({ images }: Props) {
       ) : (
         <div className="flex w-[88vw] text-white">
           <div className={`bg-grey_1 space-y-[30px] shrink-0`}>
-            <MediaList
-              className="max-h-[78vh] px-[60px] pt-[15px]"
-              updateCompareList={updateCompareList}
-              compareList={compareList}
-              images={images}
-              handleOnDrag={handleOnDrag}
-            />
+            {patientImages.length > 0 ? (
+              <MediaList
+                className="max-h-[78vh] px-[60px] pt-[15px]"
+                updateCompareList={updateCompareList}
+                compareList={compareList}
+                images={patientImages}
+                handleOnDrag={handleOnDrag}
+              />
+            ) : (
+              <MediaList
+                className="max-h-[78vh] px-[60px] pt-[15px]"
+                updateCompareList={updateCompareList}
+                compareList={compareList}
+                images={images}
+                handleOnDrag={handleOnDrag}
+              />
+            )}
+
             <div className={`w-full flex items-center justify-evenly`}>
               <CompareBox
                 compareList={compareList}

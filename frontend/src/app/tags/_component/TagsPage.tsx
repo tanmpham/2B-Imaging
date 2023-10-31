@@ -25,6 +25,7 @@ function TagsPage({ tags }: Props) {
         <TagsView
           tags={tags}
           setTagsShowing={setTagsShowing}
+          currentTagID={currentTagID}
           setCurrentTagID={setCurrentTagID}
         />
       </div>

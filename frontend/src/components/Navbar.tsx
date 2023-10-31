@@ -104,8 +104,6 @@ function Navbar() {
   const pathname = usePathname()
   const isMediaPage = pathname.split('/')[1] === 'gallery'
 
-  const [dob, setDob] = useState('')
-
   return (
     <div className="w-[12vw] bg-navBg h-screen p-[22px] text-white flex flex-col justify-center">
       <Logo />
@@ -180,11 +178,8 @@ function Navbar() {
             <input
               id="DateofBirth"
               type="date"
-              value={dob}
-              onChange={(e) => {
-                setDob(e.target.value)
-                updateData(e)
-              }}
+              value={currentPatient.DateofBirth}
+              onChange={updateData}
               className={style.input}
             />
           )}

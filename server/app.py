@@ -55,14 +55,15 @@ def hello():
 @app.route("/patientimages", methods=["GET"])
 def fetchAllImages():
     tag_id = request.args.get("tag-id")
+    patient_id = request.args.get("patient-id")
     try:
         connection = mysql.connector.connect(**db_config)
         cursor = connection.cursor()
 
-        if not tag_id:
+        if not tag_id and not patient_id:
             sql_query = f"""SELECT * FROM patientimages ORDER BY DateCreated DESC;"""
             cursor.execute(sql_query)
-        else:
+        elif tag_id and not patient_id:
             # Get all images in a tag
             sql_query = """
           SELECT *
@@ -71,6 +72,25 @@ def fetchAllImages():
           WHERE imagetagslist.TagsID = %s;
           """
             cursor.execute(sql_query, (tag_id,))
+        elif not tag_id and patient_id:  # if only patient-id is given
+            # Get all images for a patient
+            sql_query = """
+          SELECT *
+          FROM patientimages
+          INNER JOIN patients ON patientimages.PatientID = patients.PatientID
+          WHERE patients.PatientID = %s;
+          """
+            cursor.execute(sql_query, (patient_id,))
+        else:  # if both parameters are given
+            # Get all images for a patient in a tag
+            sql_query = """
+          SELECT *
+          FROM patientimages
+          INNER JOIN imagetagslist ON patientimages.ImageID = imagetagslist.ImageID
+          INNER JOIN patients ON patientimages.PatientID = patients.PatientID
+          WHERE imagetagslist.TagsID = %s AND patients.PatientID = %s;
+          """
+            cursor.execute(sql_query, (tag_id, patient_id))
 
         query_result = cursor.fetchall()
 

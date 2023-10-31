@@ -80,40 +80,47 @@ function TagsDisplay({ tagsShowing, currentTagID, setCurrentTagID }: Props) {
   }
   return (
     <div className={`grow h-screen bg-grey_3 overflow-x-auto`}>
-      <div className={`flex items-center text-[24px] mt-[.4rem] mx-[.4rem]`}>
-        {tagsShowing.map(({ tagID, tag }, idx) => (
+      {tagsShowing.length === 0 ? (
+        <div></div>
+      ) : (
+        <>
           <div
-            key={tagID}
-            className={`cursor-pointer px-[2rem] py-[1rem] border border-transparent rounded-[6px] hover:border-orange_1 active:scale-[.96] ${
-              (currentTagID === -1 && idx === 0) || currentTagID === tagID
-                ? style.title.active
-                : style.title.inactive
-            } transition-all ease-linear`}
-            onClick={() => {
-              setCurrentTagID(tagID)
-            }}
+            className={`flex items-center text-[24px] mt-[.4rem] mx-[.4rem]`}
           >
-            {tag}
+            {tagsShowing.map(({ tagID, tag }, idx) => (
+              <div
+                key={tagID}
+                className={`cursor-pointer px-[2rem] py-[1rem] border border-transparent rounded-[6px] hover:border-orange_1 active:scale-[.96] ${
+                  (currentTagID === -1 && idx === 0) || currentTagID === tagID
+                    ? style.title.active
+                    : style.title.inactive
+                } transition-all ease-linear`}
+                onClick={() => {
+                  setCurrentTagID(tagID)
+                }}
+              >
+                {tag}
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
+          {currentImagesList.length > 0 && (
+            <div className="flex items-center gap-x-[4rem]">
+              <MediaList
+                className="max-h-[88vh] w-fit px-[2rem] mt-[1rem]"
+                images={currentImagesList}
+                updateCompareList={updateCompareList}
+                compareList={compareList}
+                handleOnDrag={handleOnDrag}
+              />
 
-      {currentImagesList.length > 0 && (
-        <div className="flex items-center gap-x-[4rem]">
-          <MediaList
-            className="max-h-[88vh] w-fit px-[2rem] mt-[1rem]"
-            images={currentImagesList}
-            updateCompareList={updateCompareList}
-            compareList={compareList}
-            handleOnDrag={handleOnDrag}
-          />
-
-          <CompareBox
-            compareList={compareList}
-            updateCompareList={updateCompareList}
-            handleOnDrop__compare={handleOnDrop__compare}
-          />
-        </div>
+              <CompareBox
+                compareList={compareList}
+                updateCompareList={updateCompareList}
+                handleOnDrop__compare={handleOnDrop__compare}
+              />
+            </div>
+          )}
+        </>
       )}
     </div>
   )
