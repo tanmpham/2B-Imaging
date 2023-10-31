@@ -258,7 +258,7 @@ function Navbar() {
         ref={ref}
         className={`${
           isCalOpen ? 'block' : 'hidden'
-        } absolute z-10 bottom-[1rem] left-[14rem]`}
+        } absolute z-[100] bottom-[1rem] left-[14rem]`}
       >
         <DateRange
           ranges={[selectionRange]}

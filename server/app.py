@@ -1,9 +1,10 @@
-from flask import Flask, abort, request
+from flask import Flask, abort, request, make_response, jsonify
 from flask_cors import CORS
 from urllib.parse import urlparse
 import yaml
 import mysql.connector
-import os
+from datetime import datetime
+from dateutil.parser import parse
 
 
 app_conf_path = "app_conf.yml"
@@ -52,31 +53,35 @@ def hello():
 
 
 @app.route("/patientimages", methods=["GET"])
-def fetchAll():
+def fetchAllImages():
     tag_id = request.args.get("tag-id")
+    try:
+        connection = mysql.connector.connect(**db_config)
+        cursor = connection.cursor()
 
-    connection = mysql.connector.connect(**db_config)
-    cursor = connection.cursor()
+        if not tag_id:
+            sql_query = f"""SELECT * FROM patientimages ORDER BY DateCreated DESC;"""
+            cursor.execute(sql_query)
+        else:
+            # Get all images in a tag
+            sql_query = """
+          SELECT *
+          FROM patientimages
+          INNER JOIN imagetagslist ON patientimages.ImageID = imagetagslist.ImageID
+          WHERE imagetagslist.TagsID = %s;
+          """
+            cursor.execute(sql_query, (tag_id,))
 
-    if not tag_id:
-        sql_query = f"""SELECT * FROM patientimages ORDER BY DateCreated DESC;"""
-        cursor.execute(sql_query)
-    else:
-        # Get all images in a tag
-        sql_query = """
-        SELECT *
-        FROM patientimages
-        INNER JOIN imagetagslist ON patientimages.ImageID = imagetagslist.ImageID
-        WHERE imagetagslist.TagsID = %s;
-        """
-        cursor.execute(sql_query, (tag_id,))
+        query_result = cursor.fetchall()
 
-    query_result = cursor.fetchall()
-
-    # Commit changes and close the connection
-    connection.commit()
-    cursor.close()
-    connection.close()
+        # Commit changes and close the connection
+        connection.commit()
+        cursor.close()
+        connection.close()
+    except mysql.connector.Error as err:
+        error = f"[fetchAllImages]: {err}"
+        print(error)
+        return make_response(jsonify({"message": error}), 500)
 
     responseData = []
 
@@ -103,20 +108,26 @@ def fetchAll():
 # add a new tag
 @app.route("/imagetags", methods=["POST"])
 def add_tag():
-    connection = mysql.connector.connect(**db_config)
-    cursor = connection.cursor()
+    try:
+        connection = mysql.connector.connect(**db_config)
+        cursor = connection.cursor()
 
-    tag_name = request.json["Tag"]
-    image_id = request.json["ImageID"]
+        tag_name = request.json["Tag"]
+        image_id = request.json["ImageID"]
 
-    sql_query = (
-        """INSERT INTO imagetags (Tag, ImageID, UseCount) VALUES (%s, %s, %s);"""
-    )
-    cursor.execute(sql_query, (tag_name, image_id, 1))
+        sql_query = (
+            """INSERT INTO imagetags (Tag, ImageID, UseCount) VALUES (%s, %s, %s);"""
+        )
 
-    connection.commit()
-    cursor.close()
-    connection.close()
+        cursor.execute(sql_query, (tag_name, image_id, 1))
+
+        connection.commit()
+        cursor.close()
+        connection.close()
+    except mysql.connector.Error as err:
+        error = f"[add_tag]: {err}"
+        print(error)
+        return make_response(jsonify({"message": error}), 500)
 
     return {"message": "Tag added"}, 201
 
@@ -125,28 +136,32 @@ def add_tag():
 @app.route("/tags", methods=["GET"])
 def get_tags():
     image_id = request.args.get("image-id")
+    try:
+        connection = mysql.connector.connect(**db_config)
+        cursor = connection.cursor()
 
-    connection = mysql.connector.connect(**db_config)
-    cursor = connection.cursor()
+        if not image_id:
+            # Get all tags
+            sql_query = """SELECT imagetags.TagID, imagetags.Tag, imagetags.UseCount FROM imagetags;"""
+            cursor.execute(sql_query)
+        else:
+            # Get specific tags in an image
+            sql_query = """
+            SELECT imagetags.TagID, imagetags.Tag, imagetags.UseCount
+            FROM imagetags
+            INNER JOIN imagetagslist ON imagetags.TagID = imagetagslist.TagsID
+            WHERE imagetagslist.ImageID = %s;
+          """
+            cursor.execute(sql_query, (image_id,))
 
-    if not image_id:
-        # Get all tags
-        sql_query = """SELECT imagetags.TagID, imagetags.Tag, imagetags.UseCount FROM imagetags;"""
-        cursor.execute(sql_query)
-    else:
-        # Get specific tags in an image
-        sql_query = """
-          SELECT imagetags.TagID, imagetags.Tag, imagetags.UseCount
-          FROM imagetags
-          INNER JOIN imagetagslist ON imagetags.TagID = imagetagslist.TagsID
-          WHERE imagetagslist.ImageID = %s;
-        """
-        cursor.execute(sql_query, (image_id,))
+        query_result = cursor.fetchall()
 
-    query_result = cursor.fetchall()
-
-    cursor.close()
-    connection.close()
+        cursor.close()
+        connection.close()
+    except mysql.connector.Error as err:
+        error = f"[get_tags]: {err}"
+        print(error)
+        return make_response(jsonify({"message": error}), 500)
 
     tags = [
         {"TagID": tag[0], "Tag": tag[1], "UseCount": tag[2]} for tag in query_result
@@ -157,18 +172,21 @@ def get_tags():
 # Update a tag
 @app.route("/imagetags/<int:TagID>", methods=["PATCH"])
 def update_tag(TagID):
-    connection = mysql.connector.connect(**db_config)
-    cursor = connection.cursor()
+    try:
+        connection = mysql.connector.connect(**db_config)
+        cursor = connection.cursor()
 
-    new_tag_name = request.json["Tag"]
-    sql_query = (
-        """UPDATE imagetags SET Tag = %s, UseCount = UseCount + 1 WHERE TagID = %s;"""
-    )
+        new_tag_name = request.json["Tag"]
+        sql_query = """UPDATE imagetags SET Tag = %s, UseCount = UseCount + 1 WHERE TagID = %s;"""
 
-    cursor.execute(sql_query, (new_tag_name, TagID))
-    connection.commit()
-    cursor.close()
-    connection.close()
+        cursor.execute(sql_query, (new_tag_name, TagID))
+        connection.commit()
+        cursor.close()
+        connection.close()
+    except mysql.connector.Error as err:
+        error = f"[update_tag]: {err}"
+        print(error)
+        return make_response(jsonify({"message": error}), 500)
 
     return {"message": "Tag updated"}
 
@@ -176,15 +194,20 @@ def update_tag(TagID):
 # Delete a tag
 @app.route("/imagetags/<int:TagID>", methods=["DELETE"])
 def delete_tag(TagID):
-    connection = mysql.connector.connect(**db_config)
-    cursor = connection.cursor()
+    try:
+        connection = mysql.connector.connect(**db_config)
+        cursor = connection.cursor()
 
-    sql_query = """DELETE FROM imagetags WHERE TagID = %s;"""
-    cursor.execute(sql_query, (TagID,))
+        sql_query = """DELETE FROM imagetags WHERE TagID = %s;"""
+        cursor.execute(sql_query, (TagID,))
 
-    connection.commit()
-    cursor.close()
-    connection.close()
+        connection.commit()
+        cursor.close()
+        connection.close()
+    except mysql.connector.Error as err:
+        error = f"[delete_tag]: {err}"
+        print(error)
+        return make_response(jsonify({"message": error}), 500)
 
     return {"message": "Tag deleted"}
 
@@ -192,21 +215,24 @@ def delete_tag(TagID):
 # Add a new note
 @app.route("/imagenotes", methods=["POST"])
 def add_note():
-    connection = mysql.connector.connect(**db_config)
-    cursor = connection.cursor()
+    try:
+        connection = mysql.connector.connect(**db_config)
+        cursor = connection.cursor()
 
-    note_content = request.json["Note"]
-    image_id = request.json["ImageID"]
-    note_created_at = request.json["NoteCreatedAt"]
+        note_content = request.json["Note"]
+        image_id = request.json["ImageID"]
+        note_created_at = request.json["NoteCreatedAt"]
 
-    sql_query = (
-        """INSERT INTO imagenotes (Note, ImageID, NoteCreatedAt) VALUES (%s, %s, %s);"""
-    )
-    cursor.execute(sql_query, (note_content, image_id, note_created_at))
+        sql_query = """INSERT INTO imagenotes (Note, ImageID, NoteCreatedAt) VALUES (%s, %s, %s);"""
+        cursor.execute(sql_query, (note_content, image_id, note_created_at))
 
-    connection.commit()
-    cursor.close()
-    connection.close()
+        connection.commit()
+        cursor.close()
+        connection.close()
+    except mysql.connector.Error as err:
+        error = f"[add_note]: {err}"
+        print(error)
+        return make_response(jsonify({"message": error}), 500)
 
     return {"message": "Note added"}, 201
 
@@ -214,15 +240,25 @@ def add_note():
 # Get all notes
 @app.route("/imagenotes", methods=["GET"])
 def get_notes():
-    connection = mysql.connector.connect(**db_config)
-    cursor = connection.cursor()
+    try:
+        connection = mysql.connector.connect(**db_config)
+        cursor = connection.cursor()
+        image_id = request.args.get("image-id")
 
-    sql_query = """SELECT * FROM imagenotes;"""
-    cursor.execute(sql_query)
+        if not image_id:
+            sql_query = """SELECT * FROM imagenotes;"""
+            cursor.execute(sql_query)
+        else:
+            sql_query = """SELECT * FROM imagenotes WHERE ImageID = %s;"""
+            cursor.execute(sql_query, (image_id,))
 
-    query_result = cursor.fetchall()
-    cursor.close()
-    connection.close()
+        query_result = cursor.fetchall()
+        cursor.close()
+        connection.close()
+    except mysql.connector.Error as err:
+        error = f"[get_notes]: {err}"
+        print(error)
+        return make_response(jsonify({"message": error}), 500)
 
     notes = [
         {
@@ -239,17 +275,22 @@ def get_notes():
 # Update a note
 @app.route("/imagenotes/<int:NoteID>", methods=["PATCH"])
 def update_note(NoteID):
-    connection = mysql.connector.connect(**db_config)
-    cursor = connection.cursor()
+    try:
+        connection = mysql.connector.connect(**db_config)
+        cursor = connection.cursor()
 
-    new_content = request.json["Note"]
+        new_content = request.json["Note"]
 
-    sql_query = """UPDATE imagenotes SET Note = %s WHERE NoteID = %s;"""
-    cursor.execute(sql_query, (new_content, NoteID))
+        sql_query = """UPDATE imagenotes SET Note = %s WHERE NoteID = %s;"""
+        cursor.execute(sql_query, (new_content, NoteID))
 
-    connection.commit()
-    cursor.close()
-    connection.close()
+        connection.commit()
+        cursor.close()
+        connection.close()
+    except mysql.connector.Error as err:
+        error = f"[update_note]: {err}"
+        print(error)
+        return make_response(jsonify({"message": error}), 500)
 
     return {"message": "Note updated"}
 
@@ -257,62 +298,42 @@ def update_note(NoteID):
 # Delete a note
 @app.route("/imagenotes/<int:NoteID>", methods=["DELETE"])
 def delete_note(NoteID):
-    connection = mysql.connector.connect(**db_config)
-    cursor = connection.cursor()
+    try:
+        connection = mysql.connector.connect(**db_config)
+        cursor = connection.cursor()
 
-    sql_query = """DELETE FROM imagenotes WHERE NoteID = %s;"""
-    cursor.execute(sql_query, (NoteID,))
+        sql_query = """DELETE FROM imagenotes WHERE NoteID = %s;"""
+        cursor.execute(sql_query, (NoteID,))
 
-    connection.commit()
-    cursor.close()
-    connection.close()
+        connection.commit()
+        cursor.close()
+        connection.close()
+    except mysql.connector.Error as err:
+        error = f"[delete_note]: {err}"
+        print(error)
+        return make_response(jsonify({"message": error}), 500)
 
     return {"message": "Note deleted"}
-
-
-# Get notes for a specific image
-@app.route("/notes", methods=["GET"])
-def get_notes_for_image():
-    image_id = request.args.get("ImageID")
-
-    if not image_id:
-        return {"message": "ImageID is required"}, 400
-
-    connection = mysql.connector.connect(**db_config)
-    cursor = connection.cursor()
-
-    sql_query = """SELECT * FROM imagenotes WHERE ImageID = %s;"""
-    cursor.execute(sql_query, (image_id,))
-
-    query_result = cursor.fetchall()
-    cursor.close()
-    connection.close()
-
-    notes = [
-        {
-            "NoteID": note[0],
-            "Note": note[1],
-            "NoteCreatedAt": note[2],
-            "ImageID": note[3],
-        }
-        for note in query_result
-    ]
-    return {"notes": notes}
 
 
 # set up api for patient
 # Fetch all patients
 @app.route("/patients", methods=["GET"])
 def get_all_patients():
-    connection = mysql.connector.connect(**db_config)
-    cursor = connection.cursor()
+    try:
+        connection = mysql.connector.connect(**db_config)
+        cursor = connection.cursor()
 
-    sql_query = """SELECT * FROM patients;"""
-    cursor.execute(sql_query)
+        sql_query = """SELECT * FROM patients;"""
+        cursor.execute(sql_query)
 
-    query_result = cursor.fetchall()
-    cursor.close()
-    connection.close()
+        query_result = cursor.fetchall()
+        cursor.close()
+        connection.close()
+    except mysql.connector.Error as err:
+        error = f"[get_all_patients]: {err}"
+        print(error)
+        return make_response(jsonify({"message": error}), 500)
 
     patients = [
         {
@@ -329,15 +350,20 @@ def get_all_patients():
 # Fetch a single patient by ID
 @app.route("/patients/<int:patient_id>", methods=["GET"])
 def get_one_patient(patient_id):
-    connection = mysql.connector.connect(**db_config)
-    cursor = connection.cursor()
+    try:
+        connection = mysql.connector.connect(**db_config)
+        cursor = connection.cursor()
 
-    sql_query = """SELECT * FROM patients WHERE PatientID = %s;"""
-    cursor.execute(sql_query, (patient_id,))
+        sql_query = """SELECT * FROM patients WHERE PatientID = %s;"""
+        cursor.execute(sql_query, (patient_id,))
 
-    query_result = cursor.fetchone()
-    cursor.close()
-    connection.close()
+        query_result = cursor.fetchone()
+        cursor.close()
+        connection.close()
+    except mysql.connector.Error as err:
+        error = f"[get_one_patient]: {err}"
+        print(error)
+        return make_response(jsonify({"message": error}), 500)
 
     if query_result is None:
         return {"message": "Patient not found"}, 404
@@ -351,52 +377,6 @@ def get_one_patient(patient_id):
     return patient
 
 
-@app.route("/patients", methods=["GET"])
-def filter_patients(first_name=None, last_name=None, dob=None):
-    connection = mysql.connector.connect(**db_config)
-    cursor = connection.cursor()
-
-    firstname = request.args.get(first_name)
-    lastname = request.args.get(last_name)
-    birthdate = request.args.get(dob)
-
-    sql_query = """SELECT * FROM patients WHERE 1=1"""
-
-    if firstname:
-        sql_query += """ AND FirstName = %s"""
-    if lastname:
-        sql_query += """ AND LastName = %s"""
-    if birthdate:
-        sql_query += """ AND DateofBirth = %s"""
-
-    cursor.execute(
-        sql_query,
-        (
-            firstname,
-            lastname,
-            birthdate,
-        ),
-    )
-
-    query_result = cursor.fetchall()
-    cursor.close()
-    connection.close()
-
-    if query_result is None:
-        return {"message": "Patient not found"}, 404
-
-    patients = [
-        {
-            "PatientID": patient[0],
-            "FirstName": patient[1],
-            "LastName": patient[2],
-            "DateofBirth": patient[3],
-        }
-        for patient in query_result
-    ]
-    return {"patients": patients}
-
-
 @app.route("/patients", methods=["POST"])
 def create_patient():
     connection = mysql.connector.connect(**db_config)
@@ -404,14 +384,19 @@ def create_patient():
 
     first_name = request.json["FirstName"]
     last_name = request.json["LastName"]
-    date_of_birth = request.json["DateofBirth"]
+    date_of_birth = parse(request.json["DateofBirth"]).strftime("%Y-%m-%d %H:%M:%S")
 
     sql_query = """INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES (%s, %s, %s);"""
-    cursor.execute(sql_query, (first_name, last_name, date_of_birth))
 
-    connection.commit()
-    cursor.close()
-    connection.close()
+    try:
+        cursor.execute(sql_query, (first_name, last_name, date_of_birth))
+        connection.commit()
+        cursor.close()
+        connection.close()
+    except mysql.connector.Error as err:
+        error = f"[create_patient]: {err}"
+        print(error)
+        return make_response(jsonify({"message": error}), 500)
 
     return {"message": "Patient added"}, 201
 
@@ -426,11 +411,16 @@ def edit_patient(PatientID):
     date_of_birth = request.json["DateofBirth"]
 
     sql_query = """UPDATE patients SET FirstName = %s, LastName = %s, DateofBirth = %s WHERE PatientID = %s;"""
-    cursor.execute(sql_query, (first_name, last_name, date_of_birth, PatientID))
+    try:
+        cursor.execute(sql_query, (first_name, last_name, date_of_birth, PatientID))
 
-    connection.commit()
-    cursor.close()
-    connection.close()
+        connection.commit()
+        cursor.close()
+        connection.close()
+    except mysql.connector.Error as err:
+        error = f"[edit_patient]: {err}"
+        print(error)
+        return make_response(jsonify({"message": error}), 500)
 
     return {"message": "Patient updated"}, 201
 
