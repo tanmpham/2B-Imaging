@@ -27,7 +27,7 @@ DROP TABLE IF EXISTS `imagenotes`;
 CREATE TABLE `imagenotes` (
   `NoteID` int NOT NULL AUTO_INCREMENT,
   `Note` text,
-  `NoteCreatedAt` date DEFAULT NULL,
+  `NoteCreatedAt` datetime DEFAULT NULL,
   `ImageID` int DEFAULT NULL,
   PRIMARY KEY (`NoteID`),
   KEY `ImageID` (`ImageID`),
