@@ -3,7 +3,8 @@
 import { Button } from '@/components/shared/Buttons/Button'
 import SlideSwitchBtn from '@/components/shared/Buttons/SlideSwitchBtn'
 import { TagDto } from '@/interfaces/tag.dto'
-import { Dispatch, SetStateAction, useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { Dispatch, SetStateAction } from 'react'
 
 interface Props {
   tags: TagDto[]
@@ -17,6 +18,7 @@ function TagsView({
   currentTagID,
   setCurrentTagID,
 }: Props) {
+  const router = useRouter()
   return (
     <div className="h-[88%] w-[500px] bg-grey_3 rounded-[16px]">
       <div className={`max-h-[88%] overflow-y-auto pt-[4rem] px-[3rem]`}>
@@ -47,7 +49,12 @@ function TagsView({
       <div
         className={`flex items-center gap-x-[.64rem] mt-[2rem] justify-end mr-[2rem]`}
       >
-        <Button className="hover:translate-y-[-.2rem] transition-transform ease-in">
+        <Button
+          onClick={() => {
+            router.push('/tags/create')
+          }}
+          className="hover:translate-y-[-.2rem] transition-transform ease-in"
+        >
           Add
         </Button>
         <Button
