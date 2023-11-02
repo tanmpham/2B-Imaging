@@ -184,13 +184,7 @@ function Navbar() {
             />
           )}
         </div>
-        <div className="flex items-center gap-x-[.8rem]">
-          <Button
-            form="patientSelection"
-            className={`mt-[.4rem] ml-[1rem] w-fit hover:translate-y-[-.14rem]`}
-          >
-            Search
-          </Button>
+        <div className="flex items-center justify-center gap-x-[1rem] mt-[.4rem]">
           <Button
             onClick={() => {
               setCurrentPatient({
@@ -202,9 +196,15 @@ function Navbar() {
             }}
             form=""
             variant={'error'}
-            className={`mt-[.4rem] w-fit hover:translate-y-[-.14rem]`}
+            className={`w-fit hover:translate-y-[-.14rem]`}
           >
             Clear
+          </Button>
+          <Button
+            form="patientSelection"
+            className={`w-fit hover:translate-y-[-.14rem]`}
+          >
+            Search
           </Button>
         </div>
       </form>
