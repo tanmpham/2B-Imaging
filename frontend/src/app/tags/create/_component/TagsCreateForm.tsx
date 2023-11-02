@@ -15,7 +15,7 @@ function TagsCreateForm({}: Props) {
         className={`p-[3rem] flex flex-col gap-y-[1.4rem]`}
       >
         <label htmlFor="createtag" className="text-[40px] font-bold">
-          Create a new tag
+          Create a new #tag:
         </label>
         <input
           id="createtag"
