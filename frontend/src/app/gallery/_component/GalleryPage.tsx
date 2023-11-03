@@ -19,7 +19,8 @@ interface Props {
   images: ImageDto[]
 }
 function GalleryPage({ images }: Props) {
-  const { currentPatient, setCurrentPatient, previewMedia } = useGlobalContext()
+  const { setCurrentPatient, previewMedia, compareList, setCompareList } =
+    useGlobalContext()
 
   const searchParams = useSearchParams()
   const params = {
@@ -108,8 +109,6 @@ function GalleryPage({ images }: Props) {
     setMediaDrop({ id: item[0], fileName: item[1] })
     setIsConfirming(true)
   }
-
-  const [compareList, setCompareList] = useState<string[]>([])
 
   const updateCompareList = (src: string, method: string) => {
     if (method === 'add') {
