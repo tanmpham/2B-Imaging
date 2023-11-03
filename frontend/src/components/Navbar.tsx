@@ -8,17 +8,16 @@ import { HiHashtag } from 'react-icons/hi2'
 import { VscCalendar } from 'react-icons/vsc'
 import Logo from './shared/Logo/Logo'
 
-import format from 'date-fns/format'
+import { format } from 'date-fns'
 import { DateRange, RangeKeyDict } from 'react-date-range'
 import 'react-date-range/dist/styles.css'
 import 'react-date-range/dist/theme/default.css'
 
-import { toasterStyle } from '@/constants/toasterStyle'
 import { useGlobalContext } from '@/context/global-context'
 import { closeOnClickOutside } from '@/utils/closeOnClickOutside'
 import Link from 'next/link'
-import { usePathname, useRouter } from 'next/navigation'
-import toast from 'react-hot-toast'
+import { useRouter } from 'next/navigation'
+
 import { Button } from './shared/Buttons/Button'
 
 const style = {
@@ -81,28 +80,16 @@ function Navbar() {
     e.preventDefault()
     setSelectedDate(range)
     const { PatientID, FirstName, LastName, DateofBirth } = currentPatient
-    if (
-      PatientID === -1 &&
-      FirstName === '' &&
-      LastName === '' &&
-      DateofBirth === ''
-    ) {
-      toast.error('Please fill in at least 1 field.', toasterStyle)
-    } else {
-      router.push(
-        `/gallery?${
-          PatientID && PatientID !== -1 ? `patient-id=${PatientID}` : ''
-        }${FirstName && `&firstname=${FirstName}`}${
-          LastName && `&lastname=${LastName}`
-        }${DateofBirth && `&dob=${DateofBirth}`}`
-      )
-    }
+    router.push(
+      `/gallery?${
+        PatientID && PatientID !== -1 ? `patient-id=${PatientID}` : ''
+      }${FirstName && `&firstname=${FirstName}`}${
+        LastName && `&lastname=${LastName}`
+      }${DateofBirth && `&dob=${DateofBirth}`}`
+    )
   }
 
   const ref = useRef(null)
-
-  const pathname = usePathname()
-  const isMediaPage = pathname.split('/')[1] === 'gallery'
 
   return (
     <div className="w-[12vw] bg-navBg h-screen p-[22px] text-white flex flex-col justify-center">
@@ -129,6 +116,7 @@ function Navbar() {
             }
             onChange={updateData}
             className={style.input}
+            required
           />
         </div>
 
@@ -142,6 +130,7 @@ function Navbar() {
             value={currentPatient.LastName}
             onChange={updateData}
             className={style.input}
+            required
           />
         </div>
 
@@ -155,6 +144,7 @@ function Navbar() {
             value={currentPatient.FirstName}
             onChange={updateData}
             className={style.input}
+            required
           />
         </div>
 
@@ -163,26 +153,14 @@ function Navbar() {
             DOB
           </label>
 
-          {isMediaPage ? (
-            <input
-              value={
-                currentPatient.DateofBirth
-                  ? format(new Date(currentPatient.DateofBirth), 'yyyy-MM-dd')
-                  : ''
-              }
-              readOnly
-              id="DateofBirth"
-              className={style.input}
-            />
-          ) : (
-            <input
-              id="DateofBirth"
-              type="date"
-              value={currentPatient.DateofBirth}
-              onChange={updateData}
-              className={style.input}
-            />
-          )}
+          <input
+            id="DateofBirth"
+            type="date"
+            value={currentPatient.DateofBirth}
+            onChange={updateData}
+            className={style.input}
+            required
+          />
         </div>
         <div className="flex items-center justify-center gap-x-[1rem] mt-[.4rem]">
           <Button

@@ -10,6 +10,7 @@ import { toasterStyle } from '@/constants/toasterStyle'
 import { useGlobalContext } from '@/context/global-context'
 import { ImageDto } from '@/interfaces/image.dto'
 import { PatientDto } from '@/interfaces/patient.dto'
+import { format } from 'date-fns'
 import { useSearchParams } from 'next/navigation'
 import { DragEvent, useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
@@ -43,7 +44,15 @@ function GalleryPage({ images }: Props) {
             toast.error('Failed to fetch data', toasterStyle)
           }
           const patientData = (await res.json()) as PatientDto
-          setCurrentPatient(patientData)
+          setCurrentPatient({
+            PatientID: patientData.PatientID,
+            LastName: patientData.LastName,
+            FirstName: patientData.FirstName,
+            DateofBirth: format(
+              new Date(patientData.DateofBirth),
+              'yyyy-MM-dd'
+            ),
+          })
         } catch (error) {
           console.error('Failed to fetch patient:', error)
         }
