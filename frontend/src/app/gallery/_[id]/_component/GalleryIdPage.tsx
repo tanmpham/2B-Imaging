@@ -24,7 +24,7 @@ function GalleryIdPage({ images }: Props) {
 
   return (
     <div className="flex text-white">
-      <div className={`bg-grey_1 space-y-[30px]`}>
+      {/* <div className={`bg-grey_1 space-y-[30px]`}>
         <MediaList
           className="max-h-[78vh] px-[80px] pt-[15px]"
           updateCompareList={updateCompareList}
@@ -38,7 +38,7 @@ function GalleryIdPage({ images }: Props) {
           />
           <DeleteConfirmBox />
         </div>
-      </div>
+      </div> */}
     </div>
   )
 }
