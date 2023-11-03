@@ -2,6 +2,7 @@
 
 import { Button } from '@/components/shared/Buttons/Button'
 import { toasterStyle } from '@/constants/toasterStyle'
+import { useRouter } from 'next/navigation'
 import { ChangeEvent, FormEvent, useState } from 'react'
 import toast from 'react-hot-toast'
 
@@ -41,6 +42,7 @@ function TagsCreateForm({}: Props) {
 
     createTag()
   }
+  const router = useRouter()
   return (
     <div className={`w-[500px] h-fit bg-grey_3 rounded-[16px] mt-[5.8rem]`}>
       <form
@@ -61,6 +63,10 @@ function TagsCreateForm({}: Props) {
         <div className="w-full flex items-center justify-end mt-[1rem] gap-x-[1rem]">
           <Button
             variant={'error'}
+            form=""
+            onClick={() => {
+              router.push(`${process.env.NEXT_PUBLIC_CLIENT_FRONTEND_URL}/tags`)
+            }}
             className="hover:translate-y-[-.2rem] transition-transform ease-linear"
           >
             Cancel
