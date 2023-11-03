@@ -10,8 +10,11 @@ Download NodeJs Windows Installer (LTS Version) <a href='https://nodejs.org/en/d
 cd frontend
 npm i -g yarn
 yarn install
+yarn build
 yarn dev
 ```
+
+`Hint:` Find the download option in the browser search bar to download the PWA version of the front-end.
 
 ### Install dependencies, set up and run the back-end app locally
 
