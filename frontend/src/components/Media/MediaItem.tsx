@@ -1,69 +1,87 @@
 'use client'
 
+import { toasterStyle } from '@/constants/toasterStyle'
+import { useGlobalContext } from '@/context/global-context'
 import { usePathname, useRouter } from 'next/navigation'
-import { Dispatch, SetStateAction } from 'react'
+import { Dispatch, DragEvent, SetStateAction } from 'react'
 import toast from 'react-hot-toast'
 import { BsCameraReels } from 'react-icons/bs'
 import { HiHashtag } from 'react-icons/hi2'
+import Img from '../shared/Img/Img'
 
 interface Props {
   src?: string
-  video?: boolean
   tag?: boolean
-  setPreviewData?: Dispatch<SetStateAction<{ src: string; id: string }>>
-  id: string
   updateCompareList?: (src: string, method: string) => void
   compareList?: string[]
+  fileType: string
+  IsRightEye: number
+  patientID: number
+  id: number
+  handleOnDrag?: (
+    e: DragEvent,
+    item: { id: string; fileName: string; src: string }
+  ) => void
+  imageName: string
 }
 
 const style = {
-  icon: `text-[34px] cursor-pointer active:scale-95 hover:scale-[1.04] transition-transform ease-linear z-10 absolute bottom-[1rem]`,
+  icon: `text-[34px] cursor-pointer active:scale-95 hover:translate-x-[.2rem] transition-transform ease-linear z-10 absolute bottom-[1rem]`,
 }
 
 function MediaItem({
   id,
   src,
-  video,
   tag,
-  setPreviewData,
   updateCompareList,
   compareList,
+  fileType,
+  IsRightEye,
+  patientID,
+  handleOnDrag,
+  imageName,
 }: Props) {
   const router = useRouter()
   const pathname = usePathname()
 
-  const isMediaPage =
-    pathname.split('/')[1] === 'images' || pathname.split('/')[1] === 'videos'
+  const isMediaPage = pathname.split('/')[1] === 'gallery'
+  const isTagPage = pathname.split('/')[1] === 'tags'
 
+  function updateCompareListFn() {
+    if (compareList?.length && compareList.length > 5) {
+      toast.error('Reached limit 6 images to compare.', toasterStyle)
+    } else {
+      if (src && !compareList?.includes(src) && updateCompareList) {
+        updateCompareList(src, 'add')
+      } else {
+        toast.error('Item is already selected.', toasterStyle)
+      }
+    }
+  }
+
+  const { setPreviewMedia } = useGlobalContext()
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (src) {
+      setPreviewMedia({
+        id: patientID,
+        src: src,
+        fileType: fileType,
+        IsRightEye: IsRightEye,
+      })
+    }
     switch (e.detail) {
       case 1:
-        if (setPreviewData) {
-          setPreviewData({ id: id, src: 'hi' })
+        if (isTagPage) {
+          updateCompareListFn()
         }
-
         break
       case 2:
         if (isMediaPage && updateCompareList) {
-          if (compareList?.length && compareList.length > 5) {
-            toast.error('Reached limit 6 images to compare.')
-          } else {
-            if (!compareList?.includes(id)) {
-              updateCompareList(id, 'add')
-            } else {
-              toast.error('Item is already selected.')
-            }
-          }
+          updateCompareListFn()
         } else {
-          if (video) {
-            router.push(`/videos/${id}`)
-          } else {
-            router.push(`/images/${id}`)
-          }
+          router.push(`/gallery?patient-id=${patientID}`)
         }
-        break
-      case 3:
-        console.log('triple click')
+
         break
     }
   }
@@ -71,13 +89,37 @@ function MediaItem({
   return (
     <button
       onClick={handleClick}
-      className={`relative w-[200px] h-[200px] ${
+      draggable
+      onDragStart={(e) => {
+        handleOnDrag && src
+          ? handleOnDrag(e, { id: String(id), fileName: imageName, src: src })
+          : ''
+      }}
+      className={`relative z-[20] w-[200px] h-[200px] p-1 ${
         !src && 'bg-grey_2'
-      } hover:translate-y-[-.4rem] transition-transform ease-linear`}
+      } hover:translate-y-[-.2rem] active:scale-[0.98] border-2 border-transparent hover:border-grey_2 rounded-[6px] transition-all ease-linear group`}
     >
-      {video && (
+      {src && (
+        <>
+          {fileType === 'jpg' && (
+            <Img
+              className={`${
+                tag && 'group-hover:opacity-[.4]'
+              } transition-opacity ease-linear rounded-[6px]`}
+              src={src}
+            />
+          )}
+          {fileType === 'mp4' && (
+            <video className="object-cover group-hover:opacity-[.4] transition-opacity ease-linear">
+              <source src={`${src}#t=0.6`} type="video/mp4" />
+            </video>
+          )}
+        </>
+      )}
+
+      {fileType === 'mp4' && (
         <BsCameraReels
-          className={`${style.icon} text-stone-700 hover:text-black left-[1rem]`}
+          className={`${style.icon} text-stone-300 hover:text-stone-400 left-[1rem]`}
         />
       )}
 

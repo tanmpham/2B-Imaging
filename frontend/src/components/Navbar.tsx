@@ -13,19 +13,22 @@ import { DateRange, RangeKeyDict } from 'react-date-range'
 import 'react-date-range/dist/styles.css'
 import 'react-date-range/dist/theme/default.css'
 
-import { useCurrentPatientContext } from '@/context/current-patient-context'
+import { toasterStyle } from '@/constants/toasterStyle'
+import { useGlobalContext } from '@/context/global-context'
 import { closeOnClickOutside } from '@/utils/closeOnClickOutside'
 import Link from 'next/link'
+import { usePathname, useRouter } from 'next/navigation'
+import toast from 'react-hot-toast'
 import { Button } from './shared/Buttons/Button'
 
 const style = {
   label: `ml-[2rem] hover:text-green_2 cursor-pointer group-hover:text-green_2`,
-  input: `w-full outline-none px-[1rem] h-[28px] text-black text-[12px] font-semibold rounded-[var(--rounded-default)] mt-[.4rem] hover:scale-[1.02] transition-transform ease-linear`,
+  input: `w-full outline-none px-[1rem] h-[28px] text-black text-[12px] font-semibold rounded-[var(--rounded-default)] mt-[.4rem] transition-transform ease-linear`,
 }
 
 function Navbar() {
   const { currentPatient, setCurrentPatient, selectedDate, setSelectedDate } =
-    useCurrentPatientContext()
+    useGlobalContext()
   const [startDate, setStartDate] = useState<Date>(new Date())
   const [endDate, setEndDate] = useState<Date>(new Date())
   const [isCalOpen, setIsCalOpen] = useState(false)
@@ -53,23 +56,56 @@ function Navbar() {
   }
 
   const updateData = (e: ChangeEvent<HTMLInputElement>) => {
-    setCurrentPatient({
-      ...currentPatient,
-      [e.target.id]: e.target.value,
-    })
+    if (e.target.id === 'PatientID') {
+      if (e.target.value === '') {
+        setCurrentPatient({
+          ...currentPatient,
+          [e.target.id]: -1,
+        })
+      } else {
+        setCurrentPatient({
+          ...currentPatient,
+          [e.target.id]: Number(e.target.value),
+        })
+      }
+    } else {
+      setCurrentPatient({
+        ...currentPatient,
+        [e.target.id]: e.target.value,
+      })
+    }
   }
 
+  const router = useRouter()
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setSelectedDate(range)
-    console.log(currentPatient)
-    console.log(selectedDate)
+    const { PatientID, FirstName, LastName, DateofBirth } = currentPatient
+    if (
+      PatientID === -1 &&
+      FirstName === '' &&
+      LastName === '' &&
+      DateofBirth === ''
+    ) {
+      toast.error('Please fill in at least 1 field.', toasterStyle)
+    } else {
+      router.push(
+        `/gallery?${
+          PatientID && PatientID !== -1 ? `patient-id=${PatientID}` : ''
+        }${FirstName && `&firstname=${FirstName}`}${
+          LastName && `&lastname=${LastName}`
+        }${DateofBirth && `&dob=${DateofBirth}`}`
+      )
+    }
   }
 
   const ref = useRef(null)
 
+  const pathname = usePathname()
+  const isMediaPage = pathname.split('/')[1] === 'gallery'
+
   return (
-    <div className="w-[12vw] bg-navBg h-screen p-[22px] text-white">
+    <div className="w-[12vw] bg-navBg h-screen p-[22px] text-white flex flex-col justify-center">
       <Logo />
       <FaUserAlt className="ml-[1.4rem] my-[40px] text-4xl" />
 
@@ -80,63 +116,102 @@ function Navbar() {
         className="flex flex-col gap-y-[1rem]"
       >
         <div className="group">
-          <label htmlFor="id" className={style.label}>
+          <label htmlFor="PatientID" className={style.label}>
             ID
           </label>
           <input
-            id="id"
-            type="text"
+            id="PatientID"
+            type="number"
+            value={
+              currentPatient.PatientID !== -1
+                ? `${currentPatient.PatientID}`
+                : ''
+            }
             onChange={updateData}
             className={style.input}
           />
         </div>
 
         <div className="group">
-          <label htmlFor="last" className={style.label}>
+          <label htmlFor="LastName" className={style.label}>
             Last
           </label>
           <input
-            id="last"
+            id="LastName"
             type="text"
+            value={currentPatient.LastName}
             onChange={updateData}
             className={style.input}
           />
         </div>
 
         <div className="group">
-          <label htmlFor="first" className={style.label}>
+          <label htmlFor="FirstName" className={style.label}>
             First
           </label>
           <input
-            id="first"
+            id="FirstName"
             type="text"
+            value={currentPatient.FirstName}
             onChange={updateData}
             className={style.input}
           />
         </div>
 
         <div className="group">
-          <label htmlFor="dob" className={style.label}>
+          <label htmlFor="DateofBirth" className={style.label}>
             DOB
           </label>
-          <input
-            id="dob"
-            type="date"
-            onChange={updateData}
-            className={style.input}
-          />
+
+          {isMediaPage ? (
+            <input
+              value={
+                currentPatient.DateofBirth
+                  ? format(new Date(currentPatient.DateofBirth), 'yyyy-MM-dd')
+                  : ''
+              }
+              readOnly
+              id="DateofBirth"
+              className={style.input}
+            />
+          ) : (
+            <input
+              id="DateofBirth"
+              type="date"
+              value={currentPatient.DateofBirth}
+              onChange={updateData}
+              className={style.input}
+            />
+          )}
         </div>
-        <Button
-          form="patientSelection"
-          className={`mt-[.4rem] ml-[1rem] w-fit`}
-        >
-          Search
-        </Button>
+        <div className="flex items-center gap-x-[.8rem]">
+          <Button
+            form="patientSelection"
+            className={`mt-[.4rem] ml-[1rem] w-fit hover:translate-y-[-.14rem]`}
+          >
+            Search
+          </Button>
+          <Button
+            onClick={() => {
+              setCurrentPatient({
+                PatientID: -1,
+                LastName: '',
+                FirstName: '',
+                DateofBirth: '',
+              })
+            }}
+            form=""
+            variant={'error'}
+            className={`mt-[.4rem] w-fit hover:translate-y-[-.14rem]`}
+          >
+            Clear
+          </Button>
+        </div>
       </form>
 
       <div className={`mt-[4rem] flex flex-col space-y-[40px] justify-between`}>
         <Link href="/tags">
-          <HiHashtag className="text-6xl ml-[1rem] cursor-pointer hover:text-green_2 active:scale-95 transition-transform ease-in" />
+          <HiHashtag className="text-6xl ml-[1rem] cursor-pointer hover:text-green_2 hover:translate-x-[.2rem] transition-transform ease-in" />
         </Link>
 
         <VscCalendar
@@ -144,7 +219,7 @@ function Navbar() {
             setStartDate(new Date())
             setEndDate(new Date())
           }}
-          className="text-6xl ml-[1rem] cursor-pointer hover:text-green_2 active:scale-95 transition-transform ease-in"
+          className="text-6xl ml-[1rem] cursor-pointer hover:text-green_2 hover:translate-x-[.2rem] transition-transform ease-in"
         />
 
         <div className="flex flex-col space-y-[1rem] items-center">
@@ -165,7 +240,10 @@ function Navbar() {
               })
             }}
           />
-          <Button size="custom" className="text-[14px] px-[.4rem]">
+          <Button
+            size="custom"
+            className="text-[14px] pl-[.5rem] pr-[.2rem] py-[.1rem] hover:translate-x-[.2rem] transition-transform ease-linear"
+          >
             Select Date <BsArrowRightShort className="text-[26px]" />
           </Button>
         </div>
@@ -175,7 +253,7 @@ function Navbar() {
         ref={ref}
         className={`${
           isCalOpen ? 'block' : 'hidden'
-        } absolute z-10 bottom-[1rem] left-[14rem]`}
+        } absolute z-[100] bottom-[1rem] left-[14rem]`}
       >
         <DateRange
           ranges={[selectionRange]}

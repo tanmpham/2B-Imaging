@@ -39,7 +39,7 @@ def fetchAll():
 
     cursor = connection.cursor()
 
-    sql_query = f"""SELECT * FROM patientimages;"""
+    sql_query = f"""SELECT * FROM patientimages ORDER BY DateCreated DESC;"""
     cursor.execute(sql_query)
     query_result = cursor.fetchall()
 
@@ -48,10 +48,12 @@ def fetchAll():
     cursor.close()
     connection.close()
 
-    responseData = []
+    images = []
 
     for image in query_result:
-        responseData.append(
+        parts = image[6].split(".")
+        fileType = parts[len(parts) - 1]
+        images.append(
             {
                 "ImageID": image[0],
                 "PatientID": image[1],
@@ -60,11 +62,12 @@ def fetchAll():
                 "Annotation": image[4],
                 "ThumbnailData": image[5],
                 "ImageName": image[6],
+                "FileType": fileType,
                 "DateCreated": image[7],
             }
         )
 
-    return responseData
+    return images
 
 
 app.run(host="0.0.0.0", port=4200, debug=True)

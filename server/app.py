@@ -2,15 +2,23 @@ from flask import Flask, abort, request
 from flask_cors import CORS
 from urllib.parse import urlparse
 import yaml
+<<<<<<< HEAD
 import mysql.connector
 import os 
 import parse 
+=======
+from controllers.patientimages import patientimages_bp
+from controllers.imagetags import imagetags_bp
+from controllers.imagenotes import imagenotes_bp
+from controllers.patients import patients_bp
+>>>>>>> b9568daca92ee68ac5ff0b601cb88e8dff41ce31
 
-relative_path = "2B-Imaging\server\\app_conf.example.yml"
-app_conf_path = os.path.abspath(relative_path)
+
+app_conf_path = "app_conf.yml"
 
 with open(app_conf_path, "r") as f:
     appConfig = yaml.safe_load(f.read())
+
 
 class SecuredStaticFlask(Flask):
     def send_static_file(self, filename):
@@ -30,6 +38,12 @@ class SecuredStaticFlask(Flask):
 app = SecuredStaticFlask(
     __name__, static_folder="patientimages", static_url_path="/gallery"
 )
+
+app.register_blueprint(patients_bp)
+app.register_blueprint(patientimages_bp)
+app.register_blueprint(imagetags_bp)
+app.register_blueprint(imagenotes_bp)
+
 CORS(
     app,
     origins=[
@@ -38,19 +52,13 @@ CORS(
     ],
 )
 
-db_config = {
-    "host": "localhost",
-    "user": "root",
-    "password": appConfig["sql-pass"],
-    "database": "eyecameradb",
-}
-
 
 @app.route("/")
-def hello():
-    return "Hello, World!"
+def home():
+    return "Restricted server!", 400
 
 
+<<<<<<< HEAD
 @app.route("/patientimages", methods=["GET"])
 def fetchAll():
     connection = mysql.connector.connect(**db_config)
@@ -365,4 +373,6 @@ def edit_patient(PatientID):
 
     return {"message": "Patient updated"}, 201
 
+=======
+>>>>>>> b9568daca92ee68ac5ff0b601cb88e8dff41ce31
 app.run(host="0.0.0.0", port=4000, debug=True)

@@ -1,5 +1,5 @@
 import Navbar from '@/components/Navbar'
-import CurrentPatientContextProvider from '@/context/current-patient-context'
+import GlobalContextProvider from '@/context/global-context'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
@@ -14,6 +14,8 @@ export const metadata: Metadata = {
   },
 }
 
+export const revalidate = 0
+
 export default function RootLayout({
   children,
 }: {
@@ -24,10 +26,10 @@ export default function RootLayout({
       <body
         className={`${inter.className} flex min-w-screen min-h-screen bg-[linear-gradient(90deg,_rgba(0,0,0,0.90)_-2.91%,_rgba(0,0,0,0.80)_51.04%,_rgba(0,0,0,0.90)_107.23%)]`}
       >
-        <CurrentPatientContextProvider>
+        <GlobalContextProvider>
           <Navbar />
           {children}
-        </CurrentPatientContextProvider>
+        </GlobalContextProvider>
       </body>
     </html>
   )
