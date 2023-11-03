@@ -16,8 +16,8 @@ connection = mysql.connector.connect(**db_config)
 cursor = connection.cursor()
 
 # # Reset AUTO_INCREMENT (Use with caution!)
-# #reset_auto_increment_query = "ALTER TABLE patientimages AUTO_INCREMENT = 1"
-# #cursor.execute(reset_auto_increment_query)
+# reset_auto_increment_query = "ALTER TABLE patientimages AUTO_INCREMENT = 1"
+# cursor.execute(reset_auto_increment_query)
 
 
 # # Insert image names into the 'patientimages' table

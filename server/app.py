@@ -4,6 +4,7 @@ from urllib.parse import urlparse
 import yaml
 import mysql.connector
 import os 
+import parse 
 
 relative_path = "2B-Imaging\server\\app_conf.example.yml"
 app_conf_path = os.path.abspath(relative_path)
@@ -335,7 +336,7 @@ def create_patient():
 
     first_name = request.json["FirstName"]
     last_name = request.json["LastName"]
-    date_of_birth = request.json["DateofBirth"]
+    date_of_birth = parse(request.json["DateofBirth"]).strftime("%Y-%m-%d %H:%M:%S")
 
     sql_query = """INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES (%s, %s, %s);"""
     cursor.execute(sql_query, (first_name, last_name, date_of_birth))
@@ -353,7 +354,7 @@ def edit_patient(PatientID):
 
     first_name = request.json["FirstName"]
     last_name = request.json["LastName"]
-    date_of_birth = request.json["DateofBirth"]
+    date_of_birth = parse(request.json["DateofBirth"]).strftime("%Y-%m-%d %H:%M:%S")
 
     sql_query = """UPDATE patients SET FirstName = %s, LastName = %s, DateofBirth = %s WHERE PatientID = %s;"""
     cursor.execute(sql_query, (first_name, last_name, date_of_birth, PatientID))
