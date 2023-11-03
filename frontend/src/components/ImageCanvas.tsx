@@ -6,7 +6,7 @@ import Img from './shared/Img/Img'
 interface Props {}
 function ImageCanvas({}: Props) {
   const { previewMedia } = useGlobalContext()
-  const { id, src, IsRightEye } = previewMedia
+  const { src, IsRightEye } = previewMedia
   return (
     <div className="grow flex items-center justify-center">
       <div className={`w-[96%]`}>
