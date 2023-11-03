@@ -55,9 +55,9 @@ try:
             cursor.execute(sql_query)
 
         # Populate Tags
-        for i in range(1, 11):
+        for i in range(1, 4):
             tag_name = f"tag_{i}"
-            use_count = random.randint(20, 50)
+            use_count = random.randint(6, 10)
 
             sql_insert_tag_query = (
                 "INSERT INTO imagetags (Tag, UseCount) VALUES (%s, %s)"

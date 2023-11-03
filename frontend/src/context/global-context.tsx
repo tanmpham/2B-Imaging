@@ -37,7 +37,8 @@ export default function GlobalContextProvider({ children }: Props) {
 
   const [previewMedia, setPreviewMedia] = useState<PreviewMedia>({
     src: '',
-    id: 0,
+    patientID: 0,
+    imageID: 0,
     fileType: '',
     IsRightEye: -1,
   })

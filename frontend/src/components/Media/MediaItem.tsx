@@ -2,8 +2,9 @@
 
 import { toasterStyle } from '@/constants/toasterStyle'
 import { useGlobalContext } from '@/context/global-context'
+import { TagDto } from '@/interfaces/tag.dto'
 import { usePathname, useRouter } from 'next/navigation'
-import { Dispatch, DragEvent, SetStateAction } from 'react'
+import { DragEvent, useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { BsCameraReels } from 'react-icons/bs'
 import { HiHashtag } from 'react-icons/hi2'
@@ -11,7 +12,6 @@ import Img from '../shared/Img/Img'
 
 interface Props {
   src?: string
-  tag?: boolean
   updateCompareList?: (src: string, method: string) => void
   compareList?: string[]
   fileType: string
@@ -32,7 +32,6 @@ const style = {
 function MediaItem({
   id,
   src,
-  tag,
   updateCompareList,
   compareList,
   fileType,
@@ -63,7 +62,8 @@ function MediaItem({
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (src) {
       setPreviewMedia({
-        id: patientID,
+        patientID: patientID,
+        imageID: id,
         src: src,
         fileType: fileType,
         IsRightEye: IsRightEye,
@@ -86,13 +86,42 @@ function MediaItem({
     }
   }
 
+  const [isHaveTag, setIsHaveTag] = useState<boolean>(false)
+
+  useEffect(() => {
+    async function getTags() {
+      if (id !== 0) {
+        try {
+          const res = await fetch(`api/tags?image-id=${id}`)
+          if (!res.ok) {
+            toast.error('Failed to fetch data', toasterStyle)
+          } else {
+            const tagsData = (await res.json()) as TagDto[]
+
+            if (tagsData.length > 0) {
+              setIsHaveTag(true)
+            }
+          }
+        } catch (error) {
+          console.error('Failed to fetch patient:', error)
+          toast.error('Failed to fetch data', toasterStyle)
+        }
+      }
+    }
+    getTags()
+  }, [id])
+
   return (
     <button
       onClick={handleClick}
       draggable
       onDragStart={(e) => {
         handleOnDrag && src
-          ? handleOnDrag(e, { id: String(id), fileName: imageName, src: src })
+          ? handleOnDrag(e, {
+              id: String(id),
+              fileName: imageName,
+              src: src,
+            })
           : ''
       }}
       className={`relative z-[20] w-[200px] h-[200px] p-1 ${
@@ -104,7 +133,7 @@ function MediaItem({
           {fileType === 'jpg' && (
             <Img
               className={`${
-                tag && 'group-hover:opacity-[.4]'
+                isHaveTag && 'group-hover:opacity-[.4]'
               } transition-opacity ease-linear rounded-[6px]`}
               src={src}
             />
@@ -123,7 +152,7 @@ function MediaItem({
         />
       )}
 
-      {tag && (
+      {isHaveTag && (
         <HiHashtag
           className={`${style.icon} text-orange_1 hover:text-orange-500 right-[1rem]`}
         />

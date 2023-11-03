@@ -1,6 +1,7 @@
 export interface PreviewMedia {
   src: string
-  id: number
+  patientID: number
+  imageID: number
   fileType: string
   IsRightEye: number
 }
