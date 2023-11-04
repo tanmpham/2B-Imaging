@@ -4,7 +4,7 @@ import * as React from 'react'
 import { ImSpinner8 } from 'react-icons/im'
 
 const buttonVariants = cva(
-  `shrink-0 rounded-[0.2rem] border disabled:pointer-events-none disabled:text-stone-500 disabled:border-stone-500 disabled:bg-white disabled:border transition-transform ease-in inline-flex items-center`, //these are the base styles
+  `shrink-0 rounded-[0.2rem] border disabled:pointer-events-none disabled:text-stone-500 disabled:border-stone-500 disabled:bg-white disabled:border transition-all ease-in inline-flex items-center`, //these are the base styles
   {
     variants: {
       variant: {
@@ -22,7 +22,7 @@ const buttonVariants = cva(
         custom: '',
       },
       animation: {
-        default: 'hover:translate-y-[-.14rem] active:translate-y-[.14rem]',
+        default: 'hover:scale-105 active:translate-y-[.2rem]',
         custom: '',
       },
     },

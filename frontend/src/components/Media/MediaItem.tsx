@@ -130,7 +130,7 @@ function MediaItem({
       }}
       className={`relative z-[20] w-[200px] h-[200px] p-1 ${
         !src && 'bg-grey_2'
-      } hover:translate-y-[-.2rem] active:scale-[0.98] border-2 border-transparent hover:border-grey_2 rounded-[6px] transition-all ease-linear group`}
+      } hover:translate-y-[-.5rem] active:scale-[0.98] border-2 border-transparent hover:border-grey_2 rounded-[6px] transition-all duration-[220ms] ease-in group`}
     >
       {src && (
         <>

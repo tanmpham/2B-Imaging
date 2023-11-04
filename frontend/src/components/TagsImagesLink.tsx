@@ -12,7 +12,7 @@ function TagsImagesLink({ images, tagName }: Props) {
         <div className="h-screen w-[1px] bg-grey_4" />
       </div>
 
-      <div className={`flex w-full`}>
+      <div className={`relative flex w-full`}>
         <div className={`flex justify-center flex-[50%]`}>
           <h2 className="text-orange_1 text-[40px] font-semibold my-[2rem]">
             {tagName !== '' ? `#${tagName}` : 'Tag'} Images

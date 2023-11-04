@@ -50,7 +50,7 @@ function TagsView({
         className={`flex items-center gap-x-[1rem] mt-[2rem] justify-end mr-[2rem]`}
       >
         <Button variant={'error'}>Delete</Button>
-        <Button variant={'tag'}>Modify</Button>
+        <Button variant={'tag'}>Edit</Button>
         <Button
           onClick={() => {
             router.push('/tags/create')
