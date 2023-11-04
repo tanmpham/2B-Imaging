@@ -3,13 +3,14 @@
 import { Button } from '@/components/shared/Buttons/Button'
 import { toasterStyle } from '@/constants/toasterStyle'
 import { useRouter } from 'next/navigation'
-import { ChangeEvent, FormEvent, useState } from 'react'
+import { ChangeEvent, Dispatch, FormEvent, SetStateAction } from 'react'
 import toast from 'react-hot-toast'
 
-interface Props {}
-function TagsCreateForm({}: Props) {
-  const [tagName, setTagName] = useState('')
-
+interface Props {
+  tagName: string
+  setTagName: Dispatch<SetStateAction<string>>
+}
+function TagsCreateForm({ tagName, setTagName }: Props) {
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
     setTagName(e.target.value)
   }

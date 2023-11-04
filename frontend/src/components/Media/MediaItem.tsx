@@ -79,7 +79,9 @@ function MediaItem({
         if (isMediaPage && updateCompareList) {
           updateCompareListFn()
         } else {
-          router.push(`/gallery?patient-id=${patientID}`)
+          router.push(
+            `${process.env.NEXT_PUBLIC_CLIENT_FRONTEND_URL}/gallery?patient-id=${patientID}`
+          )
         }
 
         break
@@ -92,7 +94,9 @@ function MediaItem({
     async function getTags() {
       if (id !== 0) {
         try {
-          const res = await fetch(`api/tags?image-id=${id}`)
+          const res = await fetch(
+            `${process.env.NEXT_PUBLIC_CLIENT_FRONTEND_URL}/api/tags?image-id=${id}`
+          )
           if (!res.ok) {
             toast.error('Failed to fetch data', toasterStyle)
           } else {

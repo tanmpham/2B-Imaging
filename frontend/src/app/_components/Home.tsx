@@ -3,7 +3,6 @@
 import MediaList from '@/components/Media/MediaList'
 import { ImageDto } from '@/interfaces/image.dto'
 import { PatientDto } from '@/interfaces/patient.dto'
-import { useState } from 'react'
 import PatientSelection from './PatientSelection'
 import Preview from './Preview'
 

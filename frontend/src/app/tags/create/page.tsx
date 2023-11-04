@@ -1,5 +1,7 @@
 import { Metadata } from 'next'
 import TagsCreate from './_component/TagsCreate'
+import { getAllImages } from '@/functions'
+import { ImageDto } from '@/interfaces/image.dto'
 
 export const metadata: Metadata = {
   title: 'Create tag | 2B Imaging',
@@ -8,7 +10,8 @@ export const metadata: Metadata = {
 
 export const revalidate = 0
 interface Props {}
-function page({}: Props) {
-  return <TagsCreate />
+async function page({}: Props) {
+  const images = (await getAllImages()) as ImageDto[]
+  return <TagsCreate images={images} />
 }
 export default page
