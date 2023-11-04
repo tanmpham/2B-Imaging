@@ -18,6 +18,7 @@ import { closeOnClickOutside } from '@/utils/closeOnClickOutside'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
+import DarkSwitch from './DarkSwitch'
 import { Button } from './shared/Buttons/Button'
 
 const style = {
@@ -94,7 +95,10 @@ function Navbar() {
   return (
     <div className="w-[12vw] bg-navBg h-screen p-[22px] text-white flex flex-col justify-center">
       <Logo />
-      <FaUserAlt className="ml-[1.4rem] my-[40px] text-4xl" />
+      <div className={`pl-[1.4rem] flex items-center justify-between`}>
+        <FaUserAlt className="my-[40px] text-4xl" />
+        <DarkSwitch />
+      </div>
 
       <form
         action="#"
