@@ -8,7 +8,7 @@ interface Props {}
 
 const style = {
   container: {
-    active: `bg-yellow-500 justify-end`,
+    active: `bg-yellow-400 hover:bg-yellow-300 justify-end`,
     inactive: `bg-grey_4 justify-start`,
   },
 }
@@ -25,7 +25,7 @@ function DarkSwitch({}: Props) {
     >
       <div
         className={`relative z-10 bg-white h-[22px] w-[22px] rounded-md ${
-          !isActive && 'group-hover:bg-yellow-500'
+          !isActive && 'group-hover:bg-yellow-400'
         }`}
       />
 
