@@ -24,7 +24,7 @@ function DarkSwitch({}: Props) {
       }}
     >
       <div
-        className={`z-10 bg-white h-[22px] w-[22px] rounded-md ${
+        className={`relative z-10 bg-white h-[22px] w-[22px] rounded-md ${
           !isActive && 'group-hover:bg-yellow-500'
         }`}
       />
