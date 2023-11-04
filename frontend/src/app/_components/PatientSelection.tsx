@@ -128,7 +128,6 @@ function PatientSelection({ patients }: Props) {
           onClick={() => {
             handleClick()
           }}
-          className="hover:translate-y-[-.2rem] transition-transform ease-in"
         >
           Select
         </Button>

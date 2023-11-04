@@ -43,13 +43,14 @@ function Preview() {
     DateofBirth: '',
   })
   const { previewMedia } = useGlobalContext()
-  const { id, src, fileType, IsRightEye } = previewMedia
+
+  const { patientID, imageID, src, fileType, IsRightEye } = previewMedia
   const [tags, setTags] = useState<TagDto[]>([])
   useEffect(() => {
     async function getPatient() {
-      if (id !== 0) {
+      if (patientID !== 0) {
         try {
-          const res = await fetch(`api/patients/${id}`)
+          const res = await fetch(`api/patients/${patientID}`)
           if (!res.ok) {
             toast.error('Failed to fetch data', toasterStyle)
           }
@@ -62,13 +63,14 @@ function Preview() {
       }
     }
     async function getTags() {
-      if (id !== 0) {
+      if (imageID !== 0) {
         try {
-          const res = await fetch(`api/tags?image-id=${id}`)
+          const res = await fetch(`api/tags?image-id=${imageID}`)
           if (!res.ok) {
             toast.error('Failed to fetch data', toasterStyle)
           }
           const tagsData = (await res.json()) as TagDto[]
+
           setTags(tagsData)
         } catch (error) {
           console.error('Failed to fetch patient:', error)
@@ -79,7 +81,7 @@ function Preview() {
 
     getPatient()
     getTags()
-  }, [id])
+  }, [patientID, imageID])
 
   // console.log(patient)
   return (
@@ -102,7 +104,7 @@ function Preview() {
           <div className="space-y-[24px]">
             <div>
               <div>
-                <span className={style.title}>Patient ID:</span> {id}
+                <span className={style.title}>Patient ID:</span> {patientID}
               </div>
               <div>
                 <span className={style.title}>Last Name:</span>{' '}

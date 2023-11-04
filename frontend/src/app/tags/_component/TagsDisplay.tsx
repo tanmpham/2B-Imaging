@@ -3,6 +3,7 @@
 import CompareBox from '@/components/CompareBox'
 import MediaList from '@/components/Media/MediaList'
 import { toasterStyle } from '@/constants/toasterStyle'
+import { useGlobalContext } from '@/context/global-context'
 import { ImageDto } from '@/interfaces/image.dto'
 import { Dispatch, DragEvent, SetStateAction, useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
@@ -19,6 +20,7 @@ const style = {
   },
 }
 function TagsDisplay({ tagsShowing, currentTagID, setCurrentTagID }: Props) {
+  const { compareList, setCompareList } = useGlobalContext()
   const [currentImagesList, setCurrentImagesList] = useState<ImageDto[]>([])
   //console.log(currentImagesList)
   useEffect(() => {
@@ -40,6 +42,8 @@ function TagsDisplay({ tagsShowing, currentTagID, setCurrentTagID }: Props) {
         }
         getImages()
       }
+    } else {
+      setCompareList([])
     }
   }, [currentTagID, setCurrentTagID, tagsShowing])
 
@@ -52,8 +56,6 @@ function TagsDisplay({ tagsShowing, currentTagID, setCurrentTagID }: Props) {
       `${item.id},${item.fileName},${item.src}`
     )
   }
-
-  const [compareList, setCompareList] = useState<string[]>([])
 
   const updateCompareList = (src: string, method: string) => {
     if (method === 'add') {
@@ -97,6 +99,7 @@ function TagsDisplay({ tagsShowing, currentTagID, setCurrentTagID }: Props) {
                 } transition-all ease-linear`}
                 onClick={() => {
                   setCurrentTagID(tagID)
+                  setCompareList([])
                 }}
               >
                 {tag}

@@ -13,13 +13,10 @@ def add_tag():
         cursor = connection.cursor()
 
         tag_name = request.json["Tag"]
-        image_id = request.json["ImageID"]
 
-        sql_query = (
-            """INSERT INTO imagetags (Tag, ImageID, UseCount) VALUES (%s, %s, %s);"""
-        )
+        sql_query = """INSERT INTO imagetags (Tag) VALUES (%s);"""
 
-        cursor.execute(sql_query, (tag_name, image_id, 1))
+        cursor.execute(sql_query, (tag_name,))
 
         connection.commit()
         cursor.close()
@@ -33,7 +30,7 @@ def add_tag():
 
 
 # Get tags
-@imagetags_bp.route("/tags", methods=["GET"])
+@imagetags_bp.route("/imagetags", methods=["GET"])
 def get_tags():
     image_id = request.args.get("image-id")
     try:

@@ -41,3 +41,6 @@ __pycache__
 
 */patientimages/*.jpg
 */patientimages/*.mp4
+
+sw.js
+workbox-*.js

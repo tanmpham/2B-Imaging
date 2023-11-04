@@ -12,6 +12,7 @@ export const metadata: Metadata = {
   icons: {
     icon: ['/favicon.png?v=4'],
   },
+  manifest: '/manifest.json',
 }
 
 export const revalidate = 0
