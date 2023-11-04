@@ -18,7 +18,7 @@ function DarkSwitch({}: Props) {
     <div
       className={`relative w-[60px] h-[28px] rounded-l-[4px] rounded-r-[4px] flex items-center px-[.2rem] ${
         isActive ? style.container.active : style.container.inactive
-      } active:translate-y-[.2rem] transition-all ease-linear group`}
+      } active:translate-x-[-.2rem] transition-all ease-linear group`}
       onClick={() => {
         setIsActive((prev) => !prev)
       }}
