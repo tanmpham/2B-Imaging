@@ -67,16 +67,10 @@ function TagsCreateForm({}: Props) {
             onClick={() => {
               router.push(`${process.env.NEXT_PUBLIC_CLIENT_FRONTEND_URL}/tags`)
             }}
-            className="hover:translate-y-[-.2rem] transition-transform ease-linear"
           >
             Cancel
           </Button>
-          <Button
-            form="formCreateTag"
-            className="hover:translate-y-[-.2rem] transition-transform ease-linear"
-          >
-            Create
-          </Button>
+          <Button form="formCreateTag">Create</Button>
         </div>
       </form>
     </div>

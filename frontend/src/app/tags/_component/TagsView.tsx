@@ -49,23 +49,12 @@ function TagsView({
       <div
         className={`flex items-center gap-x-[1rem] mt-[2rem] justify-end mr-[2rem]`}
       >
-        <Button
-          variant={'error'}
-          className="hover:translate-y-[-.2rem] transition-transform ease-in"
-        >
-          Delete
-        </Button>
-        <Button
-          variant={'tag'}
-          className="hover:translate-y-[-.2rem] transition-transform ease-in"
-        >
-          Modify
-        </Button>
+        <Button variant={'error'}>Delete</Button>
+        <Button variant={'tag'}>Modify</Button>
         <Button
           onClick={() => {
             router.push('/tags/create')
           }}
-          className="hover:translate-y-[-.2rem] transition-transform ease-in"
         >
           Add
         </Button>

@@ -178,14 +178,11 @@ function Navbar() {
             }}
             form=""
             variant={'error'}
-            className={`w-fit hover:translate-y-[-.14rem]`}
+            className={`w-fit`}
           >
             Clear
           </Button>
-          <Button
-            form="patientSelection"
-            className={`w-fit hover:translate-y-[-.14rem]`}
-          >
+          <Button form="patientSelection" className={`w-fit`}>
             Search
           </Button>
         </div>
@@ -193,7 +190,7 @@ function Navbar() {
 
       <div className={`mt-[4rem] flex flex-col space-y-[40px] justify-between`}>
         <Link href="/tags">
-          <HiHashtag className="text-6xl ml-[1rem] cursor-pointer hover:text-green_2 hover:translate-x-[.2rem] transition-transform ease-in" />
+          <HiHashtag className="text-6xl ml-[1rem] cursor-pointer hover:text-green_2 hover:translate-x-[.2rem] active:translate-x-[-.2rem] transition-transform ease-in" />
         </Link>
 
         <VscCalendar
@@ -201,7 +198,7 @@ function Navbar() {
             setStartDate(new Date())
             setEndDate(new Date())
           }}
-          className="text-6xl ml-[1rem] cursor-pointer hover:text-green_2 hover:translate-x-[.2rem] transition-transform ease-in"
+          className="text-6xl ml-[1rem] cursor-pointer hover:text-green_2 hover:translate-x-[.2rem] active:translate-x-[-.2rem] transition-transform ease-in"
         />
 
         <div className="flex flex-col space-y-[1rem] items-center">
@@ -224,7 +221,8 @@ function Navbar() {
           />
           <Button
             size="custom"
-            className="text-[14px] pl-[.5rem] pr-[.2rem] py-[.1rem] hover:translate-x-[.2rem] transition-transform ease-linear"
+            animation={'custom'}
+            className="text-[14px] pl-[.5rem] pr-[.2rem] py-[.1rem] hover:translate-x-[.2rem] active:translate-x-[-.2rem]"
           >
             Select Date <BsArrowRightShort className="text-[26px]" />
           </Button>

@@ -4,7 +4,7 @@ import * as React from 'react'
 import { ImSpinner8 } from 'react-icons/im'
 
 const buttonVariants = cva(
-  `shrink-0 rounded-[0.2rem] border disabled:pointer-events-none disabled:text-stone-500 disabled:border-stone-500 disabled:bg-white disabled:border active:scale-95 transition-transform ease-in inline-flex items-center`, //these are the base styles
+  `shrink-0 rounded-[0.2rem] border disabled:pointer-events-none disabled:text-stone-500 disabled:border-stone-500 disabled:bg-white disabled:border transition-transform ease-in inline-flex items-center`, //these are the base styles
   {
     variants: {
       variant: {
@@ -21,10 +21,15 @@ const buttonVariants = cva(
         default: 'px-[.6rem] py-[.2rem] text-[13px] lg:text-base',
         custom: '',
       },
+      animation: {
+        default: 'hover:translate-y-[-.14rem] active:translate-y-[.14rem]',
+        custom: '',
+      },
     },
     defaultVariants: {
       variant: 'primary',
       size: 'default',
+      animation: 'default',
     },
   }
 )
@@ -43,6 +48,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       className,
       children,
       variant,
+      animation,
       isLoading,
       error = false,
       errorMessage = 'There was an error, please try again.',
@@ -54,7 +60,9 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <>
         <button
-          className={cn(buttonVariants({ variant, size, className }))}
+          className={cn(
+            buttonVariants({ variant, size, animation, className })
+          )}
           ref={ref}
           disabled={isLoading}
           {...props}
