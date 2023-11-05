@@ -20,7 +20,6 @@ function DarkSwitch({}: Props) {
 
   useLayoutEffect(() => {
     setIsMounted(true)
-    setTheme('dark')
   }, [])
 
   if (!isMounted) {
