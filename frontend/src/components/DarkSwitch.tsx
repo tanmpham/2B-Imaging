@@ -38,7 +38,7 @@ function DarkSwitch({}: Props) {
     >
       <div
         className={`relative z-10 bg-white h-[22px] w-[22px] rounded-md ${
-          resolvedTheme === 'light' && 'group-hover:bg-yellow-400'
+          resolvedTheme === 'dark' && 'group-hover:bg-yellow-400'
         }`}
       />
 
