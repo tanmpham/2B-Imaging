@@ -3,7 +3,10 @@ import { ImageDto } from '@/interfaces/image.dto'
 import { NextResponse } from 'next/server'
 
 export const revalidate = 0
-export async function GET(req: Request, params: { imageID: string }) {
+export async function GET(
+  req: Request,
+  { params }: { params: { imageID: string } }
+) {
   if (params.imageID) {
     const data = (await getAnImage(params.imageID)) as ImageDto
     return NextResponse.json(data)

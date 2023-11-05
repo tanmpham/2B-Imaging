@@ -15,10 +15,8 @@ function TagsCreate({ images }: Props) {
   const [imagesList, setImagesList] = useState<ImageDto[]>([])
   const [imagesID, setImagesID] = useState<string[]>([])
 
-  function handle_image_add_to_tag(e: DragEvent) {
-    const item = e.dataTransfer.getData('mediaDrop').split(',')
-    const imageID = item[0]
-    setImagesID((prev) => [...prev, imageID])
+  function handle_image_add_to_tag(imageID: string) {
+    console.log(imageID)
     async function fetchImageID() {
       try {
         const res = await fetch(
@@ -37,6 +35,13 @@ function TagsCreate({ images }: Props) {
     }
 
     fetchImageID()
+  }
+
+  function handleOnDrop__tag_create(e: DragEvent) {
+    const item = e.dataTransfer.getData('mediaDrop').split(',')
+    const imageID = item[0]
+    setImagesID((prev) => [...prev, imageID])
+    handle_image_add_to_tag(imageID)
   }
 
   function handleSubmitTagCreation(e: FormEvent<HTMLFormElement>) {
@@ -79,7 +84,12 @@ function TagsCreate({ images }: Props) {
         />
       </div>
 
-      <TagsImagesLink images={images} tagName={tagName} />
+      <TagsImagesLink
+        images={images}
+        tagName={tagName}
+        imagesList={imagesList}
+        handle_image_add_to_tag={handle_image_add_to_tag}
+      />
     </div>
   )
 }

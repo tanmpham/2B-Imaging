@@ -20,7 +20,7 @@ module.exports = {
       {
         selector: 'variable',
         types: ['boolean'],
-        format: ['PascalCase'],
+        format: ['PascalCase', 'snake_case'],
         prefix: ['is', 'should', 'has', 'can', 'did', 'will'],
       },
       {

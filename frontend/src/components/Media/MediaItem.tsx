@@ -4,7 +4,7 @@ import { toasterStyle } from '@/constants/toasterStyle'
 import { useGlobalContext } from '@/context/global-context'
 import { TagDto } from '@/interfaces/tag.dto'
 import { usePathname, useRouter } from 'next/navigation'
-import { Dispatch, DragEvent, SetStateAction, useEffect, useState } from 'react'
+import { DragEvent, useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { BsCameraReels } from 'react-icons/bs'
 import { HiHashtag } from 'react-icons/hi2'
@@ -19,6 +19,7 @@ interface Props {
   patientID: number
   id: number
   imageName: string
+  handle_image_add_to_tag?: (imageID: string) => void
 }
 
 const style = {
@@ -34,12 +35,16 @@ function MediaItem({
   IsRightEye,
   patientID,
   imageName,
+  handle_image_add_to_tag,
 }: Props) {
   const router = useRouter()
   const pathname = usePathname()
 
   const isMediaPage = pathname.split('/')[1] === 'gallery'
   const isTagPage = pathname.split('/')[1] === 'tags'
+  const is_tag_create_or_edit_page =
+    pathname.split('/')[1] === 'tags' &&
+    (pathname.split('/')[2] === 'create' || pathname.split('/')[2] === 'edit')
 
   function updateCompareListFn() {
     if (compareList?.length && compareList.length > 5) {
@@ -66,8 +71,12 @@ function MediaItem({
     }
     switch (e.detail) {
       case 1:
-        if (isTagPage) {
+        if (isTagPage && !is_tag_create_or_edit_page) {
           updateCompareListFn()
+        }
+        if (is_tag_create_or_edit_page && id && handle_image_add_to_tag) {
+          handle_image_add_to_tag(String(id))
+          toast.success('hi')
         }
         break
       case 2:

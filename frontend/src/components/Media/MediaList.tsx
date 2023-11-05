@@ -3,7 +3,7 @@
 import { ImageDto } from '@/interfaces/image.dto'
 // import { format } from 'date-fns'
 import { format } from 'date-fns'
-import { Dispatch, DragEvent, Fragment, SetStateAction } from 'react'
+import { Dispatch, Fragment, SetStateAction } from 'react'
 import MediaItem from './MediaItem'
 
 interface Props {
@@ -25,6 +25,7 @@ interface Props {
   updateCompareList?: (src: string, method: string) => void
   compareList?: string[]
   images: ImageDto[]
+  handle_image_add_to_tag?: (imageID: string) => void
 }
 
 const style = {
@@ -36,6 +37,7 @@ function MediaList({
   className,
   updateCompareList,
   images,
+  handle_image_add_to_tag,
 }: Props) {
   //console.log(format(new Date(images[1].DateCreated), 'MMM eo, yyyy'))
   //console.log(images[1].DateCreated.split(' ').slice(0, 4).join(' '))
@@ -73,6 +75,7 @@ function MediaList({
               patientID={PatientID}
               id={ImageID}
               imageName={ImageName}
+              handle_image_add_to_tag={handle_image_add_to_tag}
             />
           </Fragment>
         )

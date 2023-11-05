@@ -78,7 +78,7 @@ def fetch_all_images():
     return responseData
 
 
-@patientimages_bp.route("/patientimages/<int:image_id>", methods=["GET"])
+@patientimages_bp.route("/patientimages/<image_id>", methods=["GET"])
 def fetch_single_image(image_id):
     try:
         connection = mysql.connector.connect(**db_config)
