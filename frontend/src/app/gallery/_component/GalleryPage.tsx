@@ -42,7 +42,7 @@ function GalleryPage({ images }: Props) {
         try {
           const res = await fetch(`api/patients/${params.patientId}`)
           if (!res.ok) {
-            toast.error('Failed to fetch data', toasterStyle)
+            console.error('Failed to fetch data')
           }
           const patientData = (await res.json()) as PatientDto
           setCurrentPatient({
@@ -67,7 +67,7 @@ function GalleryPage({ images }: Props) {
             `api/patientimages?patient-id=${params.patientId}`
           )
           if (!res.ok) {
-            toast.error('Failed to fetch data', toasterStyle)
+            console.error('Failed to fetch data')
           }
           const imageData = (await res.json()) as ImageDto[]
           setPatientImages(imageData)

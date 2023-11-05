@@ -98,7 +98,7 @@ function MediaItem({
             `${process.env.NEXT_PUBLIC_CLIENT_FRONTEND_URL}/api/tags?image-id=${id}`
           )
           if (!res.ok) {
-            toast.error('Failed to fetch data', toasterStyle)
+            console.error('Failed to fetch data')
           } else {
             const tagsData = (await res.json()) as TagDto[]
 
@@ -108,7 +108,6 @@ function MediaItem({
           }
         } catch (error) {
           console.error('Failed to fetch patient:', error)
-          toast.error('Failed to fetch data', toasterStyle)
         }
       }
     }

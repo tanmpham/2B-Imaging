@@ -52,13 +52,12 @@ function Preview() {
         try {
           const res = await fetch(`api/patients/${patientID}`)
           if (!res.ok) {
-            toast.error('Failed to fetch data', toasterStyle)
+            console.error('Failed to fetch data')
           }
           const patientData = (await res.json()) as PatientDto
           setPatient(patientData)
         } catch (error) {
           console.error('Failed to fetch patient:', error)
-          toast.error('Failed to fetch data', toasterStyle)
         }
       }
     }
@@ -67,14 +66,13 @@ function Preview() {
         try {
           const res = await fetch(`api/tags?image-id=${imageID}`)
           if (!res.ok) {
-            toast.error('Failed to fetch data', toasterStyle)
+            console.error('Failed to fetch data')
           }
           const tagsData = (await res.json()) as TagDto[]
 
           setTags(tagsData)
         } catch (error) {
           console.error('Failed to fetch patient:', error)
-          toast.error('Failed to fetch data', toasterStyle)
         }
       }
     }

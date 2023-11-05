@@ -32,12 +32,12 @@ function TagsDisplay({ tagsShowing, currentTagID, setCurrentTagID }: Props) {
           try {
             const res = await fetch(`api/patientimages?tag-id=${currentTagID}`)
             if (!res.ok) {
-              toast.error('Failed to fetch data', toasterStyle)
+              console.error('Failed to fetch data')
             }
             const images = (await res.json()) as ImageDto[]
             setCurrentImagesList(images)
           } catch (error) {
-            toast.error('Failed to fetch data', toasterStyle)
+            console.error('Failed to fetch data')
           }
         }
         getImages()
