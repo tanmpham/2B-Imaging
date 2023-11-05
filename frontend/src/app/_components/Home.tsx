@@ -13,7 +13,7 @@ interface Props {
 
 function Home({ images, patients }: Props) {
   return (
-    <div className="w-[88vw] h-full flex text-white bg-black">
+    <div className="w-[88vw] h-full flex text-black bg-white dark:text-white dark:bg-black">
       <PatientSelection patients={patients} />
       <MediaList
         images={images}
