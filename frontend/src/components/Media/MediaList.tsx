@@ -26,8 +26,8 @@ interface Props {
   compareList?: string[]
   images: ImageDto[]
   handle_image_add_to_tag?: (imageID: string) => void
-  handleOnDrop__tag_create?: (e: DragEvent) => void
   setImagesID?: Dispatch<SetStateAction<string[]>>
+  imagesID?: string[]
 }
 
 const style = {
@@ -40,17 +40,13 @@ function MediaList({
   updateCompareList,
   images,
   handle_image_add_to_tag,
-  handleOnDrop__tag_create,
   setImagesID,
+  imagesID,
 }: Props) {
   //console.log(format(new Date(images[1].DateCreated), 'MMM eo, yyyy'))
   //console.log(images[1].DateCreated.split(' ').slice(0, 4).join(' '))
   return (
     <div
-      onDrop={handleOnDrop__tag_create && handleOnDrop__tag_create}
-      onDragOver={(e) => {
-        e.preventDefault()
-      }}
       className={`${className} grid grid-cols-2 gap-x-[28px] gap-y-[23px] justify-start overflow-y-auto`}
     >
       {images.map(
@@ -58,13 +54,7 @@ function MediaList({
           { ImageID, DateCreated, ImageName, FileType, IsRightEye, PatientID },
           idx
         ) => (
-          <Fragment
-            key={
-              handleOnDrop__tag_create
-                ? `Image #${ImageID} of tag create`
-                : ImageID
-            }
-          >
+          <Fragment key={ImageID}>
             {idx === 0 && (
               <div className={style.date}>
                 {format(new Date(DateCreated), 'MMM do, yyyy')}
@@ -91,6 +81,7 @@ function MediaList({
               imageName={ImageName}
               handle_image_add_to_tag={handle_image_add_to_tag}
               setImagesID={setImagesID}
+              imagesID={imagesID}
             />
           </Fragment>
         )

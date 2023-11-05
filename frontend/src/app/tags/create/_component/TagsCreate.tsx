@@ -90,6 +90,7 @@ function TagsCreate({ images }: Props) {
         imagesList={imagesList}
         handle_image_add_to_tag={handle_image_add_to_tag}
         handleOnDrop__tag_create={handleOnDrop__tag_create}
+        imagesID={imagesID}
         setImagesID={setImagesID}
       />
     </div>

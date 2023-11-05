@@ -21,6 +21,7 @@ interface Props {
   imageName: string
   handle_image_add_to_tag?: (imageID: string) => void
   setImagesID?: Dispatch<SetStateAction<string[]>>
+  imagesID?: string[]
 }
 
 const style = {
@@ -38,6 +39,7 @@ function MediaItem({
   imageName,
   handle_image_add_to_tag,
   setImagesID,
+  imagesID,
 }: Props) {
   const router = useRouter()
   const pathname = usePathname()
@@ -80,10 +82,13 @@ function MediaItem({
           is_tag_create_or_edit_page &&
           id &&
           handle_image_add_to_tag &&
-          setImagesID
+          setImagesID &&
+          imagesID
         ) {
-          handle_image_add_to_tag(String(id))
-          setImagesID((prev) => [...prev, String(id)])
+          if (!imagesID.includes(String(id))) {
+            handle_image_add_to_tag(String(id))
+            setImagesID((prev) => [...prev, String(id)])
+          } else toast.error('Item is already selected.', toasterStyle)
         }
         break
       case 2:
