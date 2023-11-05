@@ -1,7 +1,7 @@
 'use client'
 
 import { useTheme } from 'next-themes'
-import { useLayoutEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { BsFillMoonFill } from 'react-icons/bs'
 import { MdWbSunny } from 'react-icons/md'
 
@@ -18,7 +18,7 @@ function DarkSwitch({}: Props) {
   const [isMounted, setIsMounted] = useState(false)
   const { resolvedTheme, setTheme } = useTheme()
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     setIsMounted(true)
   }, [])
 
