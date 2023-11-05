@@ -4,7 +4,7 @@ import { toasterStyle } from '@/constants/toasterStyle'
 import { useGlobalContext } from '@/context/global-context'
 import { TagDto } from '@/interfaces/tag.dto'
 import { usePathname, useRouter } from 'next/navigation'
-import { DragEvent, useEffect, useState } from 'react'
+import { Dispatch, DragEvent, SetStateAction, useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { BsCameraReels } from 'react-icons/bs'
 import { HiHashtag } from 'react-icons/hi2'
@@ -20,6 +20,7 @@ interface Props {
   id: number
   imageName: string
   handle_image_add_to_tag?: (imageID: string) => void
+  setImagesID?: Dispatch<SetStateAction<string[]>>
 }
 
 const style = {
@@ -36,6 +37,7 @@ function MediaItem({
   patientID,
   imageName,
   handle_image_add_to_tag,
+  setImagesID,
 }: Props) {
   const router = useRouter()
   const pathname = usePathname()
@@ -74,8 +76,14 @@ function MediaItem({
         if (isTagPage && !is_tag_create_or_edit_page) {
           updateCompareListFn()
         }
-        if (is_tag_create_or_edit_page && id && handle_image_add_to_tag) {
+        if (
+          is_tag_create_or_edit_page &&
+          id &&
+          handle_image_add_to_tag &&
+          setImagesID
+        ) {
           handle_image_add_to_tag(String(id))
+          setImagesID((prev) => [...prev, String(id)])
         }
         break
       case 2:

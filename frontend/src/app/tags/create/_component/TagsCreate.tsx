@@ -16,7 +16,6 @@ function TagsCreate({ images }: Props) {
   const [imagesID, setImagesID] = useState<string[]>([])
 
   function handle_image_add_to_tag(imageID: string) {
-    console.log(imageID)
     async function fetchImageID() {
       try {
         const res = await fetch(
@@ -41,7 +40,8 @@ function TagsCreate({ images }: Props) {
     const item = e.dataTransfer.getData('mediaDrop').split(',')
     const imageID = item[0]
     setImagesID((prev) => [...prev, imageID])
-    handle_image_add_to_tag(imageID)
+    if (!imagesID.includes(imageID)) handle_image_add_to_tag(imageID)
+    else toast.error('Item is already selected.', toasterStyle)
   }
 
   function handleSubmitTagCreation(e: FormEvent<HTMLFormElement>) {
@@ -89,6 +89,8 @@ function TagsCreate({ images }: Props) {
         tagName={tagName}
         imagesList={imagesList}
         handle_image_add_to_tag={handle_image_add_to_tag}
+        handleOnDrop__tag_create={handleOnDrop__tag_create}
+        setImagesID={setImagesID}
       />
     </div>
   )

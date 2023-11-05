@@ -1,4 +1,5 @@
 import { ImageDto } from '@/interfaces/image.dto'
+import { Dispatch, DragEvent, SetStateAction } from 'react'
 import MediaList from './Media/MediaList'
 
 interface Props {
@@ -6,6 +7,8 @@ interface Props {
   tagName: string
   imagesList: ImageDto[]
   handle_image_add_to_tag: (imageID: string) => void
+  handleOnDrop__tag_create: (e: DragEvent) => void
+  setImagesID: Dispatch<SetStateAction<string[]>>
 }
 
 const style = {
@@ -18,6 +21,8 @@ function TagsImagesLink({
   tagName,
   imagesList,
   handle_image_add_to_tag,
+  handleOnDrop__tag_create,
+  setImagesID,
 }: Props) {
   return (
     <div className={`grow h-screen bg-grey_3 relative`}>
@@ -30,13 +35,18 @@ function TagsImagesLink({
           <h2 className={style.title}>
             {tagName !== '' ? `#${tagName}` : 'Tag'} Images
           </h2>
-          <MediaList images={imagesList} className="max-h-[84vh] px-[2rem]" />
+          <MediaList
+            images={imagesList}
+            handleOnDrop__tag_create={handleOnDrop__tag_create}
+            className="max-h-[84vh] px-[2rem]"
+          />
         </div>
         <div className={`flex flex-col items-center flex-[50%]`}>
           <h2 className={style.title}>All Images</h2>
           <MediaList
             images={images}
             handle_image_add_to_tag={handle_image_add_to_tag}
+            setImagesID={setImagesID}
             className="max-h-[84vh] px-[2rem]"
           />
         </div>
