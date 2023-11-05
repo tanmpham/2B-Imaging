@@ -17,6 +17,7 @@ const config: Config = {
         navBg: '#0A0A0A',
         grey_1: '#0000005C',
         grey_2: '#D9D9D9',
+        grey_2_inverted: '#262626',
         grey_3: '#0000008C',
         grey_4: '#878484',
         grey_5: '#828282',
