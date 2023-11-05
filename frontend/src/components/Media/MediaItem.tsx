@@ -76,7 +76,6 @@ function MediaItem({
         }
         if (is_tag_create_or_edit_page && id && handle_image_add_to_tag) {
           handle_image_add_to_tag(String(id))
-          toast.success('hi')
         }
         break
       case 2:
