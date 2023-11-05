@@ -12,7 +12,8 @@ interface Props {
 }
 function TagsCreate({ images }: Props) {
   const [tagName, setTagName] = useState('')
-  const [imagesList, setImagesList] = useState([])
+  const [imagesList, setImagesList] = useState<ImageDto[]>([])
+  const [imagesID, setImagesID] = useState<number[]>([])
 
   function handleSubmitTagCreation(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -54,7 +55,12 @@ function TagsCreate({ images }: Props) {
         />
       </div>
 
-      <TagsImagesLink images={images} tagName={tagName} />
+      <TagsImagesLink
+        images={images}
+        tagName={tagName}
+        setImagesID={setImagesID}
+        imagesID={imagesID}
+      />
     </div>
   )
 }

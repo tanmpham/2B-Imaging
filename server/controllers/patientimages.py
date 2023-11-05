@@ -6,7 +6,7 @@ patientimages_bp = Blueprint("patientimages", __name__)
 
 
 @patientimages_bp.route("/patientimages", methods=["GET"])
-def fetchAllImages():
+def fetch_all_images():
     tag_id = request.args.get("tag-id")
     patient_id = request.args.get("patient-id")
     try:
@@ -52,7 +52,7 @@ def fetchAllImages():
         cursor.close()
         connection.close()
     except mysql.connector.Error as err:
-        error = f"[fetchAllImages]: {err}"
+        error = f"[fetch_all_images]: {err}"
         print(error)
         return make_response(jsonify({"message": error}), 500)
 
@@ -76,3 +76,38 @@ def fetchAllImages():
         )
 
     return responseData
+
+
+@patientimages_bp.route("/patientimages/<int:image_id>", methods=["GET"])
+def fetch_single_image(image_id):
+    try:
+        connection = mysql.connector.connect(**db_config)
+        cursor = connection.cursor()
+
+        sql_query = """SELECT * FROM patientimages WHERE ImageID = %s;"""
+        cursor.execute(sql_query, (image_id,))
+
+        query_result = cursor.fetchone()
+        cursor.close()
+        connection.close()
+    except mysql.connector.Error as err:
+        error = f"[fetch_single_image]: {err}"
+        print(error)
+        return make_response(jsonify({"message": error}), 500)
+
+    if query_result is None:
+        return {"message": "Image not found"}, 404
+
+    parts = query_result[6].split(".")
+    fileType = parts[len(parts) - 1]
+    return {
+        "ImageID": query_result[0],
+        "PatientID": query_result[1],
+        "ImageData": query_result[2],
+        "IsRightEye": query_result[3],
+        "Annotation": query_result[4],
+        "ThumbnailData": query_result[5],
+        "ImageName": query_result[6],
+        "FileType": fileType,
+        "DateCreated": query_result[7],
+    }

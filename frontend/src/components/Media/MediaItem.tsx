@@ -4,7 +4,7 @@ import { toasterStyle } from '@/constants/toasterStyle'
 import { useGlobalContext } from '@/context/global-context'
 import { TagDto } from '@/interfaces/tag.dto'
 import { usePathname, useRouter } from 'next/navigation'
-import { DragEvent, useEffect, useState } from 'react'
+import { DragEvent, useEffect, useState, Dispatch, SetStateAction } from 'react'
 import toast from 'react-hot-toast'
 import { BsCameraReels } from 'react-icons/bs'
 import { HiHashtag } from 'react-icons/hi2'
@@ -23,6 +23,7 @@ interface Props {
     item: { id: string; fileName: string; src: string }
   ) => void
   imageName: string
+  setImagesID?: Dispatch<SetStateAction<number[]>>
 }
 
 const style = {
@@ -39,6 +40,7 @@ function MediaItem({
   patientID,
   handleOnDrag,
   imageName,
+  setImagesID,
 }: Props) {
   const router = useRouter()
   const pathname = usePathname()
