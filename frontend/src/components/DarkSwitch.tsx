@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import { useTheme } from 'next-themes'
+import { useLayoutEffect, useState } from 'react'
 import { BsFillMoonFill } from 'react-icons/bs'
 import { MdWbSunny } from 'react-icons/md'
 
@@ -14,6 +15,18 @@ const style = {
 }
 function DarkSwitch({}: Props) {
   const [isActive, setIsActive] = useState(false)
+  const [isMounted, setIsMounted] = useState(false)
+  const { resolvedTheme, setTheme } = useTheme()
+
+  useLayoutEffect(() => {
+    setIsMounted(true)
+    setTheme('dark')
+  }, [])
+
+  if (!isMounted) {
+    return null
+  }
+
   return (
     <div
       className={`relative w-[60px] h-[28px] rounded-l-[4px] rounded-r-[4px] flex items-center px-[.2rem] ${
@@ -21,6 +34,7 @@ function DarkSwitch({}: Props) {
       } active:translate-y-[.2rem] transition-all ease-linear group`}
       onClick={() => {
         setIsActive((prev) => !prev)
+        setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')
       }}
     >
       <div

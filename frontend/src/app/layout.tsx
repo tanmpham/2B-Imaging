@@ -23,7 +23,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="light">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${inter.className} flex min-w-screen min-h-screen bg-[linear-gradient(90deg,_rgba(0,0,0,0.90)_-2.91%,_rgba(0,0,0,0.80)_51.04%,_rgba(0,0,0,0.90)_107.23%)]`}
       >
