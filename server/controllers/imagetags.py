@@ -12,11 +12,20 @@ def add_tag():
         connection = mysql.connector.connect(**db_config)
         cursor = connection.cursor()
 
+        tag_id = request.json["TagID"]
         tag_name = request.json["Tag"]
+        use_count = request.json["UseCount"]
 
-        sql_query = """INSERT INTO imagetags (Tag) VALUES (%s);"""
+        sql_query = (
+            """INSERT INTO imagetags (TagID, Tag, UseCount) VALUES (%s,%s,%s);"""
+        )
+        cursor.execute(sql_query, (tag_id, tag_name, use_count))
 
-        cursor.execute(sql_query, (tag_name,))
+        images_id = request.json["ImagesID"]
+
+        for item in images_id:
+            sql_query = """INSERT INTO imagetagslist (TagID, ImageID) VALUES (%s,%s);"""
+            cursor.execute(sql_query, (tag_id, item))
 
         connection.commit()
         cursor.close()
@@ -46,7 +55,7 @@ def get_tags():
             sql_query = """
             SELECT imagetags.TagID, imagetags.Tag, imagetags.UseCount
             FROM imagetags
-            INNER JOIN imagetagslist ON imagetags.TagID = imagetagslist.TagsID
+            INNER JOIN imagetagslist ON imagetags.TagID = imagetagslist.TagID
             WHERE imagetagslist.ImageID = %s;
           """
             cursor.execute(sql_query, (image_id,))

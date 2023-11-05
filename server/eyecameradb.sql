@@ -79,12 +79,12 @@ DROP TABLE IF EXISTS `imagetagslist`;
 CREATE TABLE `imagetagslist` (
   `ImageTagsListID` int NOT NULL AUTO_INCREMENT,
   `ImageID` int NOT NULL,
-  `TagsID` int NOT NULL,
+  `TagID` int NOT NULL,
   PRIMARY KEY (`ImageTagsListID`),
   KEY `fk__idx` (`ImageID`),
-  KEY `fk_imagetagslist_1_idx` (`TagsID`),
+  KEY `fk_imagetagslist_1_idx` (`TagID`),
   CONSTRAINT `fk_imageidtagslist` FOREIGN KEY (`ImageID`) REFERENCES `patientimages` (`ImageID`),
-  CONSTRAINT `fk_imagetagslist_1` FOREIGN KEY (`TagsID`) REFERENCES `imagetags` (`TagID`)
+  CONSTRAINT `fk_imagetagslist_1` FOREIGN KEY (`TagID`) REFERENCES `imagetags` (`TagID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

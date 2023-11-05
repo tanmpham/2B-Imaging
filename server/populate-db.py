@@ -72,9 +72,7 @@ try:
                 while image_id in image_id_used:
                     image_id = random.randint(1, len(image_names))
                 image_id_used.append(image_id)
-                sql_query = (
-                    "INSERT INTO imagetagslist (ImageID, TagsID) VALUES (%s, %s)"
-                )
+                sql_query = "INSERT INTO imagetagslist (ImageID, TagID) VALUES (%s, %s)"
                 cursor.execute(sql_query, (image_id, i))
 
         # Populate notes

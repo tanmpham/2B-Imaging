@@ -22,7 +22,7 @@ def fetchAllImages():
           SELECT *
           FROM patientimages
           INNER JOIN imagetagslist ON patientimages.ImageID = imagetagslist.ImageID
-          WHERE imagetagslist.TagsID = %s;
+          WHERE imagetagslist.TagID = %s;
           """
             cursor.execute(sql_query, (tag_id,))
         elif not tag_id and patient_id:  # if only patient-id is given
@@ -41,7 +41,7 @@ def fetchAllImages():
           FROM patientimages
           INNER JOIN imagetagslist ON patientimages.ImageID = imagetagslist.ImageID
           INNER JOIN patients ON patientimages.PatientID = patients.PatientID
-          WHERE imagetagslist.TagsID = %s AND patients.PatientID = %s;
+          WHERE imagetagslist.TagID = %s AND patients.PatientID = %s;
           """
             cursor.execute(sql_query, (tag_id, patient_id))
 

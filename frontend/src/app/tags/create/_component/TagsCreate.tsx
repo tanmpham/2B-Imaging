@@ -12,6 +12,8 @@ interface Props {
 }
 function TagsCreate({ images }: Props) {
   const [tagName, setTagName] = useState('')
+  const [imagesList, setImagesList] = useState([])
+
   function handleSubmitTagCreation(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
 
