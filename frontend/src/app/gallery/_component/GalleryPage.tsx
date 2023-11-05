@@ -94,16 +94,6 @@ function GalleryPage({ images }: Props) {
 
   const [isConfirming, setIsConfirming] = useState(false)
 
-  function handleOnDrag(
-    e: DragEvent,
-    item: { id: string; fileName: string; src: string }
-  ) {
-    e.dataTransfer.setData(
-      'mediaDrop',
-      `${item.id},${item.fileName},${item.src}`
-    )
-  }
-
   function handleOnDrop__delete(e: DragEvent) {
     const item = e.dataTransfer.getData('mediaDrop').split(',')
     setMediaDrop({ id: item[0], fileName: item[1] })
@@ -149,7 +139,6 @@ function GalleryPage({ images }: Props) {
                 updateCompareList={updateCompareList}
                 compareList={compareList}
                 images={patientImages}
-                handleOnDrag={handleOnDrag}
               />
             ) : (
               <MediaList
@@ -157,7 +146,6 @@ function GalleryPage({ images }: Props) {
                 updateCompareList={updateCompareList}
                 compareList={compareList}
                 images={images}
-                handleOnDrag={handleOnDrag}
               />
             )}
 

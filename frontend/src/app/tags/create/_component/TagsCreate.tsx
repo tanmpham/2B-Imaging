@@ -15,6 +15,20 @@ function TagsCreate({ images }: Props) {
   const [imagesList, setImagesList] = useState<ImageDto[]>([])
   const [imagesID, setImagesID] = useState<number[]>([])
 
+  // function handleOnDrop__tags_create(e: DragEvent) {
+  //   const item = e.dataTransfer.getData('mediaDrop').split(',')
+  //   const src = item[2]
+  //   if (compareList.length && compareList.length > 5) {
+  //     toast.error('Reached limit 6 images to compare.', toasterStyle)
+  //   } else {
+  //     if (!compareList.includes(src)) {
+  //       updateCompareList(src, 'add')
+  //     } else {
+  //       toast.error('Item is already selected.', toasterStyle)
+  //     }
+  //   }
+  // }
+
   function handleSubmitTagCreation(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
 

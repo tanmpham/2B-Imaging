@@ -18,10 +18,6 @@ interface Props {
   IsRightEye: number
   patientID: number
   id: number
-  handleOnDrag?: (
-    e: DragEvent,
-    item: { id: string; fileName: string; src: string }
-  ) => void
   imageName: string
 }
 
@@ -37,7 +33,6 @@ function MediaItem({
   fileType,
   IsRightEye,
   patientID,
-  handleOnDrag,
   imageName,
 }: Props) {
   const router = useRouter()
@@ -114,18 +109,26 @@ function MediaItem({
     getTags()
   }, [id])
 
+  function handleOnDrag(
+    e: DragEvent,
+    item: { id: string; fileName: string; src: string }
+  ) {
+    e.dataTransfer.setData(
+      'mediaDrop',
+      `${item.id},${item.fileName},${item.src}`
+    )
+  }
+
   return (
     <button
       onClick={handleClick}
       draggable
       onDragStart={(e) => {
-        handleOnDrag && src
-          ? handleOnDrag(e, {
-              id: String(id),
-              fileName: imageName,
-              src: src,
-            })
-          : ''
+        handleOnDrag(e, {
+          id: String(id),
+          fileName: imageName,
+          src: src ? src : '',
+        })
       }}
       className={`relative z-[20] w-[200px] h-[200px] p-1 ${
         !src && 'bg-grey_2'
