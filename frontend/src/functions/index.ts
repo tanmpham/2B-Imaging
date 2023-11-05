@@ -1,6 +1,7 @@
 export * from './patient/get-a-patient'
 export * from './patient/get-all-patients'
 export * from './patientimages/get-all-images'
+export * from './patientimages/get-an-image'
 export * from './patientimages/get-images-by-patient'
 export * from './patientimages/get-images-by-tag'
 export * from './tags/create-tag'

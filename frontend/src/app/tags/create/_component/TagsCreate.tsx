@@ -3,7 +3,7 @@
 import TagsImagesLink from '@/components/TagsImagesLink'
 import { toasterStyle } from '@/constants/toasterStyle'
 import { ImageDto } from '@/interfaces/image.dto'
-import { FormEvent, useState } from 'react'
+import { DragEvent, FormEvent, useState } from 'react'
 import toast from 'react-hot-toast'
 import TagsCreateForm from './TagsCreateForm'
 
@@ -13,21 +13,31 @@ interface Props {
 function TagsCreate({ images }: Props) {
   const [tagName, setTagName] = useState('')
   const [imagesList, setImagesList] = useState<ImageDto[]>([])
-  const [imagesID, setImagesID] = useState<number[]>([])
+  const [imagesID, setImagesID] = useState<string[]>([])
 
-  // function handleOnDrop__tags_create(e: DragEvent) {
-  //   const item = e.dataTransfer.getData('mediaDrop').split(',')
-  //   const src = item[2]
-  //   if (compareList.length && compareList.length > 5) {
-  //     toast.error('Reached limit 6 images to compare.', toasterStyle)
-  //   } else {
-  //     if (!compareList.includes(src)) {
-  //       updateCompareList(src, 'add')
-  //     } else {
-  //       toast.error('Item is already selected.', toasterStyle)
-  //     }
-  //   }
-  // }
+  function handle_image_add_to_tag(e: DragEvent) {
+    const item = e.dataTransfer.getData('mediaDrop').split(',')
+    const imageID = item[0]
+    setImagesID((prev) => [...prev, imageID])
+    async function fetchImageID() {
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_CLIENT_FRONTEND_URL}/api/patientimages/${imageID}`
+        )
+        if (!res.ok) {
+          console.error('Failed to fetch data')
+        } else {
+          const imageData = (await res.json()) as ImageDto
+          setImagesList((prev) => [...prev, imageData])
+        }
+      } catch (error) {
+        console.error('[fetchImageID]', error)
+        toast.error('Server error. Cannot fetch the image.', toasterStyle)
+      }
+    }
+
+    fetchImageID()
+  }
 
   function handleSubmitTagCreation(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()

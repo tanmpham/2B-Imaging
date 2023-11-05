@@ -1,5 +1,4 @@
 import { ImageDto } from '@/interfaces/image.dto'
-import { Dispatch, SetStateAction } from 'react'
 import MediaList from './Media/MediaList'
 
 interface Props {
