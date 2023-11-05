@@ -55,12 +55,7 @@ function TagsCreate({ images }: Props) {
         />
       </div>
 
-      <TagsImagesLink
-        images={images}
-        tagName={tagName}
-        setImagesID={setImagesID}
-        imagesID={imagesID}
-      />
+      <TagsImagesLink images={images} tagName={tagName} />
     </div>
   )
 }

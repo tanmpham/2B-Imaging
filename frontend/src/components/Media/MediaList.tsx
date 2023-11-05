@@ -29,7 +29,6 @@ interface Props {
     e: DragEvent,
     item: { id: string; fileName: string; src: string }
   ) => void
-  setImagesID?: Dispatch<SetStateAction<number[]>>
 }
 
 const style = {
@@ -42,8 +41,6 @@ function MediaList({
   updateCompareList,
   images,
   handleOnDrag,
-
-  setImagesID,
 }: Props) {
   //console.log(format(new Date(images[1].DateCreated), 'MMM eo, yyyy'))
   //console.log(images[1].DateCreated.split(' ').slice(0, 4).join(' '))
@@ -82,7 +79,6 @@ function MediaList({
               id={ImageID}
               handleOnDrag={handleOnDrag}
               imageName={ImageName}
-              setImagesID={setImagesID}
             />
           </Fragment>
         )
