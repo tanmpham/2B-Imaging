@@ -1,5 +1,6 @@
 import { createTag, getTagsByImage } from '@/functions'
 import { ImageDto } from '@/interfaces/image.dto'
+import { TagCreateDto } from '@/interfaces/tag.dto'
 import { NextRequest, NextResponse } from 'next/server'
 
 export const revalidate = 0
@@ -15,11 +16,15 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: Request) {
-  const data = (await req.json()) as { Tag: string }
+  const data = (await req.json()) as TagCreateDto
 
-  if (data.Tag) {
-    const serverRes = (await createTag(data.Tag)) as { message: string }
-    return NextResponse.json({ serverRes })
+  if (data.Tag && data.UseCount) {
+    const serverRes = (await createTag(data)) as TagCreateDto
+    return NextResponse.json({
+      message: 'Tag created',
+      status: 201,
+      tagCreated: serverRes,
+    })
   }
 
   return new NextResponse('Missing required fields', { status: 400 })

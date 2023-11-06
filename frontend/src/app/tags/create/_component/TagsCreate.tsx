@@ -3,6 +3,7 @@
 import TagsImagesLink from '@/components/TagsImagesLink'
 import { toasterStyle } from '@/constants/toasterStyle'
 import { ImageDto } from '@/interfaces/image.dto'
+import { TagCreateDto } from '@/interfaces/tag.dto'
 import { DragEvent, FormEvent, useState } from 'react'
 import toast from 'react-hot-toast'
 import TagsCreateForm from './TagsCreateForm'
@@ -39,13 +40,21 @@ function TagsCreate({ images }: Props) {
   function handleOnDrop__tag_create(e: DragEvent) {
     const item = e.dataTransfer.getData('mediaDrop').split(',')
     const imageID = item[0]
-    setImagesID((prev) => [...prev, imageID])
-    if (!imagesID.includes(imageID)) handle_image_add_to_tag(imageID)
-    else toast.error('Item is already selected.', toasterStyle)
+
+    if (!imagesID.includes(imageID)) {
+      handle_image_add_to_tag(imageID)
+      setImagesID((prev) => [...prev, imageID])
+    } else toast.error('Item is already selected.', toasterStyle)
   }
 
   function handleSubmitTagCreation(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
+
+    const newTag = {
+      Tag: tagName,
+      UseCount: imagesID.length,
+      ImagesID: imagesID,
+    } as TagCreateDto
 
     async function createTag() {
       try {
@@ -56,7 +65,7 @@ function TagsCreate({ images }: Props) {
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ Tag: tagName }),
+            body: JSON.stringify(newTag),
           }
         )
         if (!res.ok) {

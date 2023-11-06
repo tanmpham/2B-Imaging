@@ -12,20 +12,19 @@ def add_tag():
         connection = mysql.connector.connect(**db_config)
         cursor = connection.cursor()
 
-        tag_id = request.json["TagID"]
         tag_name = request.json["Tag"]
         use_count = request.json["UseCount"]
 
-        sql_query = (
-            """INSERT INTO imagetags (TagID, Tag, UseCount) VALUES (%s,%s,%s);"""
-        )
-        cursor.execute(sql_query, (tag_id, tag_name, use_count))
+        sql_query = """INSERT INTO imagetags (Tag, UseCount) VALUES (%s,%s);"""
+        cursor.execute(sql_query, (tag_name, use_count))
+
+        # Get the ID of the last inserted row
+        tag_id = cursor.lastrowid
 
         images_id = request.json["ImagesID"]
-
         for item in images_id:
             sql_query = """INSERT INTO imagetagslist (TagID, ImageID) VALUES (%s,%s);"""
-            cursor.execute(sql_query, (tag_id, item))
+            cursor.execute(sql_query, (tag_id, int(item)))
 
         connection.commit()
         cursor.close()
