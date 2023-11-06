@@ -71,7 +71,7 @@ function TagsCreate({ images }: Props) {
         if (!res.ok) {
           console.error('Failed to fetch data')
         } else {
-          toast.success(`#${tagName} added!`)
+          toast.success(`#${tagName} added!`, toasterStyle)
           window.location.href = `${process.env.NEXT_PUBLIC_CLIENT_FRONTEND_URL}/tags`
         }
       } catch (error) {
