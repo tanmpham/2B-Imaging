@@ -92,7 +92,7 @@ function TagsDisplay({ tagsShowing, currentTagID, setCurrentTagID }: Props) {
             {tagsShowing.map(({ tagID, tag }, idx) => (
               <div
                 key={tagID}
-                className={`cursor-pointer px-[2rem] py-[1rem] border border-transparent rounded-[6px] hover:border-orange_1 active:scale-[.96] ${
+                className={`cursor-pointer px-[2rem] py-[1rem] border border-transparent rounded-[10px] hover:border-orange_1 active:scale-[.96] ${
                   (currentTagID === -1 && idx === 0) || currentTagID === tagID
                     ? style.title.active
                     : style.title.inactive

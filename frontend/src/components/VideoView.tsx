@@ -10,7 +10,7 @@ function VideoView({}: Props) {
   return (
     <div className="grow">
       <div className={`mt-[1rem] w-full px-[1rem] h-fit shrink-0`}>
-        <video controls src={src} className="!object-contain" />
+        <video controls src={src} className="!object-contain rounded-[10px]" />
       </div>
     </div>
   )

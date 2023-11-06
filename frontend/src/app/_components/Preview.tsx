@@ -96,7 +96,9 @@ function Preview() {
             className={`relative w-[600px] h-[400px] mt-[130px] flex items-center justify-center text-stone-400 dark:text-stone-600 text-[80px]`}
           >
             {fileType === 'jpg' && <Img src={src} className="rounded-[10px]" />}
-            {fileType === 'mp4' && <video src={src} controls />}
+            {fileType === 'mp4' && (
+              <video src={src} controls className="rounded-[10px]" />
+            )}
           </div>
 
           <div className="space-y-[24px]">

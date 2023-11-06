@@ -34,10 +34,10 @@ function TagsCreateForm({
           value={tagName}
           onChange={handleChange}
           required
-          className="bg-transparent outline-none border border-stone-600 focus:border-white rounded-[6px] w-full py-[1rem] px-[1.2rem] text-[20px] transition-colors ease-in"
+          className="bg-transparent outline-none border border-stone-600 focus:border-white rounded-[10px] w-full py-[1rem] px-[1.2rem] text-[20px] transition-colors ease-in"
         />
 
-        <div className="w-full flex items-center justify-end mt-[1rem] gap-x-[1rem]">
+        <div className="w-full flex items-center justify-end mt-[1rem] gap-x-[.8rem]">
           <Button
             variant={'error'}
             form=""

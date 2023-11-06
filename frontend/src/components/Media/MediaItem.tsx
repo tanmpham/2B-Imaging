@@ -153,7 +153,7 @@ function MediaItem({
       }}
       className={`relative z-[20] w-[200px] h-[200px] p-1 ${
         !src && 'bg-grey_2'
-      } hover:translate-y-[-.5rem] active:scale-[0.98] border-2 border-transparent hover:border-grey_2 rounded-[6px] transition-all duration-[240ms] ease-in group`}
+      } hover:translate-y-[-.5rem] active:scale-[0.98] border-2 border-transparent hover:border-grey_2 rounded-[10px] transition-all duration-[240ms] ease-in group`}
     >
       {src && (
         <>
@@ -161,7 +161,7 @@ function MediaItem({
             <Img
               className={`${
                 isHaveTag && 'group-hover:opacity-[.4]'
-              } transition-opacity ease-linear rounded-[6px]`}
+              } transition-opacity ease-linear rounded-[10px]`}
               src={src}
             />
           )}

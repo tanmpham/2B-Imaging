@@ -19,7 +19,7 @@ function ImageCanvas({}: Props) {
   return (
     <div className={`flex h-fit`}>
       <div className={`ml-[1rem] w-[1040px]`}>
-        <Img src={src} className="!object-contain" />
+        <Img src={src} className="!object-contain rounded-[10px]" />
       </div>
 
       <div className="grow flex flex-col items-center justify-between mt-[1rem] mb-[.4rem]">
