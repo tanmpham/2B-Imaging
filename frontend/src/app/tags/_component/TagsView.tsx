@@ -20,7 +20,7 @@ function TagsView({
 }: Props) {
   const router = useRouter()
   return (
-    <div className="h-[88%] w-[500px] bg-grey_3 rounded-[16px]">
+    <div className="h-[88%] w-[500px] bg-grey_2 dark:bg-grey_3 rounded-[16px]">
       <div className={`max-h-[88%] overflow-y-auto pt-[4rem] px-[3rem]`}>
         {tags.map(({ TagID, Tag, UseCount }) => (
           <div
@@ -31,7 +31,7 @@ function TagsView({
               #{Tag}
             </div>
             <div className=" flex items-center gap-x-[.8rem]">
-              <div className="text-grey_4 font-light group-hover:translate-x-[.2rem] group-hover:text-orange_1 transition-all ease-in">
+              <div className="text-grey_2_inverted dark:text-grey_4 font-light group-hover:translate-x-[.2rem] group-hover:text-orange_1 transition-all ease-in">
                 {UseCount}
               </div>
               <SlideSwitchBtn

@@ -131,8 +131,8 @@ function GalleryPage({ images }: Props) {
       {isLoading ? (
         <LoaderPage />
       ) : (
-        <div className="flex w-[88vw] text-white">
-          <div className={`bg-grey_1 space-y-[30px] shrink-0`}>
+        <div className="flex w-[88vw] text-black dark:text-white">
+          <div className={`bg-grey_2 dark:bg-grey_1 space-y-[30px] shrink-0`}>
             {patientImages.length > 0 ? (
               <MediaList
                 className="max-h-[78vh] px-[60px] pt-[15px]"
