@@ -20,7 +20,9 @@ function TagsCreateForm({
 
   const router = useRouter()
   return (
-    <div className={`w-[500px] h-fit bg-grey_3 rounded-[16px] mt-[5.8rem]`}>
+    <div
+      className={`w-[500px] h-fit bg-grey_2 dark:bg-grey_3 rounded-[16px] mt-[5.8rem]`}
+    >
       <form
         id="formCreateTag"
         onSubmit={handleSubmitTagCreation}
@@ -34,7 +36,7 @@ function TagsCreateForm({
           value={tagName}
           onChange={handleChange}
           required
-          className="bg-transparent outline-none border border-stone-600 focus:border-white rounded-[6px] w-full py-[1rem] px-[1.2rem] text-[20px] transition-colors ease-in"
+          className="bg-transparent outline-none border border-stone-400 dark:border-stone-600 focus:border-black dark:focus:border-white rounded-[6px] w-full py-[1rem] px-[1.2rem] text-[20px] transition-colors ease-in"
         />
 
         <div className="w-full flex items-center justify-end mt-[1rem] gap-x-[1rem]">

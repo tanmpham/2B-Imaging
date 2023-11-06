@@ -23,7 +23,7 @@ import { Button } from './shared/Buttons/Button'
 
 const style = {
   label: `ml-[2rem] hover:text-green_2 cursor-pointer group-hover:text-green_2`,
-  input: `w-full outline-none px-[1rem] h-[28px] text-black text-[12px] font-semibold rounded-[var(--rounded-default)] mt-[.4rem] transition-transform ease-linear`,
+  input: `w-full outline-none px-[1rem] h-[28px] text-white dark:text-black text-[12px] font-semibold rounded-[var(--rounded-default)] mt-[.4rem] transition-transform ease-linear`,
 }
 
 function Navbar() {
@@ -93,7 +93,7 @@ function Navbar() {
   const ref = useRef(null)
 
   return (
-    <div className="w-[12vw] bg-navBg h-screen p-[22px] text-white flex flex-col justify-center">
+    <div className="w-[12vw] bg-grey_2 dark:bg-navBg h-screen p-[22px] text-black dark:text-white flex flex-col justify-center">
       <Logo />
       <div className={`pl-[1.4rem] flex items-center justify-between`}>
         <FaUserAlt className="my-[40px] text-4xl" />
