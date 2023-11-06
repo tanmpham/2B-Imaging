@@ -8,9 +8,9 @@ function ImageCanvas({}: Props) {
   const { previewMedia } = useGlobalContext()
   const { src, IsRightEye } = previewMedia
   return (
-    <div className="grow flex items-center justify-center">
-      <div className={`w-[96%]`}>
-        <Img src={src} />
+    <div className="grow flex">
+      <div className={`ml-[1rem] mt-[1rem] w-[1040px] h-fit`}>
+        <Img src={src} className="!object-contain" />
       </div>
     </div>
   )
