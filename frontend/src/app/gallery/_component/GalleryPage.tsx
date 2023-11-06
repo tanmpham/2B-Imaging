@@ -2,7 +2,7 @@
 
 import CompareBox from '@/components/CompareBox'
 import DeleteConfirmBox from '@/components/DeleteConfirmBox'
-import ImageCanvas from '@/components/ImageCanvas'
+import ImageView from '@/components/ImageView'
 import MediaList from '@/components/Media/MediaList'
 import VideoView from '@/components/VideoView'
 import { LoaderPage } from '@/components/shared/LoaderPage'
@@ -166,7 +166,7 @@ function GalleryPage({ images }: Props) {
           </div>
 
           {previewMedia.fileType === 'mp4' && <VideoView />}
-          {previewMedia.fileType === 'jpg' && <ImageCanvas />}
+          {previewMedia.fileType === 'jpg' && <ImageView />}
         </div>
       )}
     </>
