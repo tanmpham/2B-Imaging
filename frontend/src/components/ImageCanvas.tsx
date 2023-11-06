@@ -8,6 +8,7 @@ import { GoShare } from 'react-icons/go'
 import { HiMagnifyingGlassMinus, HiMagnifyingGlassPlus } from 'react-icons/hi2'
 import { SlPencil } from 'react-icons/sl'
 import { VscSettings } from 'react-icons/vsc'
+import ImageNote from './ImageNote'
 import Img from './shared/Img/Img'
 
 const style = {
@@ -40,13 +41,13 @@ function ImageCanvas({}: Props) {
     getTags()
   }, [imageID])
   return (
-    <div className="grow">
+    <div className="grow flex flex-col justify-evenly">
       <div className={`flex h-fit`}>
-        <div className={`ml-[1rem] mt-[1rem] w-[1040px]`}>
+        <div className={`ml-[1rem] w-[1040px]`}>
           <Img src={src} className="!object-contain" />
         </div>
 
-        <div className="grow flex flex-col items-center justify-between mt-[2rem] mb-[1rem]">
+        <div className="grow flex flex-col items-center justify-between mt-[1rem] mb-[.4rem]">
           <div className={`flex flex-col items-center gap-y-[1.4rem]`}>
             <HiMagnifyingGlassPlus className={`${style.icon} text-[40px]`} />
             <HiMagnifyingGlassMinus className={`${style.icon} text-[40px]`} />
@@ -58,14 +59,15 @@ function ImageCanvas({}: Props) {
         </div>
       </div>
 
-      <div className="ml-[1rem] mt-[1rem] w-[1040px] flex justify-between">
-        <div>hi</div>
+      <div className="ml-[1rem] w-[1040px] flex justify-between">
+        <div />
+        <ImageNote />
         <div>
           <div className="text-[20px]">
             {IsRightEye ? 'OD (Right Eye)' : 'OS (Left Eye)'}
           </div>
           <div className="text-end text-[60px] my-[-.4rem]">#</div>
-          <div className="mr-[-1rem] pr-[1rem] text-end h-[150px] overflow-y-auto">
+          <div className="mr-[-1rem] pr-[1rem] text-end h-[110px] overflow-y-auto">
             {imgTags.map(({ TagID, Tag }) => (
               <div
                 key={TagID}
