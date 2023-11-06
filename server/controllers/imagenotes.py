@@ -62,7 +62,7 @@ def get_notes():
         }
         for note in query_result
     ]
-    return {"notes": notes}
+    return notes
 
 
 # Update a note
