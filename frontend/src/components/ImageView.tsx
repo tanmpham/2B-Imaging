@@ -9,7 +9,7 @@ import ImageNote from './ImageNote'
 interface Props {}
 function ImageView({}: Props) {
   const { previewMedia } = useGlobalContext()
-  const { src, IsRightEye, imageID } = previewMedia
+  const { IsRightEye, imageID } = previewMedia
   const [imgTags, setImgTags] = useState<TagDto[]>([])
   useEffect(() => {
     async function getTags() {
@@ -54,7 +54,6 @@ function ImageView({}: Props) {
             ))}
           </div>
         </div>
-        I
       </div>
     </div>
   )
