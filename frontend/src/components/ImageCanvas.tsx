@@ -17,20 +17,31 @@ function ImageCanvas({}: Props) {
   const { previewMedia } = useGlobalContext()
   const { src, IsRightEye } = previewMedia
   return (
-    <div className="grow flex h-fit">
-      <div className={`ml-[1rem] mt-[1rem] w-[1040px]`}>
-        <Img src={src} className="!object-contain" />
+    <div className="grow">
+      <div className={`flex h-fit`}>
+        <div className={`ml-[1rem] mt-[1rem] w-[1040px]`}>
+          <Img src={src} className="!object-contain" />
+        </div>
+
+        <div className="grow flex flex-col items-center justify-between mt-[2rem] mb-[1rem]">
+          <div className={`flex flex-col items-center gap-y-[1.4rem]`}>
+            <HiMagnifyingGlassPlus className={`${style.icon} text-[40px]`} />
+            <HiMagnifyingGlassMinus className={`${style.icon} text-[40px]`} />
+            <SlPencil className={`${style.icon} text-[34px]`} />
+            <VscSettings className={`${style.icon} text-[34px]`} />
+            <GoShare className={`${style.icon} text-[34px]`} />
+          </div>
+          <AiOutlineExpandAlt className={`${style.icon} text-[40px]`} />
+        </div>
       </div>
 
-      <div className="grow flex flex-col items-center justify-between mt-[2rem] mb-[1rem]">
-        <div className={`flex flex-col items-center gap-y-[1.4rem]`}>
-          <HiMagnifyingGlassPlus className={`${style.icon} text-[40px]`} />
-          <HiMagnifyingGlassMinus className={`${style.icon} text-[40px]`} />
-          <SlPencil className={`${style.icon} text-[34px]`} />
-          <VscSettings className={`${style.icon} text-[34px]`} />
-          <GoShare className={`${style.icon} text-[34px]`} />
+      <div className="ml-[1rem] mt-[1rem] w-[1040px] flex justify-between">
+        <div>hi</div>
+        <div>
+          <div className="text-[24px]">
+            {IsRightEye ? 'OD (Right Eye)' : 'OS (Left Eye)'}
+          </div>
         </div>
-        <AiOutlineExpandAlt className={`${style.icon} text-[40px]`} />
       </div>
     </div>
   )

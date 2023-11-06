@@ -6,7 +6,7 @@ interface Props {}
 
 function VideoView({}: Props) {
   const { previewMedia } = useGlobalContext()
-  const { src, IsRightEye } = previewMedia
+  const { src, IsRightEye, imageID } = previewMedia
   return (
     <div className="grow">
       <div className={`mt-[1rem] w-full px-[1rem] h-fit shrink-0`}>

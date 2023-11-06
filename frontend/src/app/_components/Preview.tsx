@@ -122,7 +122,7 @@ function Preview() {
             <div>
               <div>
                 <span className={style.title}>OD/OS (right / left eye):</span>{' '}
-                {IsRightEye ? 'Oculus Sinister' : 'Oculus Dextrus'}
+                {IsRightEye ? 'Oculus Dextrus' : 'Oculus Sinister'}
               </div>
               <div>
                 <span
