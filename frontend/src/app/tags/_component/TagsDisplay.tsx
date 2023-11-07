@@ -47,16 +47,6 @@ function TagsDisplay({ tagsShowing, currentTagID, setCurrentTagID }: Props) {
     }
   }, [currentTagID, setCurrentTagID, tagsShowing])
 
-  function handleOnDrag(
-    e: DragEvent,
-    item: { id: string; fileName: string; src: string }
-  ) {
-    e.dataTransfer.setData(
-      'mediaDrop',
-      `${item.id},${item.fileName},${item.src}`
-    )
-  }
-
   const updateCompareList = (src: string, method: string) => {
     if (method === 'add') {
       setCompareList((prev) => [...prev, src])
@@ -113,7 +103,6 @@ function TagsDisplay({ tagsShowing, currentTagID, setCurrentTagID }: Props) {
                 images={currentImagesList}
                 updateCompareList={updateCompareList}
                 compareList={compareList}
-                handleOnDrag={handleOnDrag}
               />
 
               <CompareBox

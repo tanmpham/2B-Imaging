@@ -5,7 +5,9 @@ interface Props {}
 
 function NoteCreateForm({}: Props) {
   const [userInput, setUserInput] = React.useState('')
-  function handleNoteCreate() {}
+  function handleNoteCreate() {
+    console.log('hi')
+  }
   return (
     <div className="bg-blue-300 w-full py-[1rem] px-[1.4rem]">
       <div className="font-bold">Add note:</div>
