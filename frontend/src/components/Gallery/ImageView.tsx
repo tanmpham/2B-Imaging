@@ -35,8 +35,7 @@ function ImageView({}: Props) {
     <div className="grow flex flex-col justify-evenly">
       <ImageCanvas />
 
-      <div className="ml-[1rem] w-[1040px] flex justify-between">
-        <div />
+      <div className="ml-[1rem] w-[1040px] relative flex justify-end">
         <ImageNote />
         <div>
           <div className="text-[20px]">
