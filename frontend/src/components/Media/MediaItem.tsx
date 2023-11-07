@@ -111,7 +111,7 @@ function MediaItem({
       if (id !== 0) {
         try {
           const res = await fetch(
-            `${process.env.NEXT_PUBLIC_CLIENT_FRONTEND_URL}/api/tags?image-id=${id}`
+            `${process.env.NEXT_PUBLIC_CLIENT_FRONTEND_URL}/api/imagetags?image-id=${id}`
           )
           if (!res.ok) {
             console.error('Failed to fetch data')

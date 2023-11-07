@@ -64,7 +64,7 @@ function Preview() {
     async function getTags() {
       if (imageID !== 0) {
         try {
-          const res = await fetch(`api/tags?image-id=${imageID}`)
+          const res = await fetch(`api/imagetags?image-id=${imageID}`)
           if (!res.ok) {
             console.error('Failed to fetch data')
           }

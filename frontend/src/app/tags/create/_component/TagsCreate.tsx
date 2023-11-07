@@ -59,7 +59,7 @@ function TagsCreate({ images }: Props) {
     async function createTag() {
       try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_CLIENT_FRONTEND_URL}/api/tags`,
+          `${process.env.NEXT_PUBLIC_CLIENT_FRONTEND_URL}/api/imagetags`,
           {
             method: 'POST',
             headers: {

@@ -55,7 +55,7 @@ try:
         # Populate Tags
         for i in range(1, 4):
             tag_name = f"tag_{i}"
-            use_count = random.randint(6, 40)
+            use_count = random.randint(30, 40)
 
             sql_insert_tag_query = (
                 "INSERT INTO imagetags (Tag, UseCount) VALUES (%s, %s)"
@@ -74,7 +74,7 @@ try:
                 cursor.execute(sql_query, (image_id, i))
 
         # Populate notes
-        for i in range(1, 100):
+        for i in range(1, 240):
             image_id = random.randint(1, len(image_names))
             note = f"Automatically generated note #{i} for image {image_id}"
             date = start_date + datetime.timedelta(

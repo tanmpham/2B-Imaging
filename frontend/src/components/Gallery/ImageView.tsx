@@ -1,6 +1,7 @@
 'use client'
 
 import { useGlobalContext } from '@/context/global-context'
+import { NoteDto } from '@/interfaces/note.dto'
 import { TagDto } from '@/interfaces/tag.dto'
 import { useEffect, useState } from 'react'
 import ImageCanvas from './ImageCanvas'
@@ -11,12 +12,13 @@ function ImageView({}: Props) {
   const { previewMedia } = useGlobalContext()
   const { IsRightEye, imageID } = previewMedia
   const [imgTags, setImgTags] = useState<TagDto[]>([])
+  const [notes, setNotes] = useState<NoteDto[]>([])
   useEffect(() => {
     async function getTags() {
       if (imageID !== 0) {
         try {
           const res = await fetch(
-            `${process.env.NEXT_PUBLIC_CLIENT_FRONTEND_URL}/api/tags?image-id=${imageID}`
+            `${process.env.NEXT_PUBLIC_CLIENT_FRONTEND_URL}/api/imagetags?image-id=${imageID}`
           )
           if (!res.ok) {
             console.error('Failed to fetch data')
@@ -29,14 +31,34 @@ function ImageView({}: Props) {
         }
       }
     }
+
+    async function getNotes() {
+      if (imageID !== 0) {
+        try {
+          const res = await fetch(
+            `${process.env.NEXT_PUBLIC_CLIENT_FRONTEND_URL}/api/imagenotes?image-id=${imageID}`
+          )
+          if (!res.ok) {
+            console.error('Failed to fetch data')
+          } else {
+            const notesData = (await res.json()) as NoteDto[]
+            setNotes(notesData)
+          }
+        } catch (error) {
+          console.error('Failed to fetch patient:', error)
+        }
+      }
+    }
+
     getTags()
+    getNotes()
   }, [imageID])
   return (
     <div className="grow flex flex-col justify-evenly">
       <ImageCanvas />
 
       <div className="ml-[1rem] w-[1040px] relative flex justify-end">
-        <ImageNote />
+        <ImageNote notes={notes} setNotes={setNotes} />
         <div>
           <div className="text-[20px]">
             {IsRightEye ? 'OD (Right Eye)' : 'OS (Left Eye)'}

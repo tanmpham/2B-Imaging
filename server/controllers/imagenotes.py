@@ -30,7 +30,7 @@ def add_note():
     return {"message": "Note added"}, 201
 
 
-# Get all notes
+# Get notes
 @imagenotes_bp.route("/imagenotes", methods=["GET"])
 def get_notes():
     try:
