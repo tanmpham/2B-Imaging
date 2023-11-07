@@ -9,10 +9,9 @@ const style = {
 
 interface Props {
   notes: NoteDto[]
-  setNotes: React.Dispatch<React.SetStateAction<NoteDto[]>>
 }
 
-function ImageNote({ notes, setNotes }: Props) {
+function ImageNote({ notes }: Props) {
   const [isAdding, setisAdding] = React.useState(false)
   return (
     <div className="absolute right-[240px] w-[560px] h-[220px] bg-grey_2 text-black rounded-[10px] overflow-y-auto">

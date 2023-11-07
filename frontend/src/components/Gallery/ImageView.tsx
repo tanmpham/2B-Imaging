@@ -58,7 +58,7 @@ function ImageView({}: Props) {
       <ImageCanvas />
 
       <div className="ml-[1rem] w-[1040px] relative flex justify-end">
-        <ImageNote notes={notes} setNotes={setNotes} />
+        <ImageNote notes={notes} />
         <div>
           <div className="text-[20px]">
             {IsRightEye ? 'OD (Right Eye)' : 'OS (Left Eye)'}
