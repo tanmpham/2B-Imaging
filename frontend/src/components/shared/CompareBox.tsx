@@ -3,7 +3,7 @@
 import { fileType } from '@/utils'
 import { DragEvent, MouseEvent } from 'react'
 import { BsFillTrash3Fill } from 'react-icons/bs'
-import Img from './shared/Img/Img'
+import Img from './Img'
 
 const style = {
   image: `w-[50px] h-[50px] flex items-center justify-center group text-[18px] text-white hover:translate-y-[-.1rem] transition-transform ease-linear`,
@@ -29,7 +29,7 @@ function CompareBox({
       onDragOver={(e) => {
         e.preventDefault()
       }}
-      className="z-[20] w-[240px] h-[160px] rounded-[6px] bg-blue_2 flex flex-col items-center"
+      className="z-[20] w-[240px] h-[160px] rounded-[10px] bg-blue_2 flex flex-col items-center"
     >
       <div className={`text-black text-[13px] font-semibold`}>Compare</div>
       <div

@@ -13,10 +13,18 @@ def add_tag():
         cursor = connection.cursor()
 
         tag_name = request.json["Tag"]
+        use_count = request.json["UseCount"]
 
-        sql_query = """INSERT INTO imagetags (Tag) VALUES (%s);"""
+        sql_query = """INSERT INTO imagetags (Tag, UseCount) VALUES (%s,%s);"""
+        cursor.execute(sql_query, (tag_name, use_count))
 
-        cursor.execute(sql_query, (tag_name,))
+        # Get the ID of the last inserted row
+        tag_id = cursor.lastrowid
+
+        images_id = request.json["ImagesID"]
+        for item in images_id:
+            sql_query = """INSERT INTO imagetagslist (TagID, ImageID) VALUES (%s,%s);"""
+            cursor.execute(sql_query, (tag_id, int(item)))
 
         connection.commit()
         cursor.close()
@@ -46,7 +54,7 @@ def get_tags():
             sql_query = """
             SELECT imagetags.TagID, imagetags.Tag, imagetags.UseCount
             FROM imagetags
-            INNER JOIN imagetagslist ON imagetags.TagID = imagetagslist.TagsID
+            INNER JOIN imagetagslist ON imagetags.TagID = imagetagslist.TagID
             WHERE imagetagslist.ImageID = %s;
           """
             cursor.execute(sql_query, (image_id,))

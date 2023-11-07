@@ -25,10 +25,9 @@ interface Props {
   updateCompareList?: (src: string, method: string) => void
   compareList?: string[]
   images: ImageDto[]
-  handleOnDrag?: (
-    e: DragEvent,
-    item: { id: string; fileName: string; src: string }
-  ) => void
+  handle_image_add_to_tag?: (imageID: string) => void
+  setImagesID?: Dispatch<SetStateAction<string[]>>
+  imagesID?: string[]
 }
 
 const style = {
@@ -40,7 +39,9 @@ function MediaList({
   className,
   updateCompareList,
   images,
-  handleOnDrag,
+  handle_image_add_to_tag,
+  setImagesID,
+  imagesID,
 }: Props) {
   //console.log(format(new Date(images[1].DateCreated), 'MMM eo, yyyy'))
   //console.log(images[1].DateCreated.split(' ').slice(0, 4).join(' '))
@@ -77,8 +78,10 @@ function MediaList({
               IsRightEye={IsRightEye}
               patientID={PatientID}
               id={ImageID}
-              handleOnDrag={handleOnDrag}
               imageName={ImageName}
+              handle_image_add_to_tag={handle_image_add_to_tag}
+              setImagesID={setImagesID}
+              imagesID={imagesID}
             />
           </Fragment>
         )

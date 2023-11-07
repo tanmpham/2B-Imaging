@@ -16,8 +16,8 @@ interface Props {
 
 const style = {
   thead: 'min-w-[150px]',
-  td: 'border-t border-dashed border-white py-[.5rem] ease-linear max-w-[150px] overflow-x-auto',
-  td__active: `bg-stone-300 text-black`,
+  td: 'border-t border-dashed border-black dark:border-white py-[.5rem] ease-linear max-w-[150px] overflow-x-auto',
+  td__active: `bg-stone-600 text-white dark:bg-stone-300 dark:text-black`,
 }
 
 function PatientSelection({ patients }: Props) {
@@ -50,14 +50,18 @@ function PatientSelection({ patients }: Props) {
           <thead>
             <tr>
               <th
-                className={`py-[.4rem] min-w-[60px] border-r-[1px] border-white`}
+                className={`py-[.4rem] min-w-[60px] border-r-[1px] border-black dark:border-white`}
               >
                 ID
               </th>
-              <th className={`${style.thead} border-r-[1px] border-white`}>
+              <th
+                className={`${style.thead} border-r-[1px] border-black dark:border-white`}
+              >
                 Last
               </th>
-              <th className={`${style.thead} border-r-[1px] border-white`}>
+              <th
+                className={`${style.thead} border-r-[1px] border-black dark:border-white`}
+              >
                 First
               </th>
               <th className={`${style.thead}`}>DOB</th>
@@ -69,8 +73,9 @@ function PatientSelection({ patients }: Props) {
                 key={PatientID}
                 id={`${PatientID}`}
                 onClick={handleSelect}
-                className={`hover:bg-stone-600 ${
-                  patientSelected == PatientID && 'bg-stone-600'
+                className={`hover:bg-stone-400 dark:hover:bg-stone-600 ${
+                  patientSelected == PatientID &&
+                  'bg-stone-400 dark:bg-stone-600'
                 } active:scale-[.98] transition-all ease-linear`}
               >
                 <td

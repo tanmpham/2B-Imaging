@@ -44,3 +44,5 @@ __pycache__
 
 sw.js
 workbox-*.js
+
+/server/env

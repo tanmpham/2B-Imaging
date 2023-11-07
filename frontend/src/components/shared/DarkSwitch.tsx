@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import { useTheme } from 'next-themes'
+import { useEffect, useState } from 'react'
 import { BsFillMoonFill } from 'react-icons/bs'
 import { MdWbSunny } from 'react-icons/md'
 
@@ -13,19 +14,31 @@ const style = {
   },
 }
 function DarkSwitch({}: Props) {
-  const [isActive, setIsActive] = useState(false)
+  const [isMounted, setIsMounted] = useState(false)
+  const { resolvedTheme, setTheme } = useTheme()
+
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
+
+  if (!isMounted) {
+    return null
+  }
+
   return (
     <div
       className={`relative w-[60px] h-[28px] rounded-l-[4px] rounded-r-[4px] flex items-center px-[.2rem] ${
-        isActive ? style.container.active : style.container.inactive
+        resolvedTheme === 'light'
+          ? style.container.active
+          : style.container.inactive
       } active:translate-y-[.2rem] transition-all ease-linear group`}
       onClick={() => {
-        setIsActive((prev) => !prev)
+        setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')
       }}
     >
       <div
         className={`relative z-10 bg-white h-[22px] w-[22px] rounded-md ${
-          !isActive && 'group-hover:bg-yellow-400'
+          resolvedTheme === 'dark' && 'group-hover:bg-yellow-400'
         }`}
       />
 

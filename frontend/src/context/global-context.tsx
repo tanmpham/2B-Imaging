@@ -2,6 +2,7 @@
 
 import { PatientDto } from '@/interfaces/patient.dto'
 import { PreviewMedia } from '@/interfaces/preview-media'
+import { ThemeProvider } from 'next-themes'
 import {
   Dispatch,
   ReactNode,
@@ -63,7 +64,7 @@ export default function GlobalContextProvider({ children }: Props) {
       }}
     >
       <Toaster />
-      {children}
+      <ThemeProvider attribute="class">{children}</ThemeProvider>
     </GlobalContext.Provider>
   )
 }

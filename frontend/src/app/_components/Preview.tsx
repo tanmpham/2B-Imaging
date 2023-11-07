@@ -1,4 +1,4 @@
-import Img from '@/components/shared/Img/Img'
+import Img from '@/components/shared/Img'
 import { toasterStyle } from '@/constants/toasterStyle'
 import { useGlobalContext } from '@/context/global-context'
 import { PatientDto } from '@/interfaces/patient.dto'
@@ -23,7 +23,7 @@ function Initial() {
         onClick={() =>
           toast('Click an image on the left to preview', toasterStyle)
         }
-        className={`w-[600px] h-[400px] mt-[130px] flex items-center justify-center text-grey_2 border-[2px] border-dashed border-grey_2 text-[80px] rounded-[10px] hover:text-green_2 hover:border-green_2 transition-colors ease-linear cursor-pointer`}
+        className={`w-[600px] h-[400px] mt-[130px] flex items-center justify-center text-grey_2_inverted dark:text-grey_2 border-[2px] border-dashed border-grey_2_inverted dark:border-grey_2 text-[80px] rounded-[10px] hover:text-green_2 hover:border-green_2 transition-colors ease-linear cursor-pointer`}
       >
         Preview
       </div>
@@ -32,7 +32,7 @@ function Initial() {
 }
 
 const style = {
-  title: `text-stone-300 font-semibold`,
+  title: `text-stone-700 dark:text-stone-300 font-semibold`,
 }
 
 function Preview() {
@@ -52,29 +52,27 @@ function Preview() {
         try {
           const res = await fetch(`api/patients/${patientID}`)
           if (!res.ok) {
-            toast.error('Failed to fetch data', toasterStyle)
+            console.error('Failed to fetch data')
           }
           const patientData = (await res.json()) as PatientDto
           setPatient(patientData)
         } catch (error) {
           console.error('Failed to fetch patient:', error)
-          toast.error('Failed to fetch data', toasterStyle)
         }
       }
     }
     async function getTags() {
       if (imageID !== 0) {
         try {
-          const res = await fetch(`api/tags?image-id=${imageID}`)
+          const res = await fetch(`api/imagetags?image-id=${imageID}`)
           if (!res.ok) {
-            toast.error('Failed to fetch data', toasterStyle)
+            console.error('Failed to fetch data')
           }
           const tagsData = (await res.json()) as TagDto[]
 
           setTags(tagsData)
         } catch (error) {
           console.error('Failed to fetch patient:', error)
-          toast.error('Failed to fetch data', toasterStyle)
         }
       }
     }
@@ -95,10 +93,12 @@ function Preview() {
       ) : (
         <div className="mx-auto space-y-[24px]">
           <div
-            className={`relative w-[600px] h-[400px] mt-[130px] flex items-center justify-center text-stone-600 text-[80px]`}
+            className={`relative w-[600px] h-[400px] mt-[130px] flex items-center justify-center text-stone-400 dark:text-stone-600 text-[80px]`}
           >
             {fileType === 'jpg' && <Img src={src} className="rounded-[10px]" />}
-            {fileType === 'mp4' && <video src={src} controls />}
+            {fileType === 'mp4' && (
+              <video src={src} controls className="rounded-[10px]" />
+            )}
           </div>
 
           <div className="space-y-[24px]">
@@ -124,7 +124,7 @@ function Preview() {
             <div>
               <div>
                 <span className={style.title}>OD/OS (right / left eye):</span>{' '}
-                {IsRightEye ? 'Oculus Sinister' : 'Oculus Dextrus'}
+                {IsRightEye ? 'Oculus Dextrus' : 'Oculus Sinister'}
               </div>
               <div>
                 <span

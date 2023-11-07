@@ -1,10 +1,12 @@
-export async function createTag(tagName: string) {
+import { TagCreateDto } from '@/interfaces/tag.dto'
+
+export async function createTag(tag: TagCreateDto) {
   const res = await fetch(`${process.env.NEXT_PUBLIC_CLIENT_API}/imagetags`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ Tag: tagName }),
+    body: JSON.stringify(tag),
   })
 
   if (!res.ok) {

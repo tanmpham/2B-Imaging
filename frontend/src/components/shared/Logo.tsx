@@ -21,7 +21,7 @@ const Logo = ({ className }: Props) => {
         className={`hidden lg:flex hover:translate-x-[.2rem] active:translate-y-[.2rem] transition-transform ease-in ${className}`}
       >
         <div
-          className={`w-full h-[60px] bg-green_2 rounded-[var(--rounded-default)]`}
+          className={`w-full h-[60px] bg-white dark:bg-green_2 rounded-[var(--rounded-default)]`}
         ></div>
       </div>
     </>
