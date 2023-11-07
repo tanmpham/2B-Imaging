@@ -1,4 +1,4 @@
-import Img from '@/components/shared/Img/Img'
+import Img from '@/components/shared/Img'
 import { toasterStyle } from '@/constants/toasterStyle'
 import { useGlobalContext } from '@/context/global-context'
 import { PatientDto } from '@/interfaces/patient.dto'

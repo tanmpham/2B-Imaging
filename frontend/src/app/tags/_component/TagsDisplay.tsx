@@ -1,7 +1,7 @@
 'use client'
 
-import CompareBox from '@/components/CompareBox'
 import MediaList from '@/components/Media/MediaList'
+import CompareBox from '@/components/shared/CompareBox'
 import { toasterStyle } from '@/constants/toasterStyle'
 import { useGlobalContext } from '@/context/global-context'
 import { ImageDto } from '@/interfaces/image.dto'

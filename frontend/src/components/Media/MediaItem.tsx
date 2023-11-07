@@ -8,7 +8,7 @@ import { Dispatch, DragEvent, SetStateAction, useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { BsCameraReels } from 'react-icons/bs'
 import { HiHashtag } from 'react-icons/hi2'
-import Img from '../shared/Img/Img'
+import Img from '../shared/Img'
 
 interface Props {
   src?: string
