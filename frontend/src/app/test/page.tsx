@@ -17,7 +17,7 @@ function Page() {
     <div className="w-screen h-screen flex justify-center items-center text-4xl font-bold">
       Test page
       <img
-        src="http://localhost:4000/gallery/image.png"
+        src="http://127.0.0.1:4200/gallery/Bob_Doe_Right_2023_01_08.jpg"
         width={500}
         height={500}
       />

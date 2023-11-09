@@ -33,3 +33,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+app_conf.yml
+*.sqlite
+
+__pycache__
+
+*/patientimages/*.jpg
+*/patientimages/*.mp4
