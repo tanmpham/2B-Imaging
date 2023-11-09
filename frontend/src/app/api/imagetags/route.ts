@@ -18,7 +18,7 @@ export async function GET(req: NextRequest) {
 export async function POST(req: Request) {
   const data = (await req.json()) as TagCreateDto
 
-  if (data.Tag && data.UseCount) {
+  if (data.Tag !== '') {
     const serverRes = (await createTag(data)) as TagCreateDto
     return NextResponse.json({
       message: 'Tag created',
