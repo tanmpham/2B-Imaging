@@ -18,10 +18,10 @@ def queue_up(new_data, filename="kafka/queue.json"):
 
         with open(filename, "w") as file:
             # Convert back to json and write to file.
-            json.dump(file_data, file, indent=4)
+            json.dump(file_data, file, indent=2)
     else:
         file_data["queue"].append(new_data)
         with open(filename, "w") as file:
             # Convert back to json and write to file.
-            json.dump(file_data, file, indent=4)
+            json.dump(file_data, file, indent=2)
             return
