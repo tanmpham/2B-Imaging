@@ -3,6 +3,10 @@ from flask_cors import CORS
 from urllib.parse import urlparse
 import yaml
 import sqlite3
+from controllers.patientimages import patientimages_bp
+from controllers.imagetags import imagetags_bp
+from controllers.imagenotes import imagenotes_bp
+from controllers.patients import patients_bp
 
 with open("app_conf.yml", "r") as f:
     appConfig = yaml.safe_load(f.read())
@@ -27,47 +31,15 @@ app = SecuredStaticFlask(
 )
 CORS(app, origins=[appConfig["client-frontend-url"], appConfig["server-url"]])
 
+app.register_blueprint(patients_bp)
+app.register_blueprint(patientimages_bp)
+app.register_blueprint(imagetags_bp)
+app.register_blueprint(imagenotes_bp)
+
 
 @app.route("/")
-def hello():
-    return "Hello, World!"
-
-
-@app.route("/patientimages", methods=["GET"])
-def fetchAll():
-    connection = sqlite3.connect("eyecameradb.sqlite")
-
-    cursor = connection.cursor()
-
-    sql_query = f"""SELECT * FROM patientimages ORDER BY DateCreated DESC;"""
-    cursor.execute(sql_query)
-    query_result = cursor.fetchall()
-
-    # Commit changes and close the connection
-    connection.commit()
-    cursor.close()
-    connection.close()
-
-    images = []
-
-    for image in query_result:
-        parts = image[6].split(".")
-        fileType = parts[len(parts) - 1]
-        images.append(
-            {
-                "ImageID": image[0],
-                "PatientID": image[1],
-                "ImageData": image[2],
-                "IsRightEye": image[3],
-                "Annotation": image[4],
-                "ThumbnailData": image[5],
-                "ImageName": image[6],
-                "FileType": fileType,
-                "DateCreated": image[7],
-            }
-        )
-
-    return images
+def home():
+    return "Restricted server!", 400
 
 
 app.run(host="0.0.0.0", port=4200, debug=True)

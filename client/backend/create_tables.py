@@ -37,12 +37,12 @@ c.execute(
     """
         CREATE TABLE `patientimages` (
           `ImageID` INTEGER PRIMARY KEY AUTOINCREMENT,
-          `ImageName` varchar(50) DEFAULT NULL,
-          `PatientID` INTEGER DEFAULT NULL,
+          `PatientID` int DEFAULT NULL,
           `ImageData` longblob,
-          `IsRightEye` tinyINTEGER DEFAULT NULL,
+          `IsRightEye` tinyint DEFAULT NULL,
           `Annotation` text,
           `ThumbnailData` blob,
+          `ImageName` varchar(50) DEFAULT NULL,
           `DateCreated` datetime DEFAULT NULL,
           FOREIGN KEY(PatientID) REFERENCES patients(PatientID)
         );
