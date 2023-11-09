@@ -5,17 +5,22 @@ c = conn.cursor()
 
 c.execute(
     """
-        DROP TABLE IF EXISTS `imagetags`;
+        --
+        -- Table structure for table `patients`
+        --
+
+        DROP TABLE IF EXISTS `patients`;
     """
 )
 
 c.execute(
     """
-          CREATE TABLE `imagetags` (
-          `TagID` INTEGER PRIMARY KEY AUTOINCREMENT,
-          `ImageID` INTEGER DEFAULT NULL,
-          `Tag` VARCHAR(50) DEFAULT NULL
-          );
+        CREATE TABLE `patients` (
+          `PatientID` INTEGER PRIMARY KEY AUTOINCREMENT,
+          `FirstName` varchar(50) DEFAULT NULL,
+          `LastName` varchar(50) DEFAULT NULL,
+          `DateofBirth` date DEFAULT NULL
+        );
     """
 )
 
@@ -32,11 +37,13 @@ c.execute(
     """
         CREATE TABLE `patientimages` (
           `ImageID` INTEGER PRIMARY KEY AUTOINCREMENT,
+          `ImageName` varchar(50) DEFAULT NULL,
           `PatientID` INTEGER DEFAULT NULL,
           `ImageData` longblob,
           `IsRightEye` tinyINTEGER DEFAULT NULL,
           `Annotation` text,
           `ThumbnailData` blob,
+          `DateCreated` datetime DEFAULT NULL,
           FOREIGN KEY(PatientID) REFERENCES patients(PatientID)
         );
     """
@@ -44,20 +51,35 @@ c.execute(
 
 c.execute(
     """
-        --
-        -- Table structure for table `patients`
-        --
-
-        DROP TABLE IF EXISTS `patients`;
+        DROP TABLE IF EXISTS `imagetags`;
     """
 )
 
 c.execute(
     """
-        CREATE TABLE `patients` (
-          `PatientID` INTEGER PRIMARY KEY AUTOINCREMENT,
-          `FirstName` varchar(50) DEFAULT NULL,
-          `LastName` varchar(50) DEFAULT NULL
+          CREATE TABLE `imagetags` (
+          `TagID` INTEGER PRIMARY KEY AUTOINCREMENT,
+          `Tag` VARCHAR(50) DEFAULT NULL,
+          `UseCount` INTEGER DEFAULT NULL
+          );
+    """
+)
+
+c.execute(
+    """
+        -- Add a new table imagetagslist
+        DROP TABLE IF EXISTS `imagetagslist`;
+    """
+)
+
+c.execute(
+    """
+        CREATE TABLE `imagetagslist` (
+            `ImageTagsListID` INTEGER PRIMARY KEY AUTOINCREMENT,
+            `ImageID` INTEGER NOT NULL,
+            `TagID` INTEGER NOT NULL,
+            FOREIGN KEY (`ImageID`) REFERENCES `patientimages` (`ImageID`)
+            FOREIGN KEY (`TagID`) REFERENCES `imagetags` (`TagID`)
         );
     """
 )
@@ -76,43 +98,13 @@ c.execute(
     """
         CREATE TABLE `workqueue` (
           `workId` INTEGER PRIMARY KEY AUTOINCREMENT,
-          `PatientId` int NOT NULL,
+          `PatientId` INTEGER NOT NULL,
           `InsertDateTime` datetime NOT NULL,
           `Seen` tinyINTEGER DEFAULT NULL
         );
     """
 )
 
-c.execute(
-    """
-        -- Add a DateofBirth column to the patients table 
-        ALTER TABLE patients
-        ADD DateofBirth DATE;
-    """
-)
-
-c.execute(
-    """
-        -- Add ImageName and DateCreated columns to the patientimages table 
-        ALTER TABLE patientimages
-        ADD ImageName VARCHAR(50);
-    """
-)
-c.execute(
-    """
-        -- Add ImageName and DateCreated columns to the patientimages table 
-        ALTER TABLE patientimages
-        ADD DateCreated DATETIME; -- OR TIMESTAMP 
-    """
-)
-
-c.execute(
-    """
-        -- Add UseCount column to the imagetags table 
-        ALTER TABLE imagetags
-        ADD UseCount INT;
-    """
-)
 
 c.execute(
     """
@@ -126,7 +118,7 @@ c.execute(
         CREATE TABLE `imagenotes` (
             `NoteID` INTEGER PRIMARY KEY AUTOINCREMENT,
             `Note` TEXT,
-            `NoteCreatedAt` DATE, 
+            `NoteCreatedAt` datetime DEFAULT NULL, 
             `ImageID` INTEGER DEFAULT NULL, 
             FOREIGN KEY (`ImageID`) REFERENCES `patientimages`(`ImageID`)
         );

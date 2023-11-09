@@ -39,10 +39,12 @@ app_conf.yml
 
 __pycache__
 
-*/patientimages/*.jpg
-*/patientimages/*.mp4
+
+*.mp4
+*.jpg
 
 sw.js
 workbox-*.js
 
 /server/env
+/client/backend/env

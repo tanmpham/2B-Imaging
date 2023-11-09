@@ -1,1 +1,8 @@
-flask
+Flask==3.0.0
+Flask-Cors==4.0.0
+urllib3==2.0.7
+PyYAML==6.0.1
+mysql-connector-python==8.2.0
+random2==1.0.1
+DateTime==5.2
+python-dateutil==2.8.2
