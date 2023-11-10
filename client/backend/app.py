@@ -18,11 +18,11 @@ class SecuredStaticFlask(Flask):
         referrer = request.headers.get("Referer")
         if referrer:
             url = urlparse(referrer)
-            if (
-                url.netloc == appConfig["client-frontend-url"]
-                or url.netloc == appConfig["server-url"]
-            ):
-                return super(SecuredStaticFlask, self).send_static_file(filename)
+            # if (
+            #     url.netloc == appConfig["client-frontend-url"]
+            #     or url.netloc == appConfig["server-url"]
+            # ):
+            return super(SecuredStaticFlask, self).send_static_file(filename)
         abort(403)  # Forbidden access
 
 

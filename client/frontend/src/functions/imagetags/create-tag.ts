@@ -1,7 +1,7 @@
 import { TagCreateDto } from '@/interfaces/tag.dto'
 
 export async function createTag(tag: TagCreateDto) {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_CLIENT_API}/imagetags`, {
+  const res = await fetch(`${process.env.CLIENT_API}/imagetags`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

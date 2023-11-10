@@ -1,6 +1,6 @@
 export async function getImagesByPatient(patientID: string) {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_CLIENT_API}/patientimages?patient-id=${patientID}`
+    `${process.env.CLIENT_API}/patientimages?patient-id=${patientID}`
   )
 
   if (!res.ok) {

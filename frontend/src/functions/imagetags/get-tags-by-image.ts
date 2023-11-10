@@ -1,6 +1,6 @@
 export async function getTagsByImage(imageID: string) {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_CLIENT_API}/imagetags?image-id=${imageID}`
+    `${process.env.CLIENT_API}/imagetags?image-id=${imageID}`
   )
 
   if (!res.ok) {

@@ -1,5 +1,5 @@
 export async function getAllTags() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_CLIENT_API}/imagetags`)
+  const res = await fetch(`${process.env.CLIENT_API}/imagetags`)
   // The return value is *not* serialized
   // You can return Date, Map, Set, etc.
 
