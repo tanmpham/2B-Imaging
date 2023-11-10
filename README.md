@@ -44,6 +44,15 @@ py populate-db.py
 py app.py
 ```
 
+### Docker
+
+```powershell
+cd client/deployment
+docker-compose build
+docker-compose up # start the app
+docker-compose down # stop the app
+```
+
 ### Technologies used:
 
 <a
