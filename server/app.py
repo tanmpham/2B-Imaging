@@ -58,7 +58,6 @@ def home():
     return "Restricted server!", 400
 
 
-<<<<<<< HEAD
 @app.route("/patientimages", methods=["GET"])
 def fetchAll():
     connection = mysql.connector.connect(**db_config)
@@ -373,6 +372,38 @@ def edit_patient(PatientID):
 
     return {"message": "Patient updated"}, 201
 
-=======
->>>>>>> b9568daca92ee68ac5ff0b601cb88e8dff41ce31
 app.run(host="0.0.0.0", port=4000, debug=True)
+
+@app.route("/patients/<int:PatientID>", methods=["POST"])
+def link_image():
+    connection = mysql.connector.connect(**db_config)
+    cursor = connection.cursor()
+
+    patient_id = request.json["PatientID"]
+    image_id = request.json["ImageID"]
+
+    sql_query = """UPDATE patientimages SET PatientID = %s WHERE ImageID = %s;"""
+    cursor.execute(sql_query, (patient_id, image_id))
+
+    connection.commit()
+    cursor.close()
+    connection.close()
+
+    return {"message": "Linkage Completed"}, 201
+
+@app.route("/patients/<int:PatientID>", methods=["POST"])
+def unlink_image():
+    connection = mysql.connector.connect(**db_config)
+    cursor = connection.cursor()
+
+    patient_id = request.json["PatientID"]
+    image_id = request.json["ImageID"]
+
+    sql_query = """UPDATE patientimages SET ImageID = NULL WHERE PatientID = %s AND ImageID = %s;"""
+    cursor.execute(sql_query, (patient_id, image_id))
+
+    connection.commit()
+    cursor.close()
+    connection.close()
+
+    return {"message": "Unlinkage Completed"}, 201
