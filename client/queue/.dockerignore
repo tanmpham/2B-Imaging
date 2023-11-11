@@ -34,14 +34,11 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-app_conf.yml
+app_conf.example.yml
 *.sqlite*
 
 __pycache__
 
-
-*.mp4
-*.jpg
 queue.json
 
 sw.js
@@ -49,4 +46,5 @@ workbox-*.js
 
 /env
 
-/client/deployment/logs
+Dockerfile
+README.md

@@ -1,6 +1,48 @@
 version: '3.8'
 name: 2b-imaging
 services:
+  zookeeper:
+    image: wurstmeister/zookeeper
+    restart: always
+    ports:
+      - '2181'
+    hostname: zookeeper
+    volumes:
+      - ./logs/zookeeper:/opt/zookeeper-3.4.13/data
+  kafka:
+    image: wurstmeister/kafka
+    restart: always
+    command: [start-kafka.sh]
+    ports:
+      - '9092:9092'
+    hostname: kafka
+    environment:
+      KAFKA_CREATE_TOPICS: 'events:1:1' # topic:partition:replicas
+      KAFKA_ADVERTISED_HOST_NAME: localhost
+      KAFKA_LISTENERS: INSIDE://:29092,OUTSIDE://:9092
+      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
+      KAFKA_ADVERTISED_LISTENERS: INSIDE://kafka:29092,OUTSIDE://localhost:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LOG_DIRS: /kafka/kafka-logs
+      KAFKA_BROKER_ID: 1
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./logs/kafka:/kafka/kafka-logs
+    depends_on:
+      - 'zookeeper'
+
+  client-queue:
+    build:
+      context: ../queue
+      dockerfile: Dockerfile
+    image: client_queue
+    restart: always
+    ports:
+      - 4600:4600
+    networks:
+      - 'apiNetwork'
+
   client-backend:
     build:
       context: ../backend

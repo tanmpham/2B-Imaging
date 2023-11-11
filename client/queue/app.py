@@ -2,11 +2,10 @@ from flask import Flask, abort, request
 from flask_cors import CORS
 from urllib.parse import urlparse
 import yaml
-import sqlite3
-from controllers.patientimages import patientimages_bp
-from controllers.imagetags import imagetags_bp
-from controllers.imagenotes import imagenotes_bp
-from controllers.patients import patients_bp
+from pykafka import KafkaClient
+import time
+import json
+
 
 with open("app_conf.yml", "r") as f:
     appConfig = yaml.safe_load(f.read())
@@ -26,22 +25,15 @@ class SecuredStaticFlask(Flask):
         abort(403)  # Forbidden access
 
 
-app = SecuredStaticFlask(
-    __name__, static_folder="patientimages", static_url_path="/gallery"
-)
+app = SecuredStaticFlask(__name__)
 CORS(
     app,
     origins=[
         appConfig["client-frontend-url"],
-        appConfig["client-queue-url"],
+        appConfig["client-backend-url"],
         appConfig["server-url"],
     ],
 )
-
-app.register_blueprint(patients_bp)
-app.register_blueprint(patientimages_bp)
-app.register_blueprint(imagetags_bp)
-app.register_blueprint(imagenotes_bp)
 
 
 @app.route("/")
@@ -49,4 +41,26 @@ def home():
     return "Restricted server!", 400
 
 
-app.run(host="0.0.0.0", port=4200, debug=True)
+def produce_messages(filename="../kafka/queue.json"):
+    with open(filename, "r") as file:
+        file_data = json.load(file)
+
+
+def producer():
+    hostname = "%s:%d" % (
+        appConfig["events"]["hostname"],
+        appConfig["events"]["port"],
+    )
+
+    for connecting in range(appConfig["max_tries"]):
+        try:
+            client = KafkaClient(hosts=hostname)
+            topic = client.topics[str.encode(appConfig["events"]["topic"])]
+            produce_messages()
+        except Exception:
+            time.sleep(appConfig["sleep"])
+            print(f"[producer]: Numbers of fail connection to Kafka: {connecting}")
+            continue
+
+
+app.run(host="0.0.0.0", port=4600, debug=True)
