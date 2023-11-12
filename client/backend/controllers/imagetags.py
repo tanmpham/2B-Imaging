@@ -1,6 +1,6 @@
 from flask import Blueprint, request, make_response, jsonify
 import sqlite3
-from kafka.receiver import queue_up
+from kafka.queue_bp import queue_up
 from constants.producer_id import producerID
 
 imagetags_bp = Blueprint("imagetags", __name__)
