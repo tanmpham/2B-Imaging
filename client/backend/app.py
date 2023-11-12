@@ -7,6 +7,7 @@ from controllers.patientimages import patientimages_bp
 from controllers.imagetags import imagetags_bp
 from controllers.imagenotes import imagenotes_bp
 from controllers.patients import patients_bp
+from kafka.producer import queue_bp
 
 with open("app_conf.yml", "r") as f:
     appConfig = yaml.safe_load(f.read())
@@ -42,6 +43,7 @@ app.register_blueprint(patients_bp)
 app.register_blueprint(patientimages_bp)
 app.register_blueprint(imagetags_bp)
 app.register_blueprint(imagenotes_bp)
+app.register_blueprint(queue_bp)
 
 
 @app.route("/")
