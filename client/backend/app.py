@@ -7,7 +7,7 @@ from controllers.patientimages import patientimages_bp
 from controllers.imagetags import imagetags_bp
 from controllers.imagenotes import imagenotes_bp
 from controllers.patients import patients_bp
-from kafka.producer import queue_bp
+from kafka.queue_bp import queue_bp
 
 with open("app_conf.yml", "r") as f:
     appConfig = yaml.safe_load(f.read())
