@@ -8,7 +8,7 @@ services:
       - '2181'
     hostname: zookeeper
     volumes:
-      - ./logs/zookeeper:/opt/zookeeper-3.4.13/data
+      - zookeeper-volume:/opt/zookeeper-3.4.13/data
   kafka:
     image: wurstmeister/kafka
     restart: always
@@ -28,46 +28,48 @@ services:
       KAFKA_BROKER_ID: 1
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./logs/kafka:/kafka/kafka-logs
+      - kafka-volume:/kafka/kafka-logs
     depends_on:
       - 'zookeeper'
 
-  client-queue:
-    build:
-      context: ../queue
-      dockerfile: Dockerfile
-    image: client_queue
-    restart: always
-    ports:
-      - 4600:4600
-    networks:
-      - 'apiNetwork'
+#   client-queue:
+#     build:
+#       context: ../queue
+#       dockerfile: Dockerfile
+#     image: client_queue
+#     restart: always
+#     ports:
+#       - 4600:4600
+#     networks:
+#       - 'apiNetwork'
+#     depends_on:
+#       - 'kafka'
 
-  client-backend:
-    build:
-      context: ../backend
-      dockerfile: Dockerfile
-    image: client_backend
-    restart: always
-    ports:
-      - 4200:4200
-    volumes:
-      - ../backend/patientimages:/app/patientimages
-    networks:
-      - 'apiNetwork'
+#   client-backend:
+#     build:
+#       context: ../backend
+#       dockerfile: Dockerfile
+#     image: client_backend
+#     restart: always
+#     volumes:
+#       - ../backend/patientimages:/app/patientimages
+#     networks:
+#       - 'apiNetwork'
 
-  client-frontend:
-    # depends_on:
-    #   - client_backend
-    build:
-      context: ../frontend
-      dockerfile: Dockerfile
-    image: client_frontend
-    restart: always
-    ports:
-      - 3000:3000
-    networks:
-      - 'apiNetwork'
-
-networks:
-  apiNetwork:
+#   client-frontend:
+#     # depends_on:
+#     #   - client_backend
+#     build:
+#       context: ../frontend
+#       dockerfile: Dockerfile
+#     image: client_frontend
+#     restart: always
+#     ports:
+#       - 3000:3000
+#     networks:
+#       - 'apiNetwork'
+# networks:
+#   apiNetwork:
+volumes:
+  kafka-volume:
+  zookeeper-volume:

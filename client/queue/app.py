@@ -5,6 +5,7 @@ import yaml
 from pykafka import KafkaClient
 import time
 import json
+from apscheduler.schedulers.background import BackgroundScheduler
 
 
 with open("app_conf.yml", "r") as f:
@@ -36,14 +37,12 @@ CORS(
 )
 
 
-@app.route("/")
-def home():
-    return "Restricted server!", 400
-
-
-def produce_messages(filename="../kafka/queue.json"):
+def produce_messages(filename="../backend/kafka/queue.json"):
     with open(filename, "r") as file:
         file_data = json.load(file)
+    if len(file_data) > 0:
+        for item in file_data:
+            print(item)
 
 
 def producer():
@@ -61,6 +60,11 @@ def producer():
             time.sleep(appConfig["sleep"])
             print(f"[producer]: Numbers of fail connection to Kafka: {connecting}")
             continue
+
+
+@app.route("/")
+def home():
+    return "Restricted server!", 400
 
 
 app.run(host="0.0.0.0", port=4600, debug=True)
