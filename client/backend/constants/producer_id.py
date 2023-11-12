@@ -10,7 +10,8 @@ try:
     cursor.close()
     connection.close()
     producerID = query_result[0][0]
-    print(producerID)
 except sqlite3.Error as err:
     error = f"[get_producer_id]: {err}"
     print(error)
+
+queue_json = "kafka/queue.json"
