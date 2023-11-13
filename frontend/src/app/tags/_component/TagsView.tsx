@@ -47,7 +47,7 @@ function TagsView({
       </div>
 
       <div
-        className={`flex items-center gap-x-[1rem] mt-[2rem] justify-end mr-[2rem]`}
+        className={`flex items-center gap-x-[.8rem] mt-[2rem] justify-end mr-[2rem]`}
       >
         <Button variant={'error'}>Delete</Button>
         <Button variant={'tag'}>Edit</Button>

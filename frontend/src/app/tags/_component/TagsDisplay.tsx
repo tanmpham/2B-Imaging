@@ -1,7 +1,7 @@
 'use client'
 
-import CompareBox from '@/components/CompareBox'
 import MediaList from '@/components/Media/MediaList'
+import CompareBox from '@/components/shared/CompareBox'
 import { toasterStyle } from '@/constants/toasterStyle'
 import { useGlobalContext } from '@/context/global-context'
 import { ImageDto } from '@/interfaces/image.dto'
@@ -47,16 +47,6 @@ function TagsDisplay({ tagsShowing, currentTagID, setCurrentTagID }: Props) {
     }
   }, [currentTagID, setCurrentTagID, tagsShowing])
 
-  function handleOnDrag(
-    e: DragEvent,
-    item: { id: string; fileName: string; src: string }
-  ) {
-    e.dataTransfer.setData(
-      'mediaDrop',
-      `${item.id},${item.fileName},${item.src}`
-    )
-  }
-
   const updateCompareList = (src: string, method: string) => {
     if (method === 'add') {
       setCompareList((prev) => [...prev, src])
@@ -92,7 +82,7 @@ function TagsDisplay({ tagsShowing, currentTagID, setCurrentTagID }: Props) {
             {tagsShowing.map(({ tagID, tag }, idx) => (
               <div
                 key={tagID}
-                className={`cursor-pointer px-[2rem] py-[1rem] border border-transparent rounded-[6px] hover:border-orange_1 active:scale-[.96] ${
+                className={`cursor-pointer px-[2rem] py-[1rem] border border-transparent rounded-[10px] hover:border-orange_1 active:scale-[.96] ${
                   (currentTagID === -1 && idx === 0) || currentTagID === tagID
                     ? style.title.active
                     : style.title.inactive
@@ -113,7 +103,6 @@ function TagsDisplay({ tagsShowing, currentTagID, setCurrentTagID }: Props) {
                 images={currentImagesList}
                 updateCompareList={updateCompareList}
                 compareList={compareList}
-                handleOnDrag={handleOnDrag}
               />
 
               <CompareBox

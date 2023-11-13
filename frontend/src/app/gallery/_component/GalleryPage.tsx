@@ -1,10 +1,10 @@
 'use client'
 
-import CompareBox from '@/components/CompareBox'
-import DeleteConfirmBox from '@/components/DeleteConfirmBox'
-import ImageCanvas from '@/components/ImageCanvas'
+import DeleteConfirmBox from '@/components/shared/DeleteConfirmBox'
+import ImageView from '@/components/Gallery/ImageView'
+import VideoView from '@/components/Gallery/VideoView'
 import MediaList from '@/components/Media/MediaList'
-import VideoView from '@/components/VideoView'
+import CompareBox from '@/components/shared/CompareBox'
 import { LoaderPage } from '@/components/shared/LoaderPage'
 import { toasterStyle } from '@/constants/toasterStyle'
 import { useGlobalContext } from '@/context/global-context'
@@ -166,7 +166,7 @@ function GalleryPage({ images }: Props) {
           </div>
 
           {previewMedia.fileType === 'mp4' && <VideoView />}
-          {previewMedia.fileType === 'jpg' && <ImageCanvas />}
+          {previewMedia.fileType === 'jpg' && <ImageView />}
         </div>
       )}
     </>

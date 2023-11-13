@@ -8,7 +8,7 @@ import { Dispatch, DragEvent, SetStateAction, useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { BsCameraReels } from 'react-icons/bs'
 import { HiHashtag } from 'react-icons/hi2'
-import Img from '../shared/Img/Img'
+import Img from '../shared/Img'
 
 interface Props {
   src?: string
@@ -111,7 +111,7 @@ function MediaItem({
       if (id !== 0) {
         try {
           const res = await fetch(
-            `${process.env.NEXT_PUBLIC_CLIENT_FRONTEND_URL}/api/tags?image-id=${id}`
+            `${process.env.NEXT_PUBLIC_CLIENT_FRONTEND_URL}/api/imagetags?image-id=${id}`
           )
           if (!res.ok) {
             console.error('Failed to fetch data')
@@ -161,7 +161,7 @@ function MediaItem({
             <Img
               className={`${
                 isHaveTag && 'group-hover:opacity-[.4]'
-              } transition-opacity ease-linear rounded-[6px]`}
+              } transition-opacity ease-linear rounded-[10px]`}
               src={src}
             />
           )}

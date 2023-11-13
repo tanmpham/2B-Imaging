@@ -36,7 +36,6 @@ try:
             IsRightEye = random.randint(0, 1)
             Annotation = f"Image Annotation for Patient #{PatientID}"
 
-            # if i > 3:
             date = start_date + datetime.timedelta(
                 days=random.randint(0, (end_date - start_date).days)
             )
@@ -47,8 +46,7 @@ try:
             )
             # Combine the date and time into a datetime object
             DateCreated = datetime.datetime.combine(date, time)
-            # else:
-            #     DateCreated = datetime.date(2023, 10, 30)
+
 
             sql_query = f"""INSERT INTO patientimages (PatientID, IsRightEye, Annotation, ImageName, DateCreated) VALUES
                     ('{PatientID}', '{IsRightEye}', '{Annotation}', '{image_names[i]}', '{DateCreated}')"""
@@ -57,7 +55,7 @@ try:
         # Populate Tags
         for i in range(1, 4):
             tag_name = f"tag_{i}"
-            use_count = random.randint(6, 10)
+            use_count = random.randint(30, 40)
 
             sql_insert_tag_query = (
                 "INSERT INTO imagetags (Tag, UseCount) VALUES (%s, %s)"
@@ -76,11 +74,22 @@ try:
                 cursor.execute(sql_query, (image_id, i))
 
         # Populate notes
-        for i in range(1, 200):
+        for i in range(1, 240):
             image_id = random.randint(1, len(image_names))
-            note = f"Automatically generated note #{id} for image {image_id}"
-            sql_insert_note_query = "INSERT INTO imagenotes (Note, NoteCreatedAt, ImageID) VALUES (%s, CURRENT_TIMESTAMP, %s)"
-            cursor.execute(sql_insert_note_query, (note, image_id))
+            note = f"Automatically generated note #{i} for image {image_id}"
+            date = start_date + datetime.timedelta(
+                days=random.randint(0, (end_date - start_date).days)
+            )
+
+            # Generate a random time between 00:00:00 and 23:59:59
+            time = datetime.time(
+                random.randint(0, 23), random.randint(0, 59), random.randint(0, 59)
+            )
+            # Combine the date and time into a datetime object
+            DateCreated = datetime.datetime.combine(date, time)
+            
+            sql_insert_note_query = "INSERT INTO imagenotes (Note, NoteCreatedAt, ImageID) VALUES (%s, %s, %s)"
+            cursor.execute(sql_insert_note_query, (note, DateCreated, image_id))
 
         # Commit changes and close the connection
         connection.commit()

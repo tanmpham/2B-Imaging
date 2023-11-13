@@ -6,7 +6,7 @@ import { FaUserAlt } from 'react-icons/fa'
 import { HiHashtag } from 'react-icons/hi2'
 
 import { VscCalendar } from 'react-icons/vsc'
-import Logo from './shared/Logo/Logo'
+import Logo from './shared/Logo'
 
 import { format } from 'date-fns'
 import { DateRange, RangeKeyDict } from 'react-date-range'
@@ -18,7 +18,7 @@ import { closeOnClickOutside } from '@/utils/closeOnClickOutside'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
-import DarkSwitch from './DarkSwitch'
+import DarkSwitch from './shared/DarkSwitch'
 import { Button } from './shared/Buttons/Button'
 
 const style = {
