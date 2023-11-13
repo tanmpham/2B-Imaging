@@ -8,7 +8,7 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    domains: ['127.0.0.1', 'client-backend'],
+    domains: ['127.0.0.1'],
   },
 }
 

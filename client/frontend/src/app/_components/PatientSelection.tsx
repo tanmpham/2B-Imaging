@@ -131,6 +131,31 @@ function PatientSelection({ patients }: Props) {
       <div className={`flex justify-end mt-[1rem] gap-x-[.8rem]`}>
         <Button
           onClick={() => {
+            router.push(
+              `${process.env.NEXT_PUBLIC_CLIENT_FRONTEND_URL}/patients/new`
+            )
+          }}
+        >
+          Add
+        </Button>
+        <Button
+          variant={'warning'}
+          onClick={() => {
+            toast.success('Edit Button', toasterStyle)
+          }}
+        >
+          Edit
+        </Button>
+        <Button
+          variant={'error'}
+          onClick={() => {
+            toast.error('Delete Button', toasterStyle)
+          }}
+        >
+          Delete
+        </Button>
+        <Button
+          onClick={() => {
             handleClick()
           }}
         >
