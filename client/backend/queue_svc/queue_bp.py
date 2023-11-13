@@ -3,9 +3,10 @@ import yaml
 from pykafka import KafkaClient
 import time
 from flask import Blueprint
-from constants.producer_id import queue_json
+from constants.producer_id import queue_json, producerID
 import json
 import os
+import datetime
 
 queue_bp = Blueprint("queue", __name__)
 
@@ -45,17 +46,31 @@ hostname = "%s:%d" % (
 
 
 def producer(topic):
-    producer = topic.get_sync_producer()
+    try:
+        producer = topic.get_sync_producer()
+    except Exception:
+        print(f"[producer]: Cannot sync producer.")
     # Check if file exists
     if os.path.isfile(queue_json):
         with open(queue_json, "r") as file:
             file_data = json.load(file)
 
-        print(file_data)
-
-    # with open(queue_json, "w") as file:
-    #     # Convert back to json and write to file.
-    #     json.dump({"queue": []}, file, indent=2)
+        if file_data != {"queue": []}:
+            msg = file_data
+            msg |= {
+                "createdAt": datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S"),
+            }
+            msg_str = json.dumps(msg)
+            try:
+                producer.produce(msg_str.encode("utf-8"))
+                with open(queue_json, "w") as file:
+                    # Convert back to json and write to file.
+                    json.dump({"queue": []}, file, indent=2)
+                print(f"Produce {msg_str} successfully!")
+            except Exception:
+                print(f"[producer]: Error while producing message.")
+        else:
+            print("No new messages")
 
 
 def process_messages():

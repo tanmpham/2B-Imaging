@@ -1,7 +1,6 @@
 from flask import Blueprint, request, make_response, jsonify
 import sqlite3
 from queue_svc.queue_bp import queue_up
-import datetime
 
 imagetags_bp = Blueprint("imagetags", __name__)
 
@@ -31,7 +30,7 @@ def add_tag():
             {
                 "action": "add_tag",
                 "payload": {"TagID": tag_id, "Tag": tag_name, "ImagesID": images_id},
-                "createdAt": datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S"),
+                # "createdAt": datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S"),
             }
         )
 
