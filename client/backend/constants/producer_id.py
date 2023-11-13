@@ -1,6 +1,5 @@
 import sqlite3
 
-
 try:
     connection = sqlite3.connect("eyecameradb.sqlite")
     cursor = connection.cursor()
