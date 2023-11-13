@@ -4,11 +4,11 @@ services:
   zookeeper:
     image: wurstmeister/zookeeper
     restart: always
-    ports:
-      - '2181'
     hostname: zookeeper
     volumes:
       - zookeeper-volume:/opt/zookeeper-3.4.13/data
+    networks:
+      - 'apiNetwork'
   kafka:
     image: wurstmeister/kafka
     restart: always
@@ -18,7 +18,7 @@ services:
     hostname: kafka
     environment:
       KAFKA_CREATE_TOPICS: 'events:1:1' # topic:partition:replicas
-      KAFKA_ADVERTISED_HOST_NAME: localhost
+      KAFKA_ADVERTISED_HOST_NAME: kafka
       KAFKA_LISTENERS: INSIDE://:29092,OUTSIDE://:9092
       KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
       KAFKA_ADVERTISED_LISTENERS: INSIDE://kafka:29092,OUTSIDE://localhost:9092
@@ -29,6 +29,8 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - kafka-volume:/kafka/kafka-logs
+    networks:
+      - 'apiNetwork'
     depends_on:
       - 'zookeeper'
 
@@ -45,35 +47,35 @@ services:
   #     depends_on:
   #       - 'kafka'
 
-#   client-backend:
-#     build:
-#       context: ../backend
-#       dockerfile: Dockerfile
-#     image: client_backend
-#     restart: always
-#     ports:
-#       - 4200:4200
-#     volumes:
-#       - ../backend/patientimages:/app/patientimages
-#     networks:
-#       - 'apiNetwork'
-#     depends_on:
-#       - 'kafka'
+  client-backend:
+    build:
+      context: ../backend2
+      dockerfile: Dockerfile
+    image: client_backend
+    restart: always
+    ports:
+      - 4400:4400
+    volumes:
+      - ../backend2/patientimages:/app/patientimages
+    networks:
+      - 'apiNetwork'
+    depends_on:
+      - 'kafka'
 
-#   client-frontend:
-#     build:
-#       context: ../frontend
-#       dockerfile: Dockerfile
-#     image: client_frontend
-#     restart: always
-#     ports:
-#       - 3000:3000
-#     networks:
-#       - 'apiNetwork'
-#     depends_on:
-#       - 'client-backend'
-# networks:
-#   apiNetwork:
+  client-frontend:
+    build:
+      context: ../frontend2
+      dockerfile: Dockerfile
+    image: client_frontend
+    restart: always
+    ports:
+      - 3004:3004
+    networks:
+      - 'apiNetwork'
+    depends_on:
+      - 'client-backend'
+networks:
+  apiNetwork:
 volumes:
   kafka-volume:
   zookeeper-volume:
