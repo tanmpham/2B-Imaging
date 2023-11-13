@@ -14,3 +14,5 @@ except sqlite3.Error as err:
     print(error)
 
 queue_json = "queue_svc/queue.json"
+
+queue_received = "queue_svc/queue_received.json"

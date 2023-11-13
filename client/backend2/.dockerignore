@@ -38,7 +38,7 @@ app_conf.example.yml
 
 __pycache__
 
-queue.json
+queue*.json
 
 sw.js
 workbox-*.js

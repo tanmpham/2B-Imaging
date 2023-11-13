@@ -4,7 +4,7 @@ from pykafka import KafkaClient
 from pykafka.common import OffsetType
 import time
 from flask import Blueprint
-from constants.producer_id import queue_json, producerID
+from constants.queue_svc_constants import producerID, queue_json, queue_received
 import json
 import os
 import datetime
@@ -100,14 +100,61 @@ def produce_msg():
         logger.info(f"[producer]: Cannot sync producer.")
 
 
-# readed_msg_id = ""
+def save_msg(message):
+    file_data = {"queue_received": []}
+
+    # Check if file exists
+    if os.path.isfile(queue_received):
+        with open(queue_received, "r") as file:
+            # Load existing data into a dict.
+            file_data = json.load(file)
+            # Sets file's current position at offset.
+            file.seek(0)
+        # Join new_data with file_data inside queue
+        file_data["queue_received"].append(message)
+
+        with open(queue_received, "w") as file:
+            # Convert back to json and write to file.
+            json.dump(file_data, file, indent=2)
+    else:
+        file_data["queue_received"].append(message)
+        with open(queue_received, "w") as file:
+            # Convert back to json and write to file.
+            json.dump(file_data, file, indent=2)
 
 
-def process_msg(message):
-    items = message["queue"]
-    for item in items:
+def process_msg(messages):
+    for item in messages:
         if item["action"] == "add_tag":
             add_tag(item["payload"])
+
+
+def read_received_msg():
+    # Check if file exists
+    if os.path.isfile(queue_received):
+        with open(queue_received, "r") as file:
+            file_data = json.load(file)
+        if file_data != {"queue_received": []}:
+            for i, queue_item in enumerate(file_data["queue_received"]):
+                if i > 0:
+                    if (
+                        file_data["queue_received"][i - 1]["msgID"]
+                        == queue_item["msgID"]
+                    ):
+                        logger.info("[read_received_msg]: Duplicated messages.")
+                    else:
+                        process_msg(queue_item["queue"])
+                else:
+                    process_msg(queue_item["queue"])
+
+            with open(queue_received, "w") as file:
+                # Convert back to json and write to file.
+                json.dump({"queue_received": []}, file, indent=2)
+
+        else:
+            print("[read_received_msg]: No new messages")
+    else:
+        logger.info("[read_received_msg]: File is not existed")
 
 
 def consume_msg():
@@ -123,26 +170,19 @@ def consume_msg():
             auto_offset_reset=OffsetType.LATEST,
         )
 
-        # Track messages consumed
-        # a = 0
-
         for msg in consumer:
             msg_str = msg.value.decode("utf-8")
             msg = json.loads(msg_str)
             logger.info("Consumed Message: %s" % msg)
 
-            # a += 1
-            # logger.info(f"single count: {a}")
-
             if msg["producerID"] == producerID:
                 logger.info("[consumer]: Same producer id in this client")
             else:
-                process_msg(msg)
+                save_msg(msg)
 
             # Commit the new message as being read
             consumer.commit_offsets()
 
-        # logger.info(f"Total: {a}")
     except Exception:
         logger.info(f"[consumer]: Cannot connect to the consumer group.")
 
@@ -151,6 +191,12 @@ def init_scheduler():
     sched = BackgroundScheduler(daemon=True)
     sched.add_job(
         produce_msg,
+        "interval",
+        seconds=appConfig["scheduler"]["period_sec"],
+    )
+
+    sched.add_job(
+        read_received_msg,
         "interval",
         seconds=appConfig["scheduler"]["period_sec"],
     )

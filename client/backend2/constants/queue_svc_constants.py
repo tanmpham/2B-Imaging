@@ -1,6 +1,5 @@
 import sqlite3
 
-
 try:
     connection = sqlite3.connect("eyecameradb.sqlite")
     cursor = connection.cursor()
@@ -15,3 +14,5 @@ except sqlite3.Error as err:
     print(error)
 
 queue_json = "queue_svc/queue.json"
+
+queue_received = "queue_svc/queue_received.json"
