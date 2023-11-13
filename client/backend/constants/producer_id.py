@@ -14,4 +14,4 @@ except sqlite3.Error as err:
     error = f"[get_producer_id]: {err}"
     print(error)
 
-queue_json = "kafka/queue.json"
+queue_json = "queue_svc/queue.json"
