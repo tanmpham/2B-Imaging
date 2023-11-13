@@ -32,18 +32,18 @@ services:
     depends_on:
       - 'zookeeper'
 
-#   client-queue:
-#     build:
-#       context: ../queue
-#       dockerfile: Dockerfile
-#     image: client_queue
-#     restart: always
-#     ports:
-#       - 4600:4600
-#     networks:
-#       - 'apiNetwork'
-#     depends_on:
-#       - 'kafka'
+  #   client-queue:
+  #     build:
+  #       context: ../queue
+  #       dockerfile: Dockerfile
+  #     image: client_queue
+  #     restart: always
+  #     ports:
+  #       - 4600:4600
+  #     networks:
+  #       - 'apiNetwork'
+  #     depends_on:
+  #       - 'kafka'
 
 #   client-backend:
 #     build:
@@ -51,14 +51,16 @@ services:
 #       dockerfile: Dockerfile
 #     image: client_backend
 #     restart: always
+#     ports:
+#       - 4200:4200
 #     volumes:
 #       - ../backend/patientimages:/app/patientimages
 #     networks:
 #       - 'apiNetwork'
+#     depends_on:
+#       - 'kafka'
 
 #   client-frontend:
-#     # depends_on:
-#     #   - client_backend
 #     build:
 #       context: ../frontend
 #       dockerfile: Dockerfile
@@ -68,6 +70,8 @@ services:
 #       - 3000:3000
 #     networks:
 #       - 'apiNetwork'
+#     depends_on:
+#       - 'client-backend'
 # networks:
 #   apiNetwork:
 volumes:

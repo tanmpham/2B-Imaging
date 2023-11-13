@@ -50,3 +50,4 @@ workbox-*.js
 /env
 
 /client/deployment/logs
+app.log

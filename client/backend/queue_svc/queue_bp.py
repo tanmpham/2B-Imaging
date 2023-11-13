@@ -1,18 +1,28 @@
 from apscheduler.schedulers.background import BackgroundScheduler
 import yaml
 from pykafka import KafkaClient
+from pykafka.common import OffsetType
 import time
 from flask import Blueprint
 from constants.producer_id import queue_json, producerID
 import json
 import os
 import datetime
+import logging
+import logging.config
+from threading import Thread
 
 queue_bp = Blueprint("queue", __name__)
 
 
 with open("app_conf.yml", "r") as f:
     appConfig = yaml.safe_load(f.read())
+
+with open("log_conf.yml", "r") as f:
+    log_config = yaml.safe_load(f.read())
+    logging.config.dictConfig(log_config)
+
+logger = logging.getLogger("basicLogger")
 
 
 # function to add to JSON
@@ -45,11 +55,24 @@ hostname = "%s:%d" % (
 )
 
 
-def producer(topic):
+def connect_kafka():
+    for connecting in range(appConfig["max_tries"]):
+        try:
+            client = KafkaClient(hosts=hostname)
+            topic = client.topics[str.encode(appConfig["events"]["topic"])]
+            return topic
+        except Exception:
+            time.sleep(appConfig["reconnect_sleep"])
+            print(f"[producer]: Numbers of fail connection to Kafka: {connecting}")
+            continue
+
+
+def produce_msg():
+    topic = connect_kafka()
     try:
         producer = topic.get_sync_producer()
     except Exception:
-        print(f"[producer]: Cannot sync producer.")
+        logger.info(f"[producer]: Cannot sync producer.")
     # Check if file exists
     if os.path.isfile(queue_json):
         with open(queue_json, "r") as file:
@@ -58,6 +81,7 @@ def producer(topic):
         if file_data != {"queue": []}:
             msg = file_data
             msg |= {
+                "producerID": producerID,
                 "createdAt": datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S"),
             }
             msg_str = json.dumps(msg)
@@ -66,32 +90,64 @@ def producer(topic):
                 with open(queue_json, "w") as file:
                     # Convert back to json and write to file.
                     json.dump({"queue": []}, file, indent=2)
-                print(f"Produce {msg_str} successfully!")
+                logger.info(f"[producer]: Produces message successfully!")
             except Exception:
-                print(f"[producer]: Error while producing message.")
+                logger.info(f"[producer]: Error while producing message.")
         else:
             print("No new messages")
 
 
-def process_messages():
-    for connecting in range(appConfig["max_tries"]):
-        try:
-            client = KafkaClient(hosts=hostname)
-            topic = client.topics[str.encode(appConfig["events"]["topic"])]
-            break
-        except Exception:
-            time.sleep(appConfig["sleep"])
-            print(f"[producer]: Numbers of fail connection to Kafka: {connecting}")
-            continue
-    producer(topic)
+def process_msg(items):
+    for item in items:
+        if item["action"] == "add_tag":
+            print("add_tag database action")
+
+
+def consume_msg():
+    topic = connect_kafka()
+    # Create a consume on a consumer group, that only reads new messages
+    # (uncommitted messages) when the service re-starts (i.e., it doesn't
+    # read all the old messages from the history in the message queue).
+
+    consumer = topic.get_simple_consumer(
+        consumer_group=json.dumps(producerID).encode("utf-8"),
+        reset_offset_on_start=False,
+        auto_offset_reset=OffsetType.LATEST,
+    )
+
+    # Track messages consumed
+    # a = 0
+
+    for msg in consumer:
+        msg_str = msg.value.decode("utf-8")
+        msg = json.loads(msg_str)
+        logger.info("Consumed Message: %s" % msg)
+
+        if msg["producerID"] == producerID:
+            logger.info("[consumer]: Same id")
+        else:
+            process_msg(msg["queue"])
+        # a += 1
+        # logger.info(f"single count: {a}")
+
+        # Commit the new message as being read
+        consumer.commit_offsets()
+    # logger.info(f"Total: {a}")
 
 
 def init_scheduler():
     sched = BackgroundScheduler(daemon=True)
     sched.add_job(
-        process_messages, "interval", seconds=appConfig["scheduler"]["period_sec"]
+        produce_msg,
+        "interval",
+        seconds=appConfig["scheduler"]["period_sec"],
     )
+
     sched.start()
 
 
 init_scheduler()
+
+t1 = Thread(target=consume_msg)
+t1.setDaemon(True)
+t1.start()
