@@ -1,6 +1,7 @@
 from flask import Blueprint, request, make_response, jsonify
 import mysql.connector
 from constants.dbconfig import db_config
+from datetime import datetime
 
 patientimages_bp = Blueprint("patientimages", __name__)
 
@@ -9,41 +10,62 @@ patientimages_bp = Blueprint("patientimages", __name__)
 def fetch_all_images():
     tag_id = request.args.get("tag-id")
     patient_id = request.args.get("patient-id")
+    start_date = request.args.get('startDate')
+    end_date = request.args.get('endDate')
+
     try:
         connection = mysql.connector.connect(**db_config)
         cursor = connection.cursor()
 
-        if not tag_id and not patient_id:
-            sql_query = f"""SELECT * FROM patientimages ORDER BY DateCreated DESC;"""
+        # Convert the start and end dates to datetime objects if they are provided
+        if start_date and end_date:
+            start_date = datetime.strptime(start_date, '%Y-%m-%d').date()
+            end_date = datetime.strptime(end_date, '%Y-%m-%d').date()
+
+        if not tag_id and not patient_id and not start_date and not end_date:
+            sql_query = "SELECT * FROM patientimages ORDER BY DateCreated DESC;"
             cursor.execute(sql_query)
         elif tag_id and not patient_id:
             # Get all images in a tag
             sql_query = """
-          SELECT *
-          FROM patientimages
-          INNER JOIN imagetagslist ON patientimages.ImageID = imagetagslist.ImageID
-          WHERE imagetagslist.TagID = %s;
-          """
+                SELECT *
+                FROM patientimages
+                INNER JOIN imagetagslist ON patientimages.ImageID = imagetagslist.ImageID
+                WHERE imagetagslist.TagID = %s;
+            """
             cursor.execute(sql_query, (tag_id,))
-        elif not tag_id and patient_id:  # if only patient-id is given
+        elif patient_id and not start_date and not end_date:
             # Get all images for a patient
             sql_query = """
-          SELECT *
-          FROM patientimages
-          INNER JOIN patients ON patientimages.PatientID = patients.PatientID
-          WHERE patients.PatientID = %s;
-          """
+                SELECT *
+                FROM patientimages
+                WHERE PatientID = %s;
+            """
             cursor.execute(sql_query, (patient_id,))
-        else:  # if both parameters are given
-            # Get all images for a patient in a tag
+        elif start_date and end_date and not tag_id and not patient_id:
+            # Filter images by date range
             sql_query = """
-          SELECT *
-          FROM patientimages
-          INNER JOIN imagetagslist ON patientimages.ImageID = imagetagslist.ImageID
-          INNER JOIN patients ON patientimages.PatientID = patients.PatientID
-          WHERE imagetagslist.TagID = %s AND patients.PatientID = %s;
-          """
-            cursor.execute(sql_query, (tag_id, patient_id))
+                SELECT *
+                FROM patientimages
+                WHERE DateCreated BETWEEN %s AND %s;
+            """
+            cursor.execute(sql_query, (start_date, end_date))
+        elif patient_id and start_date and end_date:
+            # Filter images for a patient within the date range
+            sql_query = """
+                SELECT *
+                FROM patientimages
+                WHERE PatientID = %s AND DateCreated BETWEEN %s AND %s;
+                """
+            cursor.execute(sql_query, (patient_id, start_date, end_date))
+        elif start_date and end_date:
+            # Filter images by date range for all patients
+            sql_query = """
+                SELECT *
+                FROM patientimages
+                WHERE DateCreated BETWEEN %s AND %s;
+            """
+            cursor.execute(sql_query, (start_date, end_date))
 
         query_result = cursor.fetchall()
 
@@ -71,11 +93,12 @@ def fetch_all_images():
                 "ThumbnailData": image[5],
                 "ImageName": image[6],
                 "FileType": fileType,
-                "DateCreated": image[7],
+                "DateCreated": image[7].strftime("%Y-%m-%d %H:%M:%S") if image[7] else None,
             }
         )
 
-    return responseData
+    return make_response(jsonify(responseData), 200)
+
 
 
 @patientimages_bp.route("/patientimages/<image_id>", methods=["GET"])
