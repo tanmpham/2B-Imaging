@@ -93,7 +93,7 @@ function Navbar() {
   const ref = useRef(null)
 
   return (
-    <div className="w-[12vw] bg-grey_2 dark:bg-navBg h-screen p-[22px] text-black dark:text-white flex flex-col justify-center">
+    <div className="w-[12vw] bg-grey_4 dark:bg-navBg h-screen p-[22px] text-black dark:text-white flex flex-col justify-center">
       <Logo />
       <div className={`pl-[1.4rem] flex items-center justify-between`}>
         <FaUserAlt className="my-[40px] text-4xl" />
