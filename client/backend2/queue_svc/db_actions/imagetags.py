@@ -14,14 +14,15 @@ def add_tag(payload):
     try:
         connection = sqlite3.connect("eyecameradb.sqlite")
         cursor = connection.cursor()
-        sql_query = """INSERT INTO imagetags (TagID, Tag, UseCount) VALUES (?,?,?);"""
-        cursor.execute(
-            sql_query, (payload["TagID"], payload["Tag"], payload["UseCount"])
-        )
+        sql_query = """INSERT INTO imagetags (Tag, UseCount) VALUES (?,?);"""
+        cursor.execute(sql_query, (payload["Tag"], payload["UseCount"]))
+
+        # Get the ID of the last inserted row
+        tag_id = cursor.lastrowid
 
         for item in payload["ImagesID"]:
             sql_query = """INSERT INTO imagetagslist (TagID, ImageID) VALUES (?,?);"""
-            cursor.execute(sql_query, (payload["TagID"], int(item)))
+            cursor.execute(sql_query, (tag_id, int(item)))
 
         connection.commit()
         cursor.close()

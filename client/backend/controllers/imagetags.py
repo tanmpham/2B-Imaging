@@ -35,7 +35,6 @@ def add_tag():
                     "UseCount": use_count,
                     "ImagesID": images_id,
                 },
-                # "createdAt": datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S"),
             }
         )
 

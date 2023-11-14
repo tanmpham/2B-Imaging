@@ -26,6 +26,7 @@ with open("log_conf.yml", "r") as f:
     logging.config.dictConfig(log_config)
 
 logger = logging.getLogger("basicLogger")
+logger.setLevel(logging.INFO)
 
 
 # function to add to JSON
@@ -72,8 +73,8 @@ def connect_kafka():
         q_producer.put(topic)
         q_consumer.put(topic)
         return
-    except Exception:
-        print(f"[connect_kafka]: Fail connection")
+    except Exception as err:
+        print("[connect_kafka]: Fail connection.")
         # time.sleep(appConfig["reconnect_sleep"])
         # continue
 
@@ -102,12 +103,12 @@ def produce_msg():
                         # Convert back to json and write to file.
                         json.dump({"queue": []}, file, indent=2)
                     logger.info(f"[producer]: Produces message successfully!")
-                except Exception:
-                    logger.info(f"[producer]: Error while producing message.")
+                except Exception as err:
+                    logger.info("[producer]: Error while producing message.")
             else:
                 print("No new messages")
-    except queue.Empty:
-        logger.info(f"[producer]: No connection to Kafka.")
+    except Exception as err:
+        logger.info("[producer]: No connection to Kafka.")
 
 
 def save_msg(message):
@@ -196,7 +197,7 @@ def consume_msg():
                 # Commit the new message as being read
                 consumer.commit_offsets()
 
-        except queue.Empty:
+        except Exception as err:
             logger.info(f"[consume_msg]: No connection to Kafka.")
             time.sleep(appConfig["reconnect_sleep"])
 
