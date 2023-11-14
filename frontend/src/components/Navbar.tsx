@@ -18,12 +18,12 @@ import { closeOnClickOutside } from '@/utils/closeOnClickOutside'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
-import DarkSwitch from './shared/DarkSwitch'
 import { Button } from './shared/Buttons/Button'
+import DarkSwitch from './shared/DarkSwitch'
 
 const style = {
   label: `ml-[2rem] hover:text-green_2 cursor-pointer group-hover:text-green_2`,
-  input: `w-full outline-none px-[1rem] h-[28px] text-white dark:text-black text-[12px] font-semibold rounded-[var(--rounded-default)] mt-[.4rem] transition-transform ease-linear`,
+  input: `w-full outline-none px-[1rem] h-[28px] text-black dark:text-grey_2 text-[12px] font-semibold rounded-[var(--rounded-default)] mt-[.4rem] transition-transform ease-linear`,
 }
 
 function Navbar() {
