@@ -1,8 +1,9 @@
 'use client'
 
-import CompareBox from '@/components/CompareBox'
 import MediaList from '@/components/Media/MediaList'
+import CompareBox from '@/components/shared/CompareBox'
 import { toasterStyle } from '@/constants/toasterStyle'
+import { useGlobalContext } from '@/context/global-context'
 import { ImageDto } from '@/interfaces/image.dto'
 import { Dispatch, DragEvent, SetStateAction, useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
@@ -19,6 +20,7 @@ const style = {
   },
 }
 function TagsDisplay({ tagsShowing, currentTagID, setCurrentTagID }: Props) {
+  const { compareList, setCompareList } = useGlobalContext()
   const [currentImagesList, setCurrentImagesList] = useState<ImageDto[]>([])
   //console.log(currentImagesList)
   useEffect(() => {
@@ -30,30 +32,20 @@ function TagsDisplay({ tagsShowing, currentTagID, setCurrentTagID }: Props) {
           try {
             const res = await fetch(`api/patientimages?tag-id=${currentTagID}`)
             if (!res.ok) {
-              toast.error('Failed to fetch data', toasterStyle)
+              console.error('Failed to fetch data')
             }
             const images = (await res.json()) as ImageDto[]
             setCurrentImagesList(images)
           } catch (error) {
-            toast.error('Failed to fetch data', toasterStyle)
+            console.error('Failed to fetch data')
           }
         }
         getImages()
       }
+    } else {
+      setCompareList([])
     }
   }, [currentTagID, setCurrentTagID, tagsShowing])
-
-  function handleOnDrag(
-    e: DragEvent,
-    item: { id: string; fileName: string; src: string }
-  ) {
-    e.dataTransfer.setData(
-      'mediaDrop',
-      `${item.id},${item.fileName},${item.src}`
-    )
-  }
-
-  const [compareList, setCompareList] = useState<string[]>([])
 
   const updateCompareList = (src: string, method: string) => {
     if (method === 'add') {
@@ -90,13 +82,14 @@ function TagsDisplay({ tagsShowing, currentTagID, setCurrentTagID }: Props) {
             {tagsShowing.map(({ tagID, tag }, idx) => (
               <div
                 key={tagID}
-                className={`cursor-pointer px-[2rem] py-[1rem] border border-transparent rounded-[6px] hover:border-orange_1 active:scale-[.96] ${
+                className={`cursor-pointer px-[2rem] py-[1rem] border border-transparent rounded-[10px] hover:border-orange_1 active:scale-[.96] ${
                   (currentTagID === -1 && idx === 0) || currentTagID === tagID
                     ? style.title.active
                     : style.title.inactive
                 } transition-all ease-linear`}
                 onClick={() => {
                   setCurrentTagID(tagID)
+                  setCompareList([])
                 }}
               >
                 {tag}
@@ -110,7 +103,6 @@ function TagsDisplay({ tagsShowing, currentTagID, setCurrentTagID }: Props) {
                 images={currentImagesList}
                 updateCompareList={updateCompareList}
                 compareList={compareList}
-                handleOnDrag={handleOnDrag}
               />
 
               <CompareBox
