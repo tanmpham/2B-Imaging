@@ -23,6 +23,8 @@ Run the script `server/eyecameradb.sql` inside MySQL Workbench.
 
 #### Server back-end
 
+`Requirement:` MySQL (2.1M). <a href='https://dev.mysql.com/downloads/installer/'>https://dev.mysql.com/downloads/installer/</a>
+
 Create a NEW app_conf.yml files (content is based on app_conf.example.yml).
 
 ```powershell
@@ -42,6 +44,17 @@ pip install -r requirements.txt
 py create_tables.py
 py populate-db.py
 py app.py
+```
+
+### Docker
+
+`Requirement:` Docker Desktop. <a href='https://www.docker.com/products/docker-desktop/'>https://www.docker.com/products/docker-desktop/</a>
+
+```powershell
+cd client/deployment
+docker-compose build
+docker-compose up # start the app
+docker-compose down # stop the app
 ```
 
 ### Technologies used:

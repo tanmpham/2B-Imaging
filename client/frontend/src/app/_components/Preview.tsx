@@ -32,7 +32,7 @@ function Initial() {
 }
 
 const style = {
-  title: `text-stone-700 dark:text-stone-300 font-semibold`,
+  title: `text-stone-700 dark:text-stone-300 font-semibold w-[600px]`,
 }
 
 function Preview() {

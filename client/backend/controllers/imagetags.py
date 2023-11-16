@@ -1,6 +1,6 @@
 from flask import Blueprint, request, make_response, jsonify
 import sqlite3
-from kafka.receiver import queue_up
+from queue_svc.queue_bp import queue_up
 
 imagetags_bp = Blueprint("imagetags", __name__)
 
@@ -25,13 +25,18 @@ def add_tag():
         for item in images_id:
             sql_query = """INSERT INTO imagetagslist (TagID, ImageID) VALUES (?,?);"""
             cursor.execute(sql_query, (tag_id, int(item)))
-            queue_up(
-                {
-                    "producerID": 0,
-                    "action": "add_tag",
-                    "payload": {"TagID": tag_id, "Tag": tag_name, "ImageID": item},
-                }
-            )
+
+        queue_up(
+            {
+                "action": "add_tag",
+                "payload": {
+                    "TagID": tag_id,
+                    "Tag": tag_name,
+                    "UseCount": use_count,
+                    "ImagesID": images_id,
+                },
+            }
+        )
 
         connection.commit()
         cursor.close()
