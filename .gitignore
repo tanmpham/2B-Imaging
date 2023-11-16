@@ -35,9 +35,16 @@ yarn-error.log*
 next-env.d.ts
 
 app_conf.yml
-*.sqlite
+*.sqlite*
 
 __pycache__
 
-*/patientimages/*.jpg
-*/patientimages/*.mp4
+
+*.mp4
+*.jpg
+queue.json
+
+sw.js
+workbox-*.js
+
+/env

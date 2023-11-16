@@ -1,4 +1,8 @@
 version: 1
 client-frontend-url: localhost:3000
 client-backend-url: localhost:4200
+<<<<<<< HEAD
 sql-pass:
+=======
+sql-pass: <MySQL_root_password>
+>>>>>>> origin/tan
