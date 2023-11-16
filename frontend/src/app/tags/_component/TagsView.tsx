@@ -3,14 +3,22 @@
 import { Button } from '@/components/shared/Buttons/Button'
 import SlideSwitchBtn from '@/components/shared/Buttons/SlideSwitchBtn'
 import { TagDto } from '@/interfaces/tag.dto'
-import { Dispatch, SetStateAction, useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { Dispatch, SetStateAction } from 'react'
 
 interface Props {
   tags: TagDto[]
   setTagsShowing: Dispatch<SetStateAction<{ tagID: number; tag: string }[]>>
+  currentTagID: number
   setCurrentTagID: Dispatch<SetStateAction<number>>
 }
-function TagsView({ tags, setTagsShowing, setCurrentTagID }: Props) {
+function TagsView({
+  tags,
+  setTagsShowing,
+  currentTagID,
+  setCurrentTagID,
+}: Props) {
+  const router = useRouter()
   return (
     <div className="h-[88%] w-[500px] bg-grey_3 rounded-[16px]">
       <div className={`max-h-[88%] overflow-y-auto pt-[4rem] px-[3rem]`}>
@@ -27,6 +35,7 @@ function TagsView({ tags, setTagsShowing, setCurrentTagID }: Props) {
                 {UseCount}
               </div>
               <SlideSwitchBtn
+                currentTagID={currentTagID}
                 setCurrentTagID={setCurrentTagID}
                 TagID={TagID}
                 Tag={Tag}
@@ -38,16 +47,16 @@ function TagsView({ tags, setTagsShowing, setCurrentTagID }: Props) {
       </div>
 
       <div
-        className={`flex items-center gap-x-[.64rem] mt-[2rem] justify-end mr-[2rem]`}
+        className={`flex items-center gap-x-[.8rem] mt-[2rem] justify-end mr-[2rem]`}
       >
-        <Button className="hover:translate-y-[-.2rem] transition-transform ease-in">
-          Add
-        </Button>
+        <Button variant={'error'}>Delete</Button>
+        <Button variant={'tag'}>Edit</Button>
         <Button
-          variant={'tag'}
-          className="hover:translate-y-[-.2rem] transition-transform ease-in"
+          onClick={() => {
+            router.push('/tags/create')
+          }}
         >
-          Modify
+          Add
         </Button>
       </div>
     </div>

@@ -3,3 +3,9 @@ export interface TagDto {
   Tag: string
   UseCount: number
 }
+
+export interface TagCreateDto {
+  Tag: string
+  UseCount: number
+  ImagesID: string[]
+}

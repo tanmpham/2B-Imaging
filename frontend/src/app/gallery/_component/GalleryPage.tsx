@@ -1,15 +1,16 @@
 'use client'
 
-import CompareBox from '@/components/CompareBox'
-import DeleteConfirmBox from '@/components/DeleteConfirmBox'
-import ImageCanvas from '@/components/ImageCanvas'
+import DeleteConfirmBox from '@/components/shared/DeleteConfirmBox'
+import ImageView from '@/components/Gallery/ImageView'
+import VideoView from '@/components/Gallery/VideoView'
 import MediaList from '@/components/Media/MediaList'
-import VideoView from '@/components/VideoView'
+import CompareBox from '@/components/shared/CompareBox'
 import { LoaderPage } from '@/components/shared/LoaderPage'
 import { toasterStyle } from '@/constants/toasterStyle'
 import { useGlobalContext } from '@/context/global-context'
 import { ImageDto } from '@/interfaces/image.dto'
 import { PatientDto } from '@/interfaces/patient.dto'
+import { format } from 'date-fns'
 import { useSearchParams } from 'next/navigation'
 import { DragEvent, useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
@@ -18,7 +19,8 @@ interface Props {
   images: ImageDto[]
 }
 function GalleryPage({ images }: Props) {
-  const { currentPatient, setCurrentPatient, previewMedia } = useGlobalContext()
+  const { setCurrentPatient, previewMedia, compareList, setCompareList } =
+    useGlobalContext()
 
   const searchParams = useSearchParams()
   const params = {
@@ -32,23 +34,51 @@ function GalleryPage({ images }: Props) {
 
   const [isLoading, setIsLoading] = useState(true)
 
+  const [patientImages, setPatientImages] = useState<ImageDto[]>([])
+
   useEffect(() => {
-    const getPatient = async () => {
+    const getPatientData = async () => {
       if (params.patientId) {
         try {
           const res = await fetch(`api/patients/${params.patientId}`)
           if (!res.ok) {
-            toast.error('Failed to fetch data', toasterStyle)
+            console.error('Failed to fetch data')
           }
           const patientData = (await res.json()) as PatientDto
-          setCurrentPatient(patientData)
+          setCurrentPatient({
+            PatientID: patientData.PatientID,
+            LastName: patientData.LastName,
+            FirstName: patientData.FirstName,
+            DateofBirth: format(
+              new Date(patientData.DateofBirth),
+              'yyyy-MM-dd'
+            ),
+          })
         } catch (error) {
           console.error('Failed to fetch patient:', error)
         }
       }
       setIsLoading(false)
     }
-    getPatient()
+    const getImagesByPatient = async () => {
+      if (params.patientId) {
+        try {
+          const res = await fetch(
+            `api/patientimages?patient-id=${params.patientId}`
+          )
+          if (!res.ok) {
+            console.error('Failed to fetch data')
+          }
+          const imageData = (await res.json()) as ImageDto[]
+          setPatientImages(imageData)
+        } catch (error) {
+          console.error('Failed to fetch patient:', error)
+        }
+      }
+      setIsLoading(false)
+    }
+    getImagesByPatient()
+    getPatientData()
 
     // console.log(currentPatient)
   }, [])
@@ -64,23 +94,11 @@ function GalleryPage({ images }: Props) {
 
   const [isConfirming, setIsConfirming] = useState(false)
 
-  function handleOnDrag(
-    e: DragEvent,
-    item: { id: string; fileName: string; src: string }
-  ) {
-    e.dataTransfer.setData(
-      'mediaDrop',
-      `${item.id},${item.fileName},${item.src}`
-    )
-  }
-
   function handleOnDrop__delete(e: DragEvent) {
     const item = e.dataTransfer.getData('mediaDrop').split(',')
     setMediaDrop({ id: item[0], fileName: item[1] })
     setIsConfirming(true)
   }
-
-  const [compareList, setCompareList] = useState<string[]>([])
 
   const updateCompareList = (src: string, method: string) => {
     if (method === 'add') {
@@ -113,15 +131,24 @@ function GalleryPage({ images }: Props) {
       {isLoading ? (
         <LoaderPage />
       ) : (
-        <div className="flex text-white">
-          <div className={`bg-grey_1 space-y-[30px]`}>
-            <MediaList
-              className="max-h-[78vh] px-[60px] pt-[15px]"
-              updateCompareList={updateCompareList}
-              compareList={compareList}
-              images={images}
-              handleOnDrag={handleOnDrag}
-            />
+        <div className="flex w-[88vw] text-white">
+          <div className={`bg-grey_1 space-y-[30px] shrink-0`}>
+            {patientImages.length > 0 ? (
+              <MediaList
+                className="max-h-[78vh] px-[60px] pt-[15px]"
+                updateCompareList={updateCompareList}
+                compareList={compareList}
+                images={patientImages}
+              />
+            ) : (
+              <MediaList
+                className="max-h-[78vh] px-[60px] pt-[15px]"
+                updateCompareList={updateCompareList}
+                compareList={compareList}
+                images={images}
+              />
+            )}
+
             <div className={`w-full flex items-center justify-evenly`}>
               <CompareBox
                 compareList={compareList}
@@ -138,7 +165,8 @@ function GalleryPage({ images }: Props) {
             </div>
           </div>
 
-          {previewMedia.fileType === 'mp4' ? <VideoView /> : <ImageCanvas />}
+          {previewMedia.fileType === 'mp4' && <VideoView />}
+          {previewMedia.fileType === 'jpg' && <ImageView />}
         </div>
       )}
     </>

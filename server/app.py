@@ -2,9 +2,15 @@ from flask import Flask, abort, request
 from flask_cors import CORS
 from urllib.parse import urlparse
 import yaml
-import mysql.connector
+from controllers.patientimages import patientimages_bp
+from controllers.imagetags import imagetags_bp
+from controllers.imagenotes import imagenotes_bp
+from controllers.patients import patients_bp
 
-with open("app_conf.yml", "r") as f:
+
+app_conf_path = "app_conf.yml"
+
+with open(app_conf_path, "r") as f:
     appConfig = yaml.safe_load(f.read())
 
 
@@ -26,6 +32,12 @@ class SecuredStaticFlask(Flask):
 app = SecuredStaticFlask(
     __name__, static_folder="patientimages", static_url_path="/gallery"
 )
+
+app.register_blueprint(patients_bp)
+app.register_blueprint(patientimages_bp)
+app.register_blueprint(imagetags_bp)
+app.register_blueprint(imagenotes_bp)
+
 CORS(
     app,
     origins=[
@@ -34,149 +46,10 @@ CORS(
     ],
 )
 
-db_config = {
-    "host": "localhost",
-    "user": "root",
-    "password": appConfig["sql-pass"],
-    "database": "eyecameradb",
-}
-
 
 @app.route("/")
-def hello():
-    return "Hello, World!"
-
-
-@app.route("/patientimages", methods=["GET"])
-def fetchAll():
-    tag_id = request.args.get("tag-id")
-
-    connection = mysql.connector.connect(**db_config)
-    cursor = connection.cursor()
-
-    if not tag_id:
-        sql_query = f"""SELECT * FROM patientimages ORDER BY DateCreated DESC;"""
-        cursor.execute(sql_query)
-    else:
-        # Get all images in a tag
-        sql_query = """
-        SELECT *
-        FROM patientimages
-        INNER JOIN imagetagslist ON patientimages.ImageID = imagetagslist.ImageID
-        WHERE imagetagslist.TagsID = %s;
-        """
-        cursor.execute(sql_query, (tag_id,))
-
-    query_result = cursor.fetchall()
-
-    # Commit changes and close the connection
-    connection.commit()
-    cursor.close()
-    connection.close()
-
-    responseData = []
-
-    for image in query_result:
-        parts = image[6].split(".")
-        fileType = parts[len(parts) - 1]
-        responseData.append(
-            {
-                "ImageID": image[0],
-                "PatientID": image[1],
-                "ImageData": image[2],
-                "IsRightEye": image[3],
-                "Annotation": image[4],
-                "ThumbnailData": image[5],
-                "ImageName": image[6],
-                "FileType": fileType,
-                "DateCreated": image[7],
-            }
-        )
-
-    return responseData
-
-
-# set up api for patient images
-# Fetch all patients
-@app.route("/patients", methods=["GET"])
-def get_all_patients():
-    connection = mysql.connector.connect(**db_config)
-    cursor = connection.cursor()
-
-    sql_query = """SELECT * FROM patients;"""
-    cursor.execute(sql_query)
-
-    query_result = cursor.fetchall()
-    cursor.close()
-    connection.close()
-
-    patients = [
-        {
-            "PatientID": patient[0],
-            "FirstName": patient[1],
-            "LastName": patient[2],
-            "DateofBirth": patient[3],
-        }
-        for patient in query_result
-    ]
-    return patients
-
-
-# Fetch a single patient by ID
-@app.route("/patients/<int:patient_id>", methods=["GET"])
-def get_one_patient(patient_id):
-    connection = mysql.connector.connect(**db_config)
-    cursor = connection.cursor()
-
-    sql_query = """SELECT * FROM patients WHERE PatientID = %s;"""
-    cursor.execute(sql_query, (patient_id,))
-
-    query_result = cursor.fetchone()
-    cursor.close()
-    connection.close()
-
-    if query_result is None:
-        return {"message": "Patient not found"}, 404
-
-    patient = {
-        "PatientID": query_result[0],
-        "FirstName": query_result[1],
-        "LastName": query_result[2],
-        "DateofBirth": query_result[3],
-    }
-    return patient
-
-
-@app.route("/tags", methods=["GET"])
-def get_tags():
-    image_id = request.args.get("image-id")
-
-    connection = mysql.connector.connect(**db_config)
-    cursor = connection.cursor()
-
-    if not image_id:
-        # Get all tags
-        sql_query = """SELECT imagetags.TagID, imagetags.Tag, imagetags.UseCount FROM imagetags;"""
-        cursor.execute(sql_query)
-    else:
-        # Get specific tags in an image
-        sql_query = """
-          SELECT imagetags.TagID, imagetags.Tag, imagetags.UseCount
-          FROM imagetags
-          INNER JOIN imagetagslist ON imagetags.TagID = imagetagslist.TagsID
-          WHERE imagetagslist.ImageID = %s;
-        """
-        cursor.execute(sql_query, (image_id,))
-
-    query_result = cursor.fetchall()
-
-    cursor.close()
-    connection.close()
-
-    tags = [
-        {"TagID": tag[0], "Tag": tag[1], "UseCount": tag[2]} for tag in query_result
-    ]
-    return tags
+def home():
+    return "Restricted server!", 400
 
 
 app.run(host="0.0.0.0", port=4000, debug=True)

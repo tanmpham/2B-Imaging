@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   description: 'Copyright © 2023 2B Imaging. All rights reserved.',
 }
 
+export const revalidate = 0
 interface Props {}
 async function page({}: Props) {
   const tags = (await getAllTags()) as TagDto[]

@@ -20,7 +20,7 @@ module.exports = {
       {
         selector: 'variable',
         types: ['boolean'],
-        format: ['PascalCase'],
+        format: ['PascalCase', 'snake_case'],
         prefix: ['is', 'should', 'has', 'can', 'did', 'will'],
       },
       {
@@ -44,5 +44,6 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': 'warn',
     '@typescript-eslint/no-explicit-any': 'warn',
     '@typescript-eslint/no-floating-promises': 'warn',
+    '@typescript-eslint/no-var-requires': 'warn',
   },
 }

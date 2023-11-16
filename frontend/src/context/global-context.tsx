@@ -2,6 +2,7 @@
 
 import { PatientDto } from '@/interfaces/patient.dto'
 import { PreviewMedia } from '@/interfaces/preview-media'
+import { ThemeProvider } from 'next-themes'
 import {
   Dispatch,
   ReactNode,
@@ -23,6 +24,8 @@ interface GlobalContextType {
   setSelectedDate: Dispatch<SetStateAction<string>>
   previewMedia: PreviewMedia
   setPreviewMedia: Dispatch<SetStateAction<PreviewMedia>>
+  compareList: string[]
+  setCompareList: Dispatch<SetStateAction<string[]>>
 }
 
 const GlobalContext = createContext<GlobalContextType | null>(null)
@@ -37,12 +40,15 @@ export default function GlobalContextProvider({ children }: Props) {
 
   const [previewMedia, setPreviewMedia] = useState<PreviewMedia>({
     src: '',
-    id: 0,
+    patientID: 0,
+    imageID: 0,
     fileType: '',
     IsRightEye: -1,
   })
 
   const [selectedDate, setSelectedDate] = useState('')
+
+  const [compareList, setCompareList] = useState<string[]>([])
 
   return (
     <GlobalContext.Provider
@@ -53,10 +59,12 @@ export default function GlobalContextProvider({ children }: Props) {
         setSelectedDate,
         previewMedia,
         setPreviewMedia,
+        compareList,
+        setCompareList,
       }}
     >
       <Toaster />
-      {children}
+      <ThemeProvider attribute="class">{children}</ThemeProvider>
     </GlobalContext.Provider>
   )
 }
