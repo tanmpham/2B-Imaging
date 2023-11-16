@@ -39,5 +39,10 @@ app_conf.yml
 
 __pycache__
 
-*/patientimages/*.jpg
-*/patientimages/*.mp4
+*.jpg
+*.mp4
+*env
+*app.log
+queue*.json
+sw*.js
+workbox*.js
