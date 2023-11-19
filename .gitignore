@@ -35,14 +35,18 @@ yarn-error.log*
 next-env.d.ts
 
 app_conf.yml
-*.sqlite
+*.sqlite*
 
 __pycache__
 
-*.jpg
 *.mp4
-*env
-*app.log
+*.jpg
 queue*.json
-sw*.js
-workbox*.js
+
+sw.js
+workbox-*.js
+
+/env
+
+/client/deployment/logs
+app.log
