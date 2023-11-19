@@ -3,10 +3,10 @@ client-frontend-url: localhost:3000
 client-backend-url: localhost:4200
 sql-pass: <MySQL_root_password>
 events:
-  hostname: kafka
-  port: 29092
+  hostname: localhost
+  port: 9092
   topic: events
 max_tries: 10
-reconnect_sleep: 10
+reconnect_sleep: 60
 scheduler:
   period_sec: 24
