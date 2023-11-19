@@ -39,7 +39,6 @@ app_conf.yml
 
 __pycache__
 
-
 *.mp4
 *.jpg
 queue*.json
