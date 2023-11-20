@@ -4,3 +4,9 @@ export interface PatientDto {
   FirstName: string
   DateofBirth: string
 }
+
+export interface PatientCreateDto {
+  LastName: string
+  FirstName: string
+  DateofBirth: string
+}

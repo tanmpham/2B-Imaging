@@ -5,10 +5,13 @@ import random
 import datetime
 from mysql.connector import Error
 
-with open("app_conf.yml", "r") as f:
+server_dir = os.path.dirname(os.path.abspath(__file__))
+config_file_path = os.path.join(server_dir, 'app_conf.yml')
+
+with open(config_file_path, "r") as f:
     appConfig = yaml.safe_load(f.read())
 
-image_folder_path = "patientimages"
+image_folder_path = os.path.join(server_dir, 'patientimages')
 image_names = os.listdir(image_folder_path)
 db_config = {
     "host": "localhost",
