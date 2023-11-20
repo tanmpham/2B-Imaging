@@ -44,7 +44,7 @@ function MediaItem({
   const router = useRouter()
   const pathname = usePathname()
 
-  const isMediaPage = pathname.split('/')[1] === 'gallery'
+  const isGalleryPage = pathname.split('/')[1] === 'gallery'
   const isTagPage = pathname.split('/')[1] === 'tags'
   const is_tag_create_or_edit_page =
     pathname.split('/')[1] === 'tags' &&
@@ -90,13 +90,19 @@ function MediaItem({
             setImagesID((prev) => [...prev, String(id)])
           } else toast.error('Item is already selected.', toasterStyle)
         }
+
+        // if (isGalleryPage) {
+        //   router.push(
+        //     `${process.env.NEXT_PUBLIC_CLIENT_FRONTEND_URL}/gallery/${id}?patient-id=${patientID}`
+        //   )
+        // }
         break
       case 2:
-        if (isMediaPage && updateCompareList) {
+        if (isGalleryPage && updateCompareList) {
           updateCompareListFn()
         } else {
           router.push(
-            `${process.env.NEXT_PUBLIC_CLIENT_FRONTEND_URL}/gallery?patient-id=${patientID}`
+            `${process.env.NEXT_PUBLIC_CLIENT_FRONTEND_URL}/gallery/${id}?patient-id=${patientID}`
           )
         }
 

@@ -1,11 +1,10 @@
 'use client'
 
-import DeleteConfirmBox from '@/components/shared/DeleteConfirmBox'
 import ImageView from '@/components/Gallery/ImageView'
 import VideoView from '@/components/Gallery/VideoView'
 import MediaList from '@/components/Media/MediaList'
 import CompareBox from '@/components/shared/CompareBox'
-import { LoaderPage } from '@/components/shared/LoaderPage'
+import DeleteConfirmBox from '@/components/shared/DeleteConfirmBox'
 import { toasterStyle } from '@/constants/toasterStyle'
 import { useGlobalContext } from '@/context/global-context'
 import { ImageDto } from '@/interfaces/image.dto'
@@ -16,11 +15,17 @@ import { DragEvent, useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 
 interface Props {
-  images: ImageDto[]
+  images?: ImageDto[]
+  imageID?: string
 }
-function GalleryPage({ images }: Props) {
-  const { setCurrentPatient, previewMedia, compareList, setCompareList } =
-    useGlobalContext()
+function GalleryPage({ images = [], imageID }: Props) {
+  const {
+    setCurrentPatient,
+    previewMedia,
+    setPreviewMedia,
+    compareList,
+    setCompareList,
+  } = useGlobalContext()
 
   const searchParams = useSearchParams()
   const params = {
@@ -32,15 +37,15 @@ function GalleryPage({ images }: Props) {
 
   //console.log(params)
 
-  const [isLoading, setIsLoading] = useState(true)
-
   const [patientImages, setPatientImages] = useState<ImageDto[]>([])
 
   useEffect(() => {
     const getPatientData = async () => {
       if (params.patientId) {
         try {
-          const res = await fetch(`api/patients/${params.patientId}`)
+          const res = await fetch(
+            `${process.env.NEXT_PUBLIC_CLIENT_FRONTEND_URL}/api/patients/${params.patientId}`
+          )
           if (!res.ok) {
             console.error('Failed to fetch data')
           }
@@ -58,13 +63,12 @@ function GalleryPage({ images }: Props) {
           console.error('Failed to fetch patient:', error)
         }
       }
-      setIsLoading(false)
     }
     const getImagesByPatient = async () => {
       if (params.patientId) {
         try {
           const res = await fetch(
-            `api/patientimages?patient-id=${params.patientId}`
+            `${process.env.NEXT_PUBLIC_CLIENT_FRONTEND_URL}/api/patientimages?patient-id=${params.patientId}`
           )
           if (!res.ok) {
             console.error('Failed to fetch data')
@@ -75,11 +79,33 @@ function GalleryPage({ images }: Props) {
           console.error('Failed to fetch patient:', error)
         }
       }
-      setIsLoading(false)
     }
+    const getImagePreview = async () => {
+      if (imageID) {
+        try {
+          const res = await fetch(
+            `${process.env.NEXT_PUBLIC_CLIENT_FRONTEND_URL}/api/patientimages/${imageID}`
+          )
+          if (!res.ok) {
+            console.error('Failed to fetch data')
+          }
+          const imageData = (await res.json()) as ImageDto
+          setPreviewMedia({
+            src: `${process.env.NEXT_PUBLIC_CLIENT_API}/gallery/${imageData.ImageName}`,
+            patientID: imageData.PatientID,
+            imageID: imageData.ImageID,
+            fileType: imageData.FileType,
+            IsRightEye: imageData.IsRightEye,
+          })
+        } catch (error) {
+          console.error('Failed to fetch patient:', error)
+        }
+      }
+    }
+
     getImagesByPatient()
     getPatientData()
-
+    getImagePreview()
     // console.log(currentPatient)
   }, [])
 
@@ -127,49 +153,43 @@ function GalleryPage({ images }: Props) {
   // console.log(mediaDrop)
 
   return (
-    <>
-      {isLoading ? (
-        <LoaderPage />
-      ) : (
-        <div className="flex w-[88vw] text-white">
-          <div className={`bg-grey_1 space-y-[30px] shrink-0`}>
-            {patientImages.length > 0 ? (
-              <MediaList
-                className="max-h-[78vh] px-[60px] pt-[15px]"
-                updateCompareList={updateCompareList}
-                compareList={compareList}
-                images={patientImages}
-              />
-            ) : (
-              <MediaList
-                className="max-h-[78vh] px-[60px] pt-[15px]"
-                updateCompareList={updateCompareList}
-                compareList={compareList}
-                images={images}
-              />
-            )}
+    <div className="flex w-[88vw] text-white">
+      <div className={`bg-grey_1 space-y-[30px] shrink-0`}>
+        {patientImages.length > 0 && imageID && images.length === 0 ? (
+          <MediaList
+            className="max-h-[78vh] px-[60px] pt-[15px]"
+            updateCompareList={updateCompareList}
+            compareList={compareList}
+            images={patientImages}
+          />
+        ) : (
+          <MediaList
+            className="max-h-[78vh] px-[60px] pt-[15px]"
+            updateCompareList={updateCompareList}
+            compareList={compareList}
+            images={images}
+          />
+        )}
 
-            <div className={`w-full flex items-center justify-evenly`}>
-              <CompareBox
-                compareList={compareList}
-                updateCompareList={updateCompareList}
-                handleOnDrop__compare={handleOnDrop__compare}
-              />
-              <DeleteConfirmBox
-                fileName={mediaDrop.fileName}
-                isConfirming={isConfirming}
-                setIsConfirming={setIsConfirming}
-                handleOnDrop__delete={handleOnDrop__delete}
-                clearMediaDrop={clearMediaDrop}
-              />
-            </div>
-          </div>
-
-          {previewMedia.fileType === 'mp4' && <VideoView />}
-          {previewMedia.fileType === 'jpg' && <ImageView />}
+        <div className={`w-full flex items-center justify-evenly`}>
+          <CompareBox
+            compareList={compareList}
+            updateCompareList={updateCompareList}
+            handleOnDrop__compare={handleOnDrop__compare}
+          />
+          <DeleteConfirmBox
+            fileName={mediaDrop.fileName}
+            isConfirming={isConfirming}
+            setIsConfirming={setIsConfirming}
+            handleOnDrop__delete={handleOnDrop__delete}
+            clearMediaDrop={clearMediaDrop}
+          />
         </div>
-      )}
-    </>
+      </div>
+
+      {previewMedia.fileType === 'mp4' && <VideoView />}
+      {previewMedia.fileType === 'jpg' && <ImageView />}
+    </div>
   )
 }
 export default GalleryPage
