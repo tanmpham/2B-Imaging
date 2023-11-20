@@ -13,6 +13,8 @@ yarn install
 yarn dev
 ```
 
+`PWA version:` Run `yarn build` before `yarn start`. The put http://localhost:3000/ in the browser, wait for the website to load, and you'll see the download option on the far right the search bar. After installed the PWA, you can run `yarn dev` (no `yarn start` or `yarn build`).
+
 ### Install dependencies, set up and run the back-end app locally
 
 `Note:` Please download the sample images sent from the sponsor, and copy them to the server/patientimages folder (create the patientimages folder if not exist).
@@ -20,6 +22,8 @@ yarn dev
 Run the script `server/eyecameradb.sql` inside MySQL Workbench.
 
 #### Server back-end
+
+`Requirement:` MySQL (2.1M). <a href='https://dev.mysql.com/downloads/installer/'>https://dev.mysql.com/downloads/installer/</a>
 
 Create a NEW app_conf.yml files (content is based on app_conf.example.yml).
 
@@ -40,6 +44,17 @@ pip install -r requirements.txt
 py create_tables.py
 py populate-db.py
 py app.py
+```
+
+### Docker
+
+`Requirement:` Docker Desktop. <a href='https://www.docker.com/products/docker-desktop/'>https://www.docker.com/products/docker-desktop/</a>
+
+```powershell
+cd client/deployment
+docker-compose build
+docker-compose up # start the app
+docker-compose down # stop the app
 ```
 
 ### Technologies used:

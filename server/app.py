@@ -2,7 +2,7 @@ from flask import Flask, abort, request
 from flask_cors import CORS
 from urllib.parse import urlparse
 import yaml
-<<<<<<< HEAD
+
 import mysql.connector
 import os 
 import parse 
@@ -11,14 +11,12 @@ from controllers.patientimages import patientimages_bp
 from controllers.imagetags import imagetags_bp
 from controllers.imagenotes import imagenotes_bp
 from controllers.patients import patients_bp
->>>>>>> b9568daca92ee68ac5ff0b601cb88e8dff41ce31
 
+server_dir = os.path.dirname(os.path.abspath(__file__))
+config_file_path = os.path.join(server_dir, 'app_conf.yml')
 
-app_conf_path = "app_conf.yml"
-
-with open(app_conf_path, "r") as f:
+with open(config_file_path, "r") as f:
     appConfig = yaml.safe_load(f.read())
-
 
 class SecuredStaticFlask(Flask):
     def send_static_file(self, filename):

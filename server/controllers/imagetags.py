@@ -1,6 +1,7 @@
 from flask import Blueprint, request, make_response, jsonify
 import mysql.connector
 from constants.dbconfig import db_config
+from queue_svc.queue_bp import queue_up
 
 imagetags_bp = Blueprint("imagetags", __name__)
 
@@ -13,13 +14,30 @@ def add_tag():
         cursor = connection.cursor()
 
         tag_name = request.json["Tag"]
-        image_id = request.json["ImageID"]
+        use_count = request.json["UseCount"]
 
-        sql_query = (
-            """INSERT INTO imagetags (Tag, ImageID, UseCount) VALUES (%s, %s, %s);"""
+        sql_query = """INSERT INTO imagetags (Tag, UseCount) VALUES (%s,%s);"""
+        cursor.execute(sql_query, (tag_name, use_count))
+
+        # Get the ID of the last inserted row
+        tag_id = cursor.lastrowid
+
+        images_id = request.json["ImagesID"]
+        for item in images_id:
+            sql_query = """INSERT INTO imagetagslist (TagID, ImageID) VALUES (%s,%s);"""
+            cursor.execute(sql_query, (tag_id, int(item)))
+
+        queue_up(
+            {
+                "action": "add_tag",
+                "payload": {
+                    "TagID": tag_id,
+                    "Tag": tag_name,
+                    "UseCount": use_count,
+                    "ImagesID": images_id,
+                },
+            }
         )
-
-        cursor.execute(sql_query, (tag_name, image_id, 1))
 
         connection.commit()
         cursor.close()
@@ -33,7 +51,7 @@ def add_tag():
 
 
 # Get tags
-@imagetags_bp.route("/tags", methods=["GET"])
+@imagetags_bp.route("/imagetags", methods=["GET"])
 def get_tags():
     image_id = request.args.get("image-id")
     try:
@@ -49,7 +67,7 @@ def get_tags():
             sql_query = """
             SELECT imagetags.TagID, imagetags.Tag, imagetags.UseCount
             FROM imagetags
-            INNER JOIN imagetagslist ON imagetags.TagID = imagetagslist.TagsID
+            INNER JOIN imagetagslist ON imagetags.TagID = imagetagslist.TagID
             WHERE imagetagslist.ImageID = %s;
           """
             cursor.execute(sql_query, (image_id,))
