@@ -25,7 +25,7 @@ interface Props {
 }
 
 const style = {
-  icon: `text-[34px] cursor-pointer active:scale-95 hover:translate-x-[.2rem] transition-transform ease-linear z-10 absolute bottom-[1rem]`,
+  icon: `text-[24px] cursor-pointer active:scale-95 hover:translate-x-[.2rem] transition-transform ease-linear z-10 absolute bottom-[1rem]`,
 }
 
 function MediaItem({
@@ -159,7 +159,7 @@ function MediaItem({
       }}
       className={`relative z-[20] w-[200px] h-[200px] p-1 ${
         !src && 'bg-grey_2'
-      } hover:translate-y-[-.5rem] active:scale-[0.98] border-2 border-transparent hover:border-grey_2 rounded-[10px] transition-all duration-[240ms] ease-in group`}
+      } hover:translate-y-[-.5rem] active:scale-[0.98] border hover:border-2 border-stone-500 dark:border-stone-800 hover:border-stone-300 dark:hover:border-grey_2 rounded-[10px] transition-all duration-[240ms] ease-in group`}
     >
       {src && (
         <>
