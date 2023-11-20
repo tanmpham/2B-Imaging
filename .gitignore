@@ -39,10 +39,9 @@ app_conf.yml
 
 __pycache__
 
-
 *.mp4
 *.jpg
-queue.json
+queue*.json
 
 sw.js
 workbox-*.js
@@ -50,3 +49,4 @@ workbox-*.js
 /env
 
 /client/deployment/logs
+app.log

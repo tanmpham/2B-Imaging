@@ -1,8 +1,8 @@
-import sqlite3
-
+import mysql.connector
+from constants.dbconfig import db_config
 
 try:
-    connection = sqlite3.connect("eyecameradb.sqlite")
+    connection = mysql.connector.connect(**db_config)
     cursor = connection.cursor()
     sql_query = """SELECT * FROM producer;"""
     cursor.execute(sql_query)
@@ -10,8 +10,10 @@ try:
     cursor.close()
     connection.close()
     producerID = query_result[0][0]
-except sqlite3.Error as err:
+except mysql.connector.Error as err:
     error = f"[get_producer_id]: {err}"
     print(error)
 
 queue_json = "queue_svc/queue.json"
+
+queue_received = "queue_svc/queue_received.json"

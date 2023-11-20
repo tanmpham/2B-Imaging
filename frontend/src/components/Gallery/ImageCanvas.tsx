@@ -3,6 +3,7 @@ import React from 'react'
 import { AiOutlineExpandAlt } from 'react-icons/ai'
 import { GoShare } from 'react-icons/go'
 import { HiMagnifyingGlassMinus, HiMagnifyingGlassPlus } from 'react-icons/hi2'
+import { RxText } from 'react-icons/rx'
 import { SlPencil } from 'react-icons/sl'
 import { VscSettings } from 'react-icons/vsc'
 import Img from '../shared/Img'
@@ -13,14 +14,14 @@ const style = {
 }
 
 const ImageCanvas = () => {
-  const { previewMedia } = useGlobalContext();
-  const { src } = previewMedia;
+  const { previewMedia } = useGlobalContext()
+  const { src } = previewMedia
 
-  const [isDrawing, setIsDrawing] = React.useState(false);
+  const [isDrawing, setIsDrawing] = React.useState(false)
 
   const toggleDrawing = () => {
-    setIsDrawing(!isDrawing);
-  };
+    setIsDrawing(!isDrawing)
+  }
 
   return (
     <div className={`flex h-fit`}>
@@ -41,13 +42,14 @@ const ImageCanvas = () => {
             className={`${style.icon} text-[34px]`}
             onClick={toggleDrawing}
           />
+          <RxText className={`${style.icon} text-[34px]`} />
           <VscSettings className={`${style.icon} text-[34px]`} />
           <GoShare className={`${style.icon} text-[34px]`} />
         </div>
         <AiOutlineExpandAlt className={`${style.icon} text-[40px]`} />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ImageCanvas;
+export default ImageCanvas

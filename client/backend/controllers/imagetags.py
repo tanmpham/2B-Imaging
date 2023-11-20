@@ -29,8 +29,12 @@ def add_tag():
         queue_up(
             {
                 "action": "add_tag",
-                "payload": {"TagID": tag_id, "Tag": tag_name, "ImagesID": images_id},
-                # "createdAt": datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S"),
+                "payload": {
+                    "TagID": tag_id,
+                    "Tag": tag_name,
+                    "UseCount": use_count,
+                    "ImagesID": images_id,
+                },
             }
         )
 

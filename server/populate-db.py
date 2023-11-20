@@ -3,6 +3,7 @@ import mysql.connector
 import yaml
 import random
 import datetime
+import uuid
 from mysql.connector import Error
 
 with open("app_conf.yml", "r") as f:
@@ -47,7 +48,6 @@ try:
             # Combine the date and time into a datetime object
             DateCreated = datetime.datetime.combine(date, time)
 
-
             sql_query = f"""INSERT INTO patientimages (PatientID, IsRightEye, Annotation, ImageName, DateCreated) VALUES
                     ('{PatientID}', '{IsRightEye}', '{Annotation}', '{image_names[i]}', '{DateCreated}')"""
             cursor.execute(sql_query)
@@ -87,9 +87,32 @@ try:
             )
             # Combine the date and time into a datetime object
             DateCreated = datetime.datetime.combine(date, time)
-            
+
             sql_insert_note_query = "INSERT INTO imagenotes (Note, NoteCreatedAt, ImageID) VALUES (%s, %s, %s)"
             cursor.execute(sql_insert_note_query, (note, DateCreated, image_id))
+
+        # Create producer
+        producerID = str(uuid.uuid4())
+
+        cursor.execute(
+            """
+                DROP TABLE IF EXISTS `producer`;
+            """
+        )
+
+        cursor.execute(
+            """
+                  CREATE TABLE `producer` (
+                      `ProducerID` VARCHAR(36) PRIMARY KEY
+                  );
+            """
+        )
+
+        query = """
+                INSERT INTO producer (ProducerID) VALUES (%s); 
+            """
+
+        cursor.execute(query, (producerID,))
 
         # Commit changes and close the connection
         connection.commit()

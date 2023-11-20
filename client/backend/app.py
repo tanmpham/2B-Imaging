@@ -34,7 +34,6 @@ CORS(
     app,
     origins=[
         appConfig["client-frontend-url"],
-        appConfig["client-queue-url"],
         appConfig["server-url"],
     ],
 )

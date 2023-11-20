@@ -1,10 +1,10 @@
 CREATE DATABASE  IF NOT EXISTS `eyecameradb` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `eyecameradb`;
--- MySQL dump 10.13  Distrib 8.0.32, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.34, for Win64 (x86_64)
 --
 -- Host: localhost    Database: eyecameradb
 -- ------------------------------------------------------
--- Server version	8.0.34-0ubuntu0.23.04.1
+-- Server version	8.0.35
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -116,7 +116,7 @@ CREATE TABLE `patientimages` (
   PRIMARY KEY (`ImageID`),
   KEY `PatientID` (`PatientID`),
   CONSTRAINT `patientimages_ibfk_1` FOREIGN KEY (`PatientID`) REFERENCES `patients` (`PatientID`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -141,7 +141,7 @@ CREATE TABLE `patients` (
   `LastName` varchar(50) DEFAULT NULL,
   `DateofBirth` date DEFAULT NULL,
   PRIMARY KEY (`PatientID`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -150,18 +150,30 @@ CREATE TABLE `patients` (
 
 LOCK TABLES `patients` WRITE;
 /*!40000 ALTER TABLE `patients` DISABLE KEYS */;
--- Populate with 10 patients and patientimages tables with data
-INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Tyler', 'Rogers', '1980-01-01');
-INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Grace', 'Higgins', '1985-01-01');
-INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Melanie', 'Watson', '1990-01-01');
-INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Sally', 'Stiffany', '1995-01-01');
-INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Hailey', 'Carter', '2000-01-01');
-INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Brad', 'Rogers', '2001-01-01');
-INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Penelope', 'Grant', '2002-01-01');
-INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Frederick', 'Warren', '1998-01-01');
-INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Sally', 'Jones', '2000-01-01');
-INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Sofia', 'Cooper', '1987-01-01');
+INSERT INTO `patients` VALUES (1,'Tyler','Rogers','1980-01-01'),(2,'Grace','Higgins','1985-01-01'),(3,'Melanie','Watson','1990-01-01'),(4,'Sally','Stiffany','1995-01-01'),(5,'Hailey','Carter','2000-01-01'),(6,'Brad','Rogers','2001-01-01'),(7,'Penelope','Grant','2002-01-01'),(8,'Frederick','Warren','1998-01-01'),(9,'Sally','Jones','2000-01-01'),(10,'Sofia','Cooper','1987-01-01');
 /*!40000 ALTER TABLE `patients` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `producer`
+--
+
+DROP TABLE IF EXISTS `producer`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `producer` (
+  `ProducerID` varchar(36) NOT NULL,
+  PRIMARY KEY (`ProducerID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `producer`
+--
+
+LOCK TABLES `producer` WRITE;
+/*!40000 ALTER TABLE `producer` DISABLE KEYS */;
+/*!40000 ALTER TABLE `producer` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -177,7 +189,7 @@ CREATE TABLE `workqueue` (
   `InsertDateTime` datetime NOT NULL,
   `Seen` tinyint DEFAULT NULL,
   PRIMARY KEY (`workId`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -589,4 +601,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-10-28  2:09:00
+-- Dump completed on 2023-11-13 16:10:12
