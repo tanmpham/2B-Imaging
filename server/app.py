@@ -6,7 +6,6 @@ import yaml
 import mysql.connector
 import os 
 import parse 
-=======
 from controllers.patientimages import patientimages_bp
 from controllers.imagetags import imagetags_bp
 from controllers.imagenotes import imagenotes_bp
