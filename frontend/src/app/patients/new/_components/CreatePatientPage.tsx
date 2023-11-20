@@ -69,7 +69,7 @@ function CreatePatientPage({}: Props) {
   };
 
   return (
-    <div className="bg-gray-900 min-h-screen flex w-[88vw] items-center justify-center">
+    <div className="bg-black min-h-screen flex w-[88vw] items-center justify-center">
       <form onSubmit={handleSubmit} className="bg-gray-800 p-6 rounded-md">
       {error && (
           <p className="text-red-500 mb-4 text-sm">
