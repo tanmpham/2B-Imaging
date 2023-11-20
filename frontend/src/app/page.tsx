@@ -3,6 +3,8 @@ import { ImageDto } from '@/interfaces/image.dto'
 import { PatientDto } from '@/interfaces/patient.dto'
 import Home from './_components/Home'
 
+export const revalidate = 0 
+
 async function page() {
   const images = (await getAllImages()) as ImageDto[]
   const patients = (await getAllPatients()) as PatientDto[]

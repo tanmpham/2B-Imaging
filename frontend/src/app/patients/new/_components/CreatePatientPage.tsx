@@ -53,7 +53,7 @@ function CreatePatientPage({}: Props) {
           console.error('Failed to fetch data')
         } else {
           toast.success(`${firstName} ${lastName} added!`, toasterStyle)
-          router.push('/')
+          window.location.href = '/';
         }
       } catch (error) {
         console.error('Create patient error', error)
@@ -65,7 +65,7 @@ function CreatePatientPage({}: Props) {
   };
 
   const handleCancel = () => {
-    router.push('/')
+    window.location.href = '/';
   };
 
   return (
