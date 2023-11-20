@@ -2,6 +2,8 @@
 import React, { FormEvent, useState } from 'react';
 import { useRouter } from 'next/navigation'
 import { PatientCreateDto } from '@/interfaces/patient.dto'
+import toast from 'react-hot-toast'
+import { toasterStyle } from '@/constants/toasterStyle';
 
 interface Props {}
 
@@ -31,9 +33,35 @@ function CreatePatientPage({}: Props) {
 
     setError(null);
 
-    router.push('/');
+    // router.push('/');
 
     console.log('Form submitted:', { firstName, lastName, dob });
+
+    async function createPatient() {
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_CLIENT_FRONTEND_URL}/api/patients/newpatient`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newPatient),
+          }
+        )
+        if (!res.ok) {
+          console.error('Failed to fetch data')
+        } else {
+          toast.success(`${firstName} ${lastName} added!`, toasterStyle)
+          router.push('/')
+        }
+      } catch (error) {
+        console.error('Create patient error', error)
+        toast.error('Failed to create patient', toasterStyle)
+      }
+    }
+
+    createPatient()
   };
 
   const handleCancel = () => {
