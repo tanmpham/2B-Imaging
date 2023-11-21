@@ -152,8 +152,8 @@ function MediaItem({
         })
       }}
       className={`relative z-[20] w-[200px] h-[200px] p-1 ${
-        !src && 'bg-grey_2'
-      } hover:translate-y-[-.5rem] active:scale-[0.98] border-2 border-transparent hover:border-grey_2 rounded-[10px] transition-all duration-[240ms] ease-in group`}
+        !src && 'bg-grey_3 dark:bg-grey_2'
+      } hover:translate-y-[-.5rem] active:scale-[0.98] border-2 border-transparent hover:border-grey_3 dark:hover:border-grey_2 rounded-[6px] transition-all duration-[240ms] ease-in group`}
     >
       {src && (
         <>
@@ -175,7 +175,7 @@ function MediaItem({
 
       {fileType === 'mp4' && (
         <BsCameraReels
-          className={`${style.icon} text-stone-300 hover:text-stone-400 left-[1rem]`}
+          className={`${style.icon} text-stone-700 dark:text-stone-300 hover:text-stone-600 dark:hover:text-stone-400 left-[1rem]`}
         />
       )}
 

@@ -37,13 +37,17 @@ function DarkSwitch({}: Props) {
       }}
     >
       <div
-        className={`relative z-10 bg-white h-[22px] w-[22px] rounded-md ${
+        className={`relative z-10 bg-black dark:bg-white h-[22px] w-[22px] rounded-md ${
           resolvedTheme === 'dark' && 'group-hover:bg-yellow-400'
         }`}
       />
 
-      <BsFillMoonFill className={`absolute right-[.4rem] text-black`} />
-      <MdWbSunny className={`absolute left-[.4rem] text-black`} />
+      <BsFillMoonFill
+        className={`absolute right-[.4rem] text-white dark:text-black`}
+      />
+      <MdWbSunny
+        className={`absolute left-[.4rem] text-white dark:text-black`}
+      />
     </div>
   )
 }
