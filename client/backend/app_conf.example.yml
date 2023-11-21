@@ -1,4 +1,12 @@
 version: 1
-client-frontend-url: localhost:3000
+client-frontend-url: client-frontend:3001
 server-url: localhost:4000
 sqlite-file: eyecameradb.sqlite
+events:
+  hostname: localhost
+  port: 9092
+  topic: events
+max_tries: 10
+reconnect_sleep: 60
+scheduler:
+  period_sec: 24

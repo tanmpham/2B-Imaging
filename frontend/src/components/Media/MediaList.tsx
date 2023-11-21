@@ -49,6 +49,17 @@ function MediaList({
     <div
       className={`${className} grid grid-cols-2 gap-x-[28px] gap-y-[23px] justify-start overflow-y-auto`}
     >
+      {images.length === 0 && (
+        <>
+          <div className={`w-[200px] h-[200px]`} />
+          <div className={`w-[200px] h-[200px]`} />
+          <div className={`w-[200px] h-[200px]`} />
+          <div className={`w-[200px] h-[200px]`} />
+          <div className={`w-[200px] h-[200px]`} />
+          <div className={`w-[200px] h-[200px]`} />
+          <div className={`w-[200px] h-[200px]`} />
+        </>
+      )}
       {images.map(
         (
           { ImageID, DateCreated, ImageName, FileType, IsRightEye, PatientID },

@@ -128,52 +128,52 @@ c.execute(
 c.execute(
     """
         -- Populate with 10 patients and patientimages tables with data
-        INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('John', 'Smith', '1980-01-01'); 
+        INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Tyler','Rogers','1980-01-01'); 
     """
 )
 c.execute(
     """
-        INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Jane', 'Doe', '1985-01-01');
+        INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Grace','Higgins','1985-01-01');
     """
 )
 c.execute(
     """
-    INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Bob', 'Jones', '1990-01-01');
+    INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Melanie','Watson','1990-01-01');
     """
 )
 c.execute(
     """
-    INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Sally', 'Smith', '1995-01-01');
+    INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Sally','Stiffany','1995-01-01');
     """
 )
 c.execute(
     """
-    INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Joe', 'Doe', '2000-01-01');
+    INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Hailey','Carter','2000-01-01');
     """
 )
 c.execute(
     """
-    INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('John', 'Jones', '2005-01-01');
+    INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Brad','Rogers','2001-01-01');
     """
 )
 c.execute(
     """
-    INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Jane', 'Smith', '2010-01-01');
+    INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Penelope','Grant','2002-01-01');
     """
 )
 c.execute(
     """
-    INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Bob', 'Doe', '2015-01-01');
+    INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Frederick','Warren','1998-01-01');
     """
 )
 c.execute(
     """
-    INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Sally', 'Jones', '2020-01-01');
+    INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Sally','Jones','2000-01-01');
     """
 )
 c.execute(
     """
-     INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Joe', 'Smith', '2025-01-01');
+     INSERT INTO patients (FirstName, LastName, DateofBirth) VALUES ('Sofia','Cooper','1987-01-01');
     """
 )
 
