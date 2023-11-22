@@ -1,5 +1,5 @@
+import GalleryPage from '@/components/Gallery/GalleryPage'
 import { ImageDto } from '@/interfaces/image.dto'
-import GalleryPage from './_component/GalleryPage'
 
 import { getAllImages } from '@/functions'
 import { Metadata } from 'next'

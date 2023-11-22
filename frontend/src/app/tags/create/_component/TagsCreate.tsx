@@ -85,7 +85,9 @@ function TagsCreate({ images }: Props) {
 
   return (
     <div className="text-black dark:text-white flex w-[88vw]">
-      <div className={`w-[580px] flex justify-center shrink-0`}>
+      <div
+        className={`w-[580px] flex justify-center shrink-0 bg-grey_1 dark:bg-transparent`}
+      >
         <TagsCreateForm
           tagName={tagName}
           setTagName={setTagName}
