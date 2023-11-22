@@ -102,7 +102,7 @@ function MediaItem({
           updateCompareListFn()
         } else {
           router.push(
-            `${process.env.NEXT_PUBLIC_CLIENT_FRONTEND_URL}/gallery/${id}?patient-id=${patientID}`
+            `${process.env.NEXT_PUBLIC_CLIENT_FRONTEND_URL}/gallery?patient-id=${patientID}`
           )
         }
 

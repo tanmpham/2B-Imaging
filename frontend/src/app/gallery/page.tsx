@@ -1,7 +1,4 @@
 import GalleryPage from '@/components/Gallery/GalleryPage'
-import { ImageDto } from '@/interfaces/image.dto'
-
-import { getAllImages } from '@/functions'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -12,8 +9,9 @@ export const metadata: Metadata = {
 export const revalidate = 0
 
 interface Props {}
-async function page({}: Props) {
-  const images = (await getAllImages()) as ImageDto[]
-  return <GalleryPage images={images} />
+
+function page({}: Props) {
+  // const images = (await getAllImages()) as ImageDto[]
+  return <GalleryPage />
 }
 export default page
