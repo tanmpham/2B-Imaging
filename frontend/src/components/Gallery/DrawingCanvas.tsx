@@ -71,7 +71,7 @@ const DrawCanvas: React.FC<DrawCanvasProps> = ({ imgSrc }) => {
       onMouseUp={stopDrawing}
       onMouseOut={stopDrawing}
       style={{ cursor: 'crosshair' }}
-      className="border border-green_1 rounded-[6px]"
+      className="rounded-[6px]"
     />
   )
 }
