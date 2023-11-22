@@ -155,7 +155,7 @@ function GalleryPage({ images = [], imageID }: Props) {
   return (
     <div className="flex w-[88vw] text-white">
       <div className={`bg-grey_1 space-y-[30px] shrink-0`}>
-        {patientImages.length > 0 && imageID && images.length === 0 ? (
+        {patientImages.length > 0 ? (
           <MediaList
             className="max-h-[78vh] px-[60px] pt-[15px]"
             updateCompareList={updateCompareList}
