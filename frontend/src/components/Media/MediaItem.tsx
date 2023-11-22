@@ -181,7 +181,7 @@ function MediaItem({
 
       {fileType === 'mp4' && (
         <BsCameraReels
-          className={`${style.icon} text-stone-300 hover:text-stone-400 left-[1rem]`}
+          className={`${style.icon} text-stone-700 dark:text-stone-300 hover:text-stone-600 dark:hover:text-stone-400 left-[1rem]`}
         />
       )}
 

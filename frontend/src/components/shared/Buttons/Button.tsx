@@ -9,12 +9,12 @@ const buttonVariants = cva(
     variants: {
       variant: {
         primary:
-          'text-white border-white hover:border-green_1 hover:text-green_1',
-        success: `text-white border-white hover:border-lime-400 hover:text-lime-400`,
-        warning: `text-white border-white hover:border-amber-400 hover:text-amber-400`,
-        archive: `text-white border-white hover:border-yellow-400 hover:text-yellow-400`,
-        tag: `text-white border-white hover:border-orange_1 hover:text-orange_1`,
-        error: `text-white border-white hover:border-red-600 hover:text-red-600`,
+          'text-black border-black hover:border-green-700 hover:text-green-700 dark:text-white dark:border-white dark:hover:border-green_1 dark:hover:text-green_1',
+        success: `text-black border-black dark:text-white dark:border-white hover:border-lime-400 hover:text-lime-400`,
+        warning: `text-black border-black dark:text-white dark:border-white hover:border-amber-400 hover:text-amber-400`,
+        archive: `text-black border-black dark:text-white dark:border-white hover:border-yellow-400 hover:text-yellow-400`,
+        tag: `text-black border-black dark:text-white dark:border-white hover:border-orange_1 hover:text-orange_1`,
+        error: `text-black border-black dark:text-white dark:border-white hover:border-red-600 hover:text-red-600`,
         black: `text-black border-black hover:border-green-700 hover:text-green-700`,
         custom: '',
       },

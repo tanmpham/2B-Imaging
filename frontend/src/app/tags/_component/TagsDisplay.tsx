@@ -16,7 +16,7 @@ interface Props {
 const style = {
   title: {
     active: `text-orange_1 font-semibold`,
-    inactive: `text-grey_5 font-light hover:text-orange_1`,
+    inactive: `text-grey_2 dark:text-grey_5 font-light hover:text-orange_1`,
   },
 }
 function TagsDisplay({ tagsShowing, currentTagID, setCurrentTagID }: Props) {
@@ -71,7 +71,7 @@ function TagsDisplay({ tagsShowing, currentTagID, setCurrentTagID }: Props) {
     }
   }
   return (
-    <div className={`grow h-screen bg-grey_3 overflow-x-auto`}>
+    <div className={`grow h-screen bg-grey_2 dark:bg-grey_3 overflow-x-auto`}>
       {tagsShowing.length === 0 ? (
         <div></div>
       ) : (
