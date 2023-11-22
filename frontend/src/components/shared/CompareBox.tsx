@@ -27,8 +27,20 @@ function CompareBox({
     switch (e.detail) {
       case 1:
         break
-      case 2:
-        router.push('/compare-patient-images')
+      case 2: {
+        let imagesQuery = '?'
+
+        compareList.forEach(function (value, index, array) {
+          if (index === 0) {
+            imagesQuery += `image=${value.id}`
+          } else {
+            const addStr = `&image${index + 1}=${value.id}`
+            imagesQuery += addStr
+          }
+        })
+
+        router.push(`/compare-patient-images${imagesQuery}`)
+      }
     }
   }
 
