@@ -47,7 +47,14 @@ function ComparePage({}: Props) {
   //console.log(imagesList)
 
   return (
-    <div className="max-w-[88vw] h-fit flex flex-wrap gap-x-[1rem] justify-center items-center gap-y-[4.6rem] m-auto"></div>
+    <div className="max-w-[88vw] h-fit flex flex-wrap gap-x-[1rem] justify-center items-center gap-y-[4.6rem] m-auto">
+      {imagesList.map((image) => (
+        <ImageCompare
+          key={image.ImageID}
+          src={`${process.env.NEXT_PUBLIC_CLIENT_API}/gallery/${image.ImageName}`}
+        />
+      ))}
+    </div>
   )
 }
 
