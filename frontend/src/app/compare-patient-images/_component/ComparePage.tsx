@@ -51,7 +51,7 @@ function ComparePage({}: Props) {
       {imagesList.map((image) => (
         <ImageCompare
           key={image.ImageID}
-          src={`${process.env.NEXT_PUBLIC_CLIENT_API}/gallery/${image.ImageName}`}
+          src={`${process.env.NEXT_PUBLIC_IMAGES_HOST_SVC}/gallery/${image.ImageName}`}
         />
       ))}
     </div>
