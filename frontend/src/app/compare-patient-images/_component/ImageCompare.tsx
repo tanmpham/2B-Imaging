@@ -1,5 +1,4 @@
 import Img from '@/components/shared/Img'
-import { useGlobalContext } from '@/context/global-context'
 import React from 'react'
 import { AiOutlineExpandAlt } from 'react-icons/ai'
 import { GoShare } from 'react-icons/go'
@@ -13,10 +12,11 @@ const style = {
   icon: `hover:scale-[1.1] hover:text-green_1 cursor-pointer active:translate-y-[.2rem] transition-all ease-linear`,
 }
 
-const ImageCompare = () => {
-  const { previewMedia } = useGlobalContext()
-  const { src } = previewMedia
+interface Props {
+  src: string
+}
 
+const ImageCompare = ({ src }: Props) => {
   const [isDrawing, setIsDrawing] = React.useState(false)
 
   const toggleDrawing = () => {
