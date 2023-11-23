@@ -24,8 +24,10 @@ const ImageCompare = ({ src }: Props) => {
   }
 
   return (
-    <div className={`flex h-fit items-center`}>
-      <div className={`w-[494px]`}>
+    <div
+      className={`flex h-fit items-center border border-grey_4 hover:border-green_1 rounded-[10px] pl-[.4rem] py-[.34rem] transition-colors ease-linear`}
+    >
+      <div className={`w-[484px] flex flex-col items-center justify-center`}>
         {/* Use DrawCanvas component when drawing is active */}
         {isDrawing ? (
           <DrawCanvasCompare imgSrc={src} />
@@ -34,7 +36,7 @@ const ImageCompare = ({ src }: Props) => {
         )}
       </div>
 
-      <div className="grow flex flex-col items-center justify-between pl-[.6rem] gap-y-[1.4rem]">
+      <div className="grow flex flex-col items-center justify-between px-[.6rem] gap-y-[1.4rem]">
         <HiMagnifyingGlassPlus className={`${style.icon} text-[28px]`} />
         <HiMagnifyingGlassMinus className={`${style.icon} text-[28px]`} />
         <SlPencil
