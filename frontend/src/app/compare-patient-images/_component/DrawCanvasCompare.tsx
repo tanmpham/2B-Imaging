@@ -4,7 +4,7 @@ interface DrawCanvasProps {
   imgSrc: string
 }
 
-const DrawCanvas: React.FC<DrawCanvasProps> = ({ imgSrc }) => {
+const DrawCanvasCompare: React.FC<DrawCanvasProps> = ({ imgSrc }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
   const [isDrawing, setIsDrawing] = useState(false)
 
@@ -20,7 +20,7 @@ const DrawCanvas: React.FC<DrawCanvasProps> = ({ imgSrc }) => {
 
     img.onload = () => {
       const aspectRatio = img.width / img.height
-      const canvasWidth = 1040 // Set the desired width (same as non-drawing Img)
+      const canvasWidth = 494 // Set the desired width (same as non-drawing Img)
       const canvasHeight = canvasWidth / aspectRatio
 
       canvas.width = canvasWidth
@@ -77,4 +77,4 @@ const DrawCanvas: React.FC<DrawCanvasProps> = ({ imgSrc }) => {
   )
 }
 
-export default DrawCanvas
+export default DrawCanvasCompare

@@ -2,6 +2,7 @@
 
 import { ImageDto } from '@/interfaces/image.dto'
 // import { format } from 'date-fns'
+import { compareList } from '@/interfaces/compare-list'
 import { format } from 'date-fns'
 import { Dispatch, DragEvent, Fragment, SetStateAction } from 'react'
 import MediaItem from './MediaItem'
@@ -22,8 +23,8 @@ interface Props {
     IsRightEye: number
   }
   className?: string
-  updateCompareList?: (src: string, method: string) => void
-  compareList?: string[]
+  updateCompareList?: (id: string, src: string, method: string) => void
+  compareList?: compareList[]
   images: ImageDto[]
   handle_image_add_to_tag?: (imageID: string) => void
   setImagesID?: Dispatch<SetStateAction<string[]>>

@@ -2,6 +2,7 @@
 
 import { toasterStyle } from '@/constants/toasterStyle'
 import { useGlobalContext } from '@/context/global-context'
+import { compareList } from '@/interfaces/compare-list'
 import { TagDto } from '@/interfaces/tag.dto'
 import { usePathname, useRouter } from 'next/navigation'
 import { Dispatch, DragEvent, SetStateAction, useEffect, useState } from 'react'
@@ -12,8 +13,8 @@ import Img from '../shared/Img'
 
 interface Props {
   src?: string
-  updateCompareList?: (src: string, method: string) => void
-  compareList?: string[]
+  updateCompareList?: (id: string, src: string, method: string) => void
+  compareList?: compareList[]
   fileType: string
   IsRightEye: number
   patientID: number
@@ -54,8 +55,13 @@ function MediaItem({
     if (compareList?.length && compareList.length > 5) {
       toast.error('Reached limit 6 images to compare.', toasterStyle)
     } else {
-      if (src && !compareList?.includes(src) && updateCompareList) {
-        updateCompareList(src, 'add')
+      if (
+        src &&
+        compareList &&
+        !compareList.some((item) => item.src === src) &&
+        updateCompareList
+      ) {
+        updateCompareList(String(id), src, 'add')
       } else {
         toast.error('Item is already selected.', toasterStyle)
       }
@@ -102,7 +108,7 @@ function MediaItem({
           updateCompareListFn()
         } else {
           router.push(
-            `${process.env.NEXT_PUBLIC_CLIENT_FRONTEND_URL}/gallery/${id}?patient-id=${patientID}`
+            `${process.env.NEXT_PUBLIC_CLIENT_FRONTEND_URL}/gallery?patient-id=${patientID}`
           )
         }
 

@@ -1,5 +1,6 @@
 'use client'
 
+import { compareList } from '@/interfaces/compare-list'
 import { PatientDto } from '@/interfaces/patient.dto'
 import { PreviewMedia } from '@/interfaces/preview-media'
 import { ThemeProvider } from 'next-themes'
@@ -24,8 +25,8 @@ interface GlobalContextType {
   setSelectedDate: Dispatch<SetStateAction<string>>
   previewMedia: PreviewMedia
   setPreviewMedia: Dispatch<SetStateAction<PreviewMedia>>
-  compareList: string[]
-  setCompareList: Dispatch<SetStateAction<string[]>>
+  compareList: compareList[]
+  setCompareList: Dispatch<SetStateAction<compareList[]>>
 }
 
 const GlobalContext = createContext<GlobalContextType | null>(null)
@@ -48,7 +49,7 @@ export default function GlobalContextProvider({ children }: Props) {
 
   const [selectedDate, setSelectedDate] = useState('')
 
-  const [compareList, setCompareList] = useState<string[]>([])
+  const [compareList, setCompareList] = useState<compareList[]>([])
 
   return (
     <GlobalContext.Provider
