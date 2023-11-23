@@ -6,6 +6,7 @@ from controllers.patientimages import patientimages_bp
 from controllers.imagetags import imagetags_bp
 from controllers.imagenotes import imagenotes_bp
 from controllers.patients import patients_bp
+from queue_svc import queue_bp
 
 
 app_conf_path = "app_conf.yml"
@@ -37,6 +38,7 @@ app.register_blueprint(patients_bp)
 app.register_blueprint(patientimages_bp)
 app.register_blueprint(imagetags_bp)
 app.register_blueprint(imagenotes_bp)
+# app.register_blueprint(queue_bp)
 
 CORS(
     app,
