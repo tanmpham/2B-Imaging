@@ -24,9 +24,7 @@ const ImageCompare = ({ src }: Props) => {
   }
 
   return (
-    <div
-      className={`flex h-fit items-center border border-grey_4 hover:border-green_1 rounded-[10px] pl-[.4rem] py-[.34rem] transition-colors ease-linear`}
-    >
+    <div className={`flex h-fit items-center`}>
       <div className={`w-[484px] flex flex-col items-center justify-center`}>
         {/* Use DrawCanvas component when drawing is active */}
         {isDrawing ? (

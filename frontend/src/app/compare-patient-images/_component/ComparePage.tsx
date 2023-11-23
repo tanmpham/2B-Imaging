@@ -48,11 +48,15 @@ function ComparePage({}: Props) {
 
   return (
     <div className="max-w-[88vw] h-fit flex flex-wrap gap-x-[1rem] justify-center items-center gap-y-[4.6rem] m-auto">
-      {imagesList.map((image) => (
-        <ImageCompare
-          key={image.ImageID}
-          src={`${process.env.NEXT_PUBLIC_IMAGES_HOST_SVC}/gallery/${image.ImageName}`}
-        />
+      {imagesList.map(({ ImageID, ImageName, FileType }) => (
+        <div
+          key={ImageID}
+          className="border border-grey_4 hover:border-green_1 rounded-[10px] pl-[.4rem] py-[.34rem] transition-colors ease-linear"
+        >
+          <ImageCompare
+            src={`${process.env.NEXT_PUBLIC_IMAGES_HOST_SVC}/gallery/${ImageName}`}
+          />
+        </div>
       ))}
     </div>
   )
