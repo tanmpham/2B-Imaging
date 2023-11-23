@@ -47,15 +47,32 @@ function ComparePage({}: Props) {
   //console.log(imagesList)
 
   return (
-    <div className="max-w-[88vw] h-fit flex flex-wrap gap-x-[1rem] justify-center items-center gap-y-[4.6rem] m-auto">
+    <div
+      className={`max-w-[88vw] h-fit flex flex-wrap gap-x-[1rem] ${
+        imagesList.length === 2 && 'gap-x-[4rem]'
+      } justify-center items-center gap-y-[4.6rem] m-auto`}
+    >
       {imagesList.map(({ ImageID, ImageName, FileType }) => (
         <div
           key={ImageID}
           className="border border-grey_4 hover:border-green_1 rounded-[10px] pl-[.4rem] py-[.34rem] transition-colors ease-linear"
         >
-          <ImageCompare
-            src={`${process.env.NEXT_PUBLIC_IMAGES_HOST_SVC}/gallery/${ImageName}`}
-          />
+          {imagesList.length === 1 ? (
+            <ImageCompare
+              imgWidth="w-[1100px]"
+              src={`${process.env.NEXT_PUBLIC_IMAGES_HOST_SVC}/gallery/${ImageName}`}
+            />
+          ) : imagesList.length === 2 ? (
+            <ImageCompare
+              imgWidth="w-[680px]"
+              src={`${process.env.NEXT_PUBLIC_IMAGES_HOST_SVC}/gallery/${ImageName}`}
+            />
+          ) : (
+            <ImageCompare
+              imgWidth="w-[484px]"
+              src={`${process.env.NEXT_PUBLIC_IMAGES_HOST_SVC}/gallery/${ImageName}`}
+            />
+          )}
         </div>
       ))}
     </div>

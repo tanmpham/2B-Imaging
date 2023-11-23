@@ -14,9 +14,10 @@ const style = {
 
 interface Props {
   src: string
+  imgWidth: string
 }
 
-const ImageCompare = ({ src }: Props) => {
+const ImageCompare = ({ src, imgWidth }: Props) => {
   const [isDrawing, setIsDrawing] = React.useState(false)
 
   const toggleDrawing = () => {
@@ -25,7 +26,7 @@ const ImageCompare = ({ src }: Props) => {
 
   return (
     <div className={`flex h-fit items-center`}>
-      <div className={`w-[484px] flex flex-col items-center justify-center`}>
+      <div className={`${imgWidth} flex flex-col items-center justify-center`}>
         {/* Use DrawCanvas component when drawing is active */}
         {isDrawing ? (
           <DrawCanvasCompare imgSrc={src} />
