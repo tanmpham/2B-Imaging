@@ -83,7 +83,7 @@ function MediaList({
               )}
 
             <MediaItem
-              src={`${process.env.NEXT_PUBLIC_CLIENT_API}/gallery/${ImageName}`}
+              src={`${process.env.NEXT_PUBLIC_IMAGES_HOST_SVC}/gallery/${ImageName}`}
               updateCompareList={updateCompareList}
               compareList={compareList}
               fileType={FileType}

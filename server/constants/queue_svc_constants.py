@@ -9,7 +9,8 @@ try:
     query_result = cursor.fetchall()
     cursor.close()
     connection.close()
-    producerID = query_result[0][0]
+    # producerID = query_result[0][0]
+    producerID = 1
 except mysql.connector.Error as err:
     error = f"[get_producer_id]: {err}"
     print(error)

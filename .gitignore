@@ -34,7 +34,7 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-app_conf.yml
+server/app_conf.yml
 *.sqlite*
 
 __pycache__

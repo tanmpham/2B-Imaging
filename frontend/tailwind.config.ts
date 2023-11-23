@@ -21,6 +21,7 @@ const config: Config = {
         grey_3: '#0000008C',
         grey_4: '#878484',
         grey_5: '#828282',
+        grey_6: '#A8A7A7',
         orange_1: '#E89903',
         red_1: `#250505`,
       },

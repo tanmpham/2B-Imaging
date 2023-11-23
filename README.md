@@ -34,6 +34,15 @@ py populate-db.py
 py app.py
 ```
 
+#### Images Hosting Service
+
+Make sure the images in images_hosting_svc\patientimages is the same as those in server\patientimages.
+
+```powershell
+cd images_hosting_svc
+py app.py
+```
+
 #### Client back-end (OPTIONAL - for offline-purpose)
 
 Create a NEW app_conf.yml files (content is based on app_conf.example.yml).
