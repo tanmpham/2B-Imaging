@@ -14,8 +14,6 @@ function CreatePatientPage({}: Props) {
   const [dob, setDob] = useState('');
   const [error, setError] = useState<string | null>(null);
 
-  const router = useRouter()
-
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
