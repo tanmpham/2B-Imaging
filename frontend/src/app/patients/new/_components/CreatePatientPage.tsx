@@ -70,7 +70,7 @@ function CreatePatientPage({}: Props) {
 
   return (
     <div className="bg-black min-h-screen flex w-[88vw] items-center justify-center">
-      <form onSubmit={handleSubmit} className="bg-gray-800 p-6 rounded-md">
+      <form onSubmit={handleSubmit} className="bg-green_2 p-6 rounded-md">
       {error && (
           <p className="text-red-500 mb-4 text-sm">
             <strong>Error:</strong> {error}
@@ -84,7 +84,7 @@ function CreatePatientPage({}: Props) {
             name="firstName"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
-            className="bg-gray-700 p-2 text-white rounded-md w-full"
+            className="p-2 text-white rounded-md w-full"
           />
         </div>
         <div className="mb-4">
@@ -95,7 +95,7 @@ function CreatePatientPage({}: Props) {
             name="lastName"
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
-            className="bg-gray-700 p-2 text-white rounded-md w-full"
+            className="p-2 text-white rounded-md w-full"
           />
         </div>
         <div className="mb-4">
@@ -106,12 +106,13 @@ function CreatePatientPage({}: Props) {
             name="dob"
             value={dob}
             onChange={(e) => setDob(e.target.value)}
-            className="bg-gray-700 p-2 text-white rounded-md w-full"
+            className="p-2 text-white rounded-md w-full"
           />
         </div>
         <div className="flex justify-end">
-          <button type="button" onClick={handleCancel} className="mr-2 bg-red-500 text-white p-2 rounded-md">Cancel</button>
-          <button type="submit" className="bg-green-500 text-white p-2 rounded-md">Save</button>
+          <button type="button" onClick={handleCancel} className="shrink-0 rounded-[10px] border disabled:pointer-events-none disabled:text-stone-500 disabled:border-stone-500 disabled:bg-white disabled:border transition-all ease-in inline-flex items-center text-white border-white hover:border-red-600 hover:text-red-600 px-[.6rem] py-[.2rem] text-[13px] lg:text-base hover:scale-105 active:translate-y-[.2rem] w-fit" form="">Cancel</button>
+          <div className="mx-2"></div>
+          <button type="submit" className="shrink-0 rounded-[10px] border disabled:pointer-events-none disabled:text-stone-500 disabled:border-stone-500 disabled:bg-white disabled:border transition-all ease-in inline-flex items-center text-white border-white hover:border-green-600 hover:text-green-600 px-[.6rem] py-[.2rem] text-[13px] lg:text-base hover:scale-105 active:translate-y-[.2rem] w-fit" form="">Submit</button>
         </div>
       </form>
     </div>
