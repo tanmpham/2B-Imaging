@@ -24,6 +24,14 @@ function CreatePatientPage({}: Props) {
       return;
     }
 
+    const lettersAndDashesRegex = /^[a-zA-Z-]+$/;
+
+    // Check if firstName and lastName contain only letters and dashes
+    if (!lettersAndDashesRegex.test(firstName) || !lettersAndDashesRegex.test(lastName)) {
+      setError('First name and last name should contain only letters or dashes.');
+      return;
+    }
+
     // Handle form submission logic here
     const newPatient={
       FirstName: firstName,
@@ -32,8 +40,6 @@ function CreatePatientPage({}: Props) {
     } as PatientCreateDto
 
     setError(null);
-
-    // router.push('/');
 
     console.log('Form submitted:', { firstName, lastName, dob });
 
@@ -112,7 +118,7 @@ function CreatePatientPage({}: Props) {
         <div className="flex justify-end">
           <button type="button" onClick={handleCancel} className="shrink-0 rounded-[10px] border disabled:pointer-events-none disabled:text-stone-500 disabled:border-stone-500 disabled:bg-white disabled:border transition-all ease-in inline-flex items-center text-white border-white hover:border-red-600 hover:text-red-600 px-[.6rem] py-[.2rem] text-[13px] lg:text-base hover:scale-105 active:translate-y-[.2rem] w-fit" form="">Cancel</button>
           <div className="mx-2"></div>
-          <button type="submit" className="shrink-0 rounded-[10px] border disabled:pointer-events-none disabled:text-stone-500 disabled:border-stone-500 disabled:bg-white disabled:border transition-all ease-in inline-flex items-center text-white border-white hover:border-green-600 hover:text-green-600 px-[.6rem] py-[.2rem] text-[13px] lg:text-base hover:scale-105 active:translate-y-[.2rem] w-fit" form="">Submit</button>
+          <button type="submit" onClick={handleSubmit} className="shrink-0 rounded-[10px] border disabled:pointer-events-none disabled:text-stone-500 disabled:border-stone-500 disabled:bg-white disabled:border transition-all ease-in inline-flex items-center text-white border-white hover:border-green-600 hover:text-green-600 px-[.6rem] py-[.2rem] text-[13px] lg:text-base hover:scale-105 active:translate-y-[.2rem] w-fit" form="">Submit</button>
         </div>
       </form>
     </div>
