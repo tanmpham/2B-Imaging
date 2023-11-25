@@ -32,7 +32,7 @@ interface Props {
 }
 
 const style = {
-  date: `col-span-2 text-center text-grey_2 font-[300]`,
+  date: `col-span-2 text-center text-black dark:text-grey_2 font-[300]`,
 }
 
 function MediaList({

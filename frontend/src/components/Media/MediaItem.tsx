@@ -193,7 +193,7 @@ function MediaItem({
 
       {isHaveTag && (
         <HiHashtag
-          className={`${style.icon} text-orange_1 hover:text-orange-500 right-[1rem]`}
+          className={`${style.icon} text-orange-600 hover:text-orange-700 dark:text-orange_1 dark:hover:text-orange-500 right-[1rem]`}
         />
       )}
     </button>

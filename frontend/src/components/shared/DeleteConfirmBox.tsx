@@ -48,7 +48,7 @@ function DeleteConfirmBox({
           e.preventDefault()
           setIsDragOver(true)
         }}
-        className={`relative z-10 text-[20px] h-[100px] w-[240px] flex items-center justify-center text-center bg-red_1 border-t-[2px] border-b-[2px] border-dashed cursor-pointer hover:border-red-600 hover:text-black dark:hover:text-white transition-all ease-linear ${
+        className={`relative z-10 text-[20px] h-[100px] w-[240px] flex items-center justify-center text-center bg-red_1 border-t-[2px] border-b-[2px] border-dashed cursor-pointer hover:border-red-600 hover:text-white dark:hover:text-white transition-all ease-linear ${
           isDragOver
             ? 'text-black dark:text-white border-red-600'
             : 'border-red-900 text-grey_4'
