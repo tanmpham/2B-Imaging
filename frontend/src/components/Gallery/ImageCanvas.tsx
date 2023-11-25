@@ -57,7 +57,9 @@ const ImageCanvas = () => {
           <HiMagnifyingGlassPlus className={`${style.icon} text-[40px]`} />
           <HiMagnifyingGlassMinus className={`${style.icon} text-[40px]`} />
           <SlPencil
-            className={`${style.icon} text-[34px]`}
+            className={`${style.icon} text-[34px] ${
+              isDrawing && 'text-yellow-400'
+            }`}
             onClick={toggleDrawing}
           />
           <RxText

@@ -2,6 +2,7 @@
 
 import { ImageDto } from '@/interfaces/image.dto'
 // import { format } from 'date-fns'
+import { compareList } from '@/interfaces/compare-list'
 import { format } from 'date-fns'
 import { Dispatch, DragEvent, Fragment, SetStateAction } from 'react'
 import MediaItem from './MediaItem'
@@ -22,8 +23,8 @@ interface Props {
     IsRightEye: number
   }
   className?: string
-  updateCompareList?: (src: string, method: string) => void
-  compareList?: string[]
+  updateCompareList?: (id: string, src: string, method: string) => void
+  compareList?: compareList[]
   images: ImageDto[]
   handle_image_add_to_tag?: (imageID: string) => void
   setImagesID?: Dispatch<SetStateAction<string[]>>
@@ -31,7 +32,7 @@ interface Props {
 }
 
 const style = {
-  date: `col-span-2 text-center text-grey_3 dark:text-grey_2 font-[300]`,
+  date: `col-span-2 text-center text-grey_2 font-[300]`,
 }
 
 function MediaList({
@@ -82,7 +83,7 @@ function MediaList({
               )}
 
             <MediaItem
-              src={`${process.env.NEXT_PUBLIC_CLIENT_API}/gallery/${ImageName}`}
+              src={`${process.env.NEXT_PUBLIC_IMAGES_HOST_SVC}/gallery/${ImageName}`}
               updateCompareList={updateCompareList}
               compareList={compareList}
               fileType={FileType}

@@ -126,24 +126,25 @@ function GalleryPage({ images = [], imageID }: Props) {
     setIsConfirming(true)
   }
 
-  const updateCompareList = (src: string, method: string) => {
+  const updateCompareList = (id: string, src: string, method: string) => {
     if (method === 'add') {
-      setCompareList((prev) => [...prev, src])
+      setCompareList((prev) => [...prev, { src: src, id: id }])
     }
 
     if (method === 'delete') {
-      setCompareList(compareList.filter((item) => item !== src))
+      setCompareList(compareList.filter((item) => item.src !== src))
     }
   }
 
   function handleOnDrop__compare(e: DragEvent) {
     const item = e.dataTransfer.getData('mediaDrop').split(',')
+    const id = item[0]
     const src = item[2]
     if (compareList.length && compareList.length > 5) {
       toast.error('Reached limit 6 images to compare.', toasterStyle)
     } else {
-      if (!compareList.includes(src)) {
-        updateCompareList(src, 'add')
+      if (!compareList.some((item) => item.src === src)) {
+        updateCompareList(id, src, 'add')
       } else {
         toast.error('Item is already selected.', toasterStyle)
       }
@@ -155,7 +156,7 @@ function GalleryPage({ images = [], imageID }: Props) {
   return (
     <div className="flex w-[88vw] text-white">
       <div className={`bg-grey_1 space-y-[30px] shrink-0`}>
-        {patientImages.length > 0 && imageID && images.length === 0 ? (
+        {patientImages.length > 0 ? (
           <MediaList
             className="max-h-[78vh] px-[60px] pt-[15px]"
             updateCompareList={updateCompareList}
