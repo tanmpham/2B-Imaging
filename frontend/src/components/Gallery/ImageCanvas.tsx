@@ -8,6 +8,7 @@ import { SlPencil } from 'react-icons/sl'
 import { VscSettings } from 'react-icons/vsc'
 import Img from '../shared/Img'
 import DrawCanvas from './DrawingCanvas'
+import Sliders from './Sliders'
 import TextTool from './TextTool'
 
 const style = {
@@ -21,10 +22,15 @@ const ImageCanvas = () => {
 
   const [isDrawing, setIsDrawing] = useState(false)
   const [textToolVisible, setTextToolVisible] = useState(false)
+  const [slidersVisible, setSlidersVisible] = useState(false)
 
   const toggleDrawing = () => {
     setIsDrawing(!isDrawing)
     setTextToolVisible(false)
+  }
+
+  const handleToggleSliders = () => {
+    setSlidersVisible(!slidersVisible)
   }
 
   const handleTextSubmit = (
@@ -52,6 +58,7 @@ const ImageCanvas = () => {
         )}
 
         {textToolVisible && <TextTool onTextSubmit={handleTextSubmit} />}
+        {slidersVisible && <Sliders />}
       </div>
 
       <div className="grow flex flex-col items-center justify-between mt-[1rem] mb-[.4rem]">
@@ -68,7 +75,10 @@ const ImageCanvas = () => {
             className={`${style.icon} text-[34px]`}
             onClick={handleToggleTextTool} // Toggle TextTool visibility
           />
-          <VscSettings className={`${style.icon} text-[34px]`} />
+          <VscSettings
+            className={`${style.icon} text-[34px]`}
+            onClick={handleToggleSliders}
+          />
           <GoShare className={`${style.icon} text-[34px]`} />
         </div>
         <AiOutlineExpandAlt className={`${style.icon} text-[40px]`} />
