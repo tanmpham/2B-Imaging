@@ -1,10 +1,13 @@
+import React from 'react';
+
 interface Props {
   src: string
   alt?: string
   className?: string
+  style?: React.CSSProperties
 }
 
-function Img({ src, alt = 'image', className }: Props) {
+function Img({ src, className, style }: Props): React.ReactElement {
   return (
     <img
       alt={alt}

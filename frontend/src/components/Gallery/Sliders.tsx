@@ -1,9 +1,6 @@
 import React, { useState } from 'react'
 
-const Sliders = () => {
-  const [brightness, setBrightness] = useState(50)
-  const [contrast, setContrast] = useState(50)
-
+const Sliders = ({ brightness, setBrightness, contrast, setContrast }) => {
   const handleBrightnessChange = (event) => {
     setBrightness(event.target.value)
   }
@@ -18,7 +15,7 @@ const Sliders = () => {
         <div>
           <label
             htmlFor="brightness"
-            className="block text-sm font-medium text-black dark:text-white"
+            className="block text-sm font-medium text-gray-700"
           >
             Brightness
           </label>
@@ -27,7 +24,7 @@ const Sliders = () => {
             id="brightness"
             name="brightness"
             min="0"
-            max="100"
+            max="200"
             value={brightness}
             onChange={handleBrightnessChange}
             className="mt-1 w-full"
@@ -36,7 +33,7 @@ const Sliders = () => {
         <div>
           <label
             htmlFor="contrast"
-            className="block text-sm font-medium text-black dark:text-white"
+            className="block text-sm font-medium text-gray-700"
           >
             Contrast
           </label>
@@ -45,7 +42,7 @@ const Sliders = () => {
             id="contrast"
             name="contrast"
             min="0"
-            max="100"
+            max="200"
             value={contrast}
             onChange={handleContrastChange}
             className="mt-1 w-full"

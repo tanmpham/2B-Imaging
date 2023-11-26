@@ -23,6 +23,8 @@ const ImageCanvas = () => {
   const [isDrawing, setIsDrawing] = useState(false)
   const [textToolVisible, setTextToolVisible] = useState(false)
   const [slidersVisible, setSlidersVisible] = useState(false)
+  const [brightness, setBrightness] = useState(100)
+  const [contrast, setContrast] = useState(100)
 
   const toggleDrawing = () => {
     setIsDrawing(!isDrawing)
@@ -54,11 +56,24 @@ const ImageCanvas = () => {
           <DrawCanvas imgSrc={src} />
         ) : (
           // {/* Display the TextTool component when textToolVisible is true */}
-          <Img src={src} className="!object-contain rounded-[10px]" />
+          <Img
+            src={src}
+            className="!object-contain rounded-[10px]"
+            style={{
+              filter: `brightness(${brightness}%) contrast(${contrast}%)`,
+            }}
+          />
         )}
 
         {textToolVisible && <TextTool onTextSubmit={handleTextSubmit} />}
-        {slidersVisible && <Sliders />}
+        {slidersVisible && (
+          <Sliders
+            brightness={brightness}
+            setBrightness={setBrightness}
+            contrast={contrast}
+            setContrast={setContrast}
+          />
+        )}
       </div>
 
       <div className="grow flex flex-col items-center justify-between mt-[1rem] mb-[.4rem]">
