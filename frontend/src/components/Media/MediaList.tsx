@@ -48,7 +48,7 @@ function MediaList({
   //console.log(images[1].DateCreated.split(' ').slice(0, 4).join(' '))
   return (
     <div
-      className={`${className} grid grid-cols-2 gap-x-[28px] gap-y-[23px] justify-start overflow-y-auto`}
+      className={`${className} grid grid-cols-2 gap-x-[21px] 2xl:gap-x-[28px] gap-y-[23px] justify-start overflow-y-auto`}
     >
       {images.length === 0 && (
         <>

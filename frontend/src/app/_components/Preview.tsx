@@ -23,7 +23,7 @@ function Initial() {
         onClick={() =>
           toast('Click an image on the left to preview', toasterStyle)
         }
-        className={`w-[600px] h-[400px] mt-[130px] flex items-center justify-center text-grey_2_inverted dark:text-grey_2 border-[2px] border-dashed border-grey_2_inverted dark:border-grey_2 text-[80px] rounded-[10px] hover:text-green_2 hover:border-green_2 transition-colors ease-linear cursor-pointer`}
+        className={`w-[450px] h-[300px] 2xl:w-[600px] 2xl:h-[400px] mt-[130px] flex items-center justify-center text-grey_2_inverted dark:text-grey_2 border-[2px] border-dashed border-grey_2_inverted dark:border-grey_2 text-[80px] rounded-[10px] hover:text-green_2 hover:border-green_2 transition-colors ease-linear cursor-pointer`}
       >
         Preview
       </div>
@@ -32,7 +32,7 @@ function Initial() {
 }
 
 const style = {
-  title: `text-stone-700 dark:text-stone-300 font-semibold w-[600px]`,
+  title: `text-stone-700 dark:text-stone-300 font-semibold w-[450px] 2xl:w-[600px]`,
 }
 
 function Preview() {
@@ -93,7 +93,7 @@ function Preview() {
       ) : (
         <div className="mx-auto space-y-[24px]">
           <div
-            className={`relative w-[600px] h-[400px] mt-[130px] flex items-center justify-center text-stone-400 dark:text-stone-600 text-[80px]`}
+            className={`relative w-[450px] h-[300px] 2xl:w-[600px] 2xl:h-[400px] mt-[130px] flex items-center justify-center text-stone-400 dark:text-stone-600 text-[80px]`}
           >
             {fileType === 'jpg' && <Img src={src} className="rounded-[10px]" />}
             {fileType === 'mp4' && (
