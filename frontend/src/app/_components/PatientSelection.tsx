@@ -15,8 +15,7 @@ interface Props {
 }
 
 const style = {
-  thead: 'min-w-[150px]',
-  td: 'border-t border-dashed border-black dark:border-white py-[.5rem] ease-linear max-w-[150px] overflow-x-auto',
+  td: 'border-t border-dashed border-black dark:border-white py-[.5rem] ease-linear max-w-[140px] overflow-x-auto',
   td__active: `bg-stone-600 text-white dark:bg-stone-300 dark:text-black`,
 }
 
@@ -44,27 +43,23 @@ function PatientSelection({ patients }: Props) {
   // console.log(currentPatient)
 
   return (
-    <div ref={ref} className="mt-[100px] ml-[30px] h-fit">
+    <div ref={ref} className="mt-[100px] ml-[23px] 2xl:ml-[30px] h-fit">
       <div className={`overflow-y-auto max-h-[80vh]`}>
-        <table className="border-collapse w-[510px] text-center">
+        <table className="border-collapse w-[383px] 2xl:w-[520px] table-auto text-center">
           <thead>
             <tr>
               <th
-                className={`py-[.4rem] min-w-[60px] border-r-[1px] border-black dark:border-white`}
+                className={`py-[.4rem] border-r-[1px] border-black dark:border-white`}
               >
                 ID
               </th>
-              <th
-                className={`${style.thead} border-r-[1px] border-black dark:border-white`}
-              >
+              <th className={`border-r-[1px] border-black dark:border-white`}>
                 Last
               </th>
-              <th
-                className={`${style.thead} border-r-[1px] border-black dark:border-white`}
-              >
+              <th className={`border-r-[1px] border-black dark:border-white`}>
                 First
               </th>
-              <th className={`${style.thead}`}>DOB</th>
+              <th className={``}>DOB</th>
             </tr>
           </thead>
           <tbody>

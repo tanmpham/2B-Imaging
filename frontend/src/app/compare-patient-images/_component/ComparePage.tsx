@@ -6,6 +6,7 @@ import { useSearchParams } from 'next/navigation'
 import React from 'react'
 import toast from 'react-hot-toast'
 import ImageCompare from './ImageCompare'
+import VideoCompare from './VideoCompare'
 
 interface Props {}
 
@@ -55,23 +56,44 @@ function ComparePage({}: Props) {
       {imagesList.map(({ ImageID, ImageName, FileType }) => (
         <div
           key={ImageID}
-          className="border border-grey_4 hover:border-green_1 rounded-[10px] pl-[.4rem] py-[.34rem] transition-colors ease-linear"
+          className="border border-grey_4 hover:border-green_1 rounded-[10px] transition-colors ease-linear"
         >
-          {imagesList.length === 1 ? (
-            <ImageCompare
-              imgWidth="w-[1100px]"
-              src={`${process.env.NEXT_PUBLIC_IMAGES_HOST_SVC}/gallery/${ImageName}`}
-            />
-          ) : imagesList.length === 2 ? (
-            <ImageCompare
-              imgWidth="w-[680px]"
-              src={`${process.env.NEXT_PUBLIC_IMAGES_HOST_SVC}/gallery/${ImageName}`}
-            />
+          {FileType !== 'mp4' ? (
+            imagesList.length === 1 ? (
+              <ImageCompare
+                imgWidth="w-[1100px]"
+                src={`${process.env.NEXT_PUBLIC_IMAGES_HOST_SVC}/gallery/${ImageName}`}
+              />
+            ) : imagesList.length === 2 ? (
+              <ImageCompare
+                imgWidth="w-[680px]"
+                src={`${process.env.NEXT_PUBLIC_IMAGES_HOST_SVC}/gallery/${ImageName}`}
+              />
+            ) : (
+              <ImageCompare
+                imgWidth="w-[484px]"
+                src={`${process.env.NEXT_PUBLIC_IMAGES_HOST_SVC}/gallery/${ImageName}`}
+              />
+            )
           ) : (
-            <ImageCompare
-              imgWidth="w-[484px]"
-              src={`${process.env.NEXT_PUBLIC_IMAGES_HOST_SVC}/gallery/${ImageName}`}
-            />
+            <>
+              {imagesList.length === 1 ? (
+                <VideoCompare
+                  width="w-[1300px]"
+                  src={`${process.env.NEXT_PUBLIC_IMAGES_HOST_SVC}/gallery/${ImageName}`}
+                />
+              ) : imagesList.length === 2 ? (
+                <VideoCompare
+                  width="w-[800px]"
+                  src={`${process.env.NEXT_PUBLIC_IMAGES_HOST_SVC}/gallery/${ImageName}`}
+                />
+              ) : (
+                <VideoCompare
+                  width="w-[544px]"
+                  src={`${process.env.NEXT_PUBLIC_IMAGES_HOST_SVC}/gallery/${ImageName}`}
+                />
+              )}
+            </>
           )}
         </div>
       ))}

@@ -17,7 +17,7 @@ function Home({ images, patients }: Props) {
       <PatientSelection patients={patients} />
       <MediaList
         images={images}
-        className="bg-grey_1 max-h-screen ml-[30px] pt-[90px] pb-[40px] px-[20px]"
+        className="bg-grey_1 max-h-screen ml-[30px] pt-[90px] pb-[40px] px-[12px] 2xl:px-[20px]"
       />
       <Preview />
     </div>

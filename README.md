@@ -3,6 +3,8 @@
 ## Setup instructions:
 
 Download NodeJs Windows Installer (LTS Version) <a href='https://nodejs.org/en/download'>https://nodejs.org/en/download</a>
+Docker Desktop: <a href='https://www.docker.com/products/docker-desktop/'>https://www.docker.com/products/docker-desktop/</a>
+Python: <a href='https://www.python.org/downloads/'>https://www.python.org/downloads/</a>
 
 ### Install dependencies and run the front-end app locally
 

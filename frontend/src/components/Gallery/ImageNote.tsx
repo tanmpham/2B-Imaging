@@ -1,5 +1,5 @@
 import { NoteDto } from '@/interfaces/note.dto'
-import React from 'react'
+import React, { Dispatch, SetStateAction } from 'react'
 import { AiOutlineCloseCircle, AiOutlinePlusCircle } from 'react-icons/ai'
 import NoteCreateForm from './NoteCreateForm'
 
@@ -9,14 +9,22 @@ const style = {
 
 interface Props {
   notes: NoteDto[]
+  imageID: number
+  setIsReFetch: Dispatch<SetStateAction<boolean>>
 }
 
-function ImageNote({ notes }: Props) {
+function ImageNote({ notes, imageID, setIsReFetch }: Props) {
   const [isAdding, setisAdding] = React.useState(false)
   return (
     <div className="absolute right-[240px] w-[560px] h-[220px] bg-grey_2 text-black rounded-[10px] overflow-y-scroll">
       <div className={`relative`}>
-        {isAdding && <NoteCreateForm />}
+        {isAdding && (
+          <NoteCreateForm
+            imageID={imageID}
+            setIsReFetch={setIsReFetch}
+            setisAdding={setisAdding}
+          />
+        )}
         <div className={`flex flex-col gap-y-[.4rem] px-[1.4rem] py-[.6rem]`}>
           {notes.map(({ NoteID, Note, NoteCreatedAt }) => (
             <div key={NoteID}>

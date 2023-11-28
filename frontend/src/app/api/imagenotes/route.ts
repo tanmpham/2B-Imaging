@@ -1,5 +1,5 @@
-import { getNotes } from '@/functions'
-import { NoteDto } from '@/interfaces/note.dto'
+import { addNote, getNotes } from '@/functions'
+import { NoteCreateDto, NoteDto } from '@/interfaces/note.dto'
 import { NextRequest, NextResponse } from 'next/server'
 
 export const revalidate = 0
@@ -14,17 +14,14 @@ export async function GET(req: NextRequest) {
   return new NextResponse('Missing image ID', { status: 400 })
 }
 
-// export async function POST(req: Request) {
-//   const data = (await req.json()) as TagCreateDto
+export async function POST(req: Request) {
+  const data = (await req.json()) as NoteCreateDto
 
-//   if (data.Tag && data.UseCount) {
-//     const serverRes = (await createTag(data)) as TagCreateDto
-//     return NextResponse.json({
-//       message: 'Tag created',
-//       status: 201,
-//       tagCreated: serverRes,
-//     })
-//   }
+  const serverRes = (await addNote(data)) as NoteCreateDto
 
-//   return new NextResponse('Missing required fields', { status: 400 })
-// }
+  return NextResponse.json({
+    message: 'Note created',
+    status: 201,
+    noteCreated: serverRes,
+  })
+}
