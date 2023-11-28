@@ -100,6 +100,42 @@ def fetch_all_images():
     return make_response(jsonify(responseData), 200)
 
 
+@patientimages_bp.route("/patientimages/<image_id>", methods=["GET", "PUT", "DELETE"])
+def handle_image(image_id):
+    if request.method == "GET":
+        return fetch_single_image(image_id)
+
+    try:
+        connection = mysql.connector.connect(**db_config)
+        cursor = connection.cursor()
+
+        if request.method == "PUT":
+            # Replace the image in the backend
+            new_image_data = request.json.get("ImageData")
+            sql_query = "UPDATE patientimages SET ImageData = %s WHERE ImageID = %s;"
+            cursor.execute(sql_query, (new_image_data, image_id))
+
+        elif request.method == "DELETE":
+            # Remove the image from the database
+            sql_query = "DELETE FROM patientimages WHERE ImageID = %s;"
+            cursor.execute(sql_query, (image_id,))
+
+            # TODO: Add code to delete the image file from the backend file system if needed
+
+        connection.commit()
+    except mysql.connector.Error as err:
+        error = f"[handle_image]: {err}"
+        print(error)
+        return make_response(jsonify({"message": error}), 500)
+    finally:
+        cursor.close()
+        connection.close()
+
+    if request.method == "PUT":
+        return jsonify({"message": "Image updated successfully"}), 200
+    elif request.method == "DELETE":
+        return jsonify({"message": "Image deleted successfully"}), 200
+
 
 @patientimages_bp.route("/patientimages/<image_id>", methods=["GET"])
 def fetch_single_image(image_id):
