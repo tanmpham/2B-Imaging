@@ -13,6 +13,8 @@ function ImageView({}: Props) {
   const { IsRightEye, imageID } = previewMedia
   const [imgTags, setImgTags] = useState<TagDto[]>([])
   const [notes, setNotes] = useState<NoteDto[]>([])
+  const [isReFetch, setIsReFetch] = useState(false)
+
   useEffect(() => {
     async function getTags() {
       if (imageID !== 0) {
@@ -52,13 +54,17 @@ function ImageView({}: Props) {
 
     getTags()
     getNotes()
-  }, [imageID])
+  }, [imageID, isReFetch])
   return (
     <div className="grow flex flex-col justify-evenly">
       <ImageCanvas />
 
       <div className="ml-[1rem] w-[1040px] relative flex justify-end">
-        <ImageNote notes={notes} />
+        <ImageNote
+          notes={notes}
+          imageID={imageID}
+          setIsReFetch={setIsReFetch}
+        />
         <div>
           <div className="text-[20px]">
             {IsRightEye ? 'OD (Right Eye)' : 'OS (Left Eye)'}
