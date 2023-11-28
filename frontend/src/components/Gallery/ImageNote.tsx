@@ -1,10 +1,13 @@
 import { NoteDto } from '@/interfaces/note.dto'
 import React, { Dispatch, SetStateAction } from 'react'
 import { AiOutlineCloseCircle, AiOutlinePlusCircle } from 'react-icons/ai'
+import { BiSolidPencil } from 'react-icons/bi'
+import { MdDelete } from 'react-icons/md'
 import NoteCreateForm from './NoteCreateForm'
 
 const style = {
   icon: `hover:scale-[1.1] cursor-pointer active:translate-y-[.2rem] transition-transform ease-linear`,
+  icon_border: `invisible group-hover:visible p-1 border border-black rounded-[10px] hover:bg-grey_6 active:scale-95 transition-all ease-linear`,
 }
 
 interface Props {
@@ -27,8 +30,18 @@ function ImageNote({ notes, imageID, setIsReFetch }: Props) {
         )}
         <div className={`flex flex-col gap-y-[.4rem] px-[1.4rem] py-[.6rem]`}>
           {notes.map(({ NoteID, Note, NoteCreatedAt }) => (
-            <div key={NoteID}>
-              <div className={`text-[14px] font-bold`}>{NoteCreatedAt}</div>
+            <div key={NoteID} className="group">
+              <div
+                className={`text-[14px] font-bold flex items-center gap-x-[.4rem]`}
+              >
+                <div className={`mr-4`}>{NoteCreatedAt}</div>
+                <div className={`${style.icon_border}`}>
+                  <BiSolidPencil />
+                </div>
+                <div className={`${style.icon_border}`}>
+                  <MdDelete />
+                </div>
+              </div>
               <div>{Note}</div>
             </div>
           ))}
