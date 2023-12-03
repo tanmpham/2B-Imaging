@@ -89,12 +89,17 @@ function ImageNote({ notes, imageID, setIsReFetch }: Props) {
                         )
                       )
                     }}
-                    className="dark:text-white w-full outline-none"
+                    className="dark:text-white w-full outline-none pl-1"
                   />
 
                   <div className={`flex gap-x-[.7rem] items-center`}>
                     <Button
                       variant={'error'}
+                      onClick={() => {
+                        setIsEditing((prev) =>
+                          prev.map((item, index) => index === idx && !item)
+                        )
+                      }}
                       className={`${style.button} hover:!border-red-600 dark:!hover:border-red-600 hover:!text-red-600 dark:hover:!text-red-600`}
                     >
                       Cancel
