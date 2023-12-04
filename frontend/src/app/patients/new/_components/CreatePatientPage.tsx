@@ -82,7 +82,7 @@ function CreatePatientPage({}: Props) {
       <form
         id="create_patient"
         onSubmit={(e) => e.preventDefault()}
-        className="bg-grey_2 dark:bg-grey_3 p-6 rounded-md"
+        className="bg-grey_3 dark:bg-grey_3 p-6 rounded-md"
       >
         {error && (
           <p className="text-red-500 mb-4 text-sm">
