@@ -10,7 +10,7 @@ export async function addNote(note: NoteCreateDto) {
   })
 
   if (!res.ok) {
-    throw new Error('Failed to create tag')
+    throw new Error('Failed to create note')
   }
 
   return res.json()

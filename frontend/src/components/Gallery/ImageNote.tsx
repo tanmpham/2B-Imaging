@@ -1,4 +1,4 @@
-import { NoteDto } from '@/interfaces/note.dto'
+import { NoteDto, NoteEditDto } from '@/interfaces/note.dto'
 import React, { Dispatch, SetStateAction, useEffect } from 'react'
 import { AiOutlineCloseCircle, AiOutlinePlusCircle } from 'react-icons/ai'
 import { BiSolidPencil } from 'react-icons/bi'
@@ -31,6 +31,17 @@ function ImageNote({ notes, imageID, setIsReFetch }: Props) {
   }, [notes])
 
   if (editData.length === 0) return null
+
+  function handleNoteSave(
+    e: React.MouseEvent<HTMLButtonElement>,
+    NoteID: number,
+    Note: string
+  ) {
+    const noteData: NoteEditDto = {
+      NoteID: NoteID,
+      Note: Note,
+    }
+  }
 
   return (
     <div className="absolute right-[240px] w-[560px] h-[220px] bg-grey_2 text-black rounded-[10px] overflow-y-scroll">
@@ -106,6 +117,7 @@ function ImageNote({ notes, imageID, setIsReFetch }: Props) {
                     </Button>
                     <Button
                       variant={'green'}
+                      onClick={(e) => handleNoteSave(e, NoteID, Note)}
                       className={`${style.button} hover:!border-green-700 hover:!text-green-700 dark:!hover:border-green-700 dark:!hover:text-green-700`}
                     >
                       Save

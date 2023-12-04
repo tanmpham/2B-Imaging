@@ -10,3 +10,8 @@ export interface NoteCreateDto {
   NoteCreatedAt: string
   ImageID: number
 }
+
+export interface NoteEditDto {
+  NoteID: number
+  Note: string
+}

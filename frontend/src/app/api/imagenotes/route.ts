@@ -1,5 +1,5 @@
-import { addNote, getNotes } from '@/functions'
-import { NoteCreateDto, NoteDto } from '@/interfaces/note.dto'
+import { addNote, editNote, getNotes } from '@/functions'
+import { NoteCreateDto, NoteDto, NoteEditDto } from '@/interfaces/note.dto'
 import { NextRequest, NextResponse } from 'next/server'
 
 export const revalidate = 0
@@ -20,8 +20,18 @@ export async function POST(req: Request) {
   const serverRes = (await addNote(data)) as NoteCreateDto
 
   return NextResponse.json({
-    message: 'Note created',
     status: 201,
-    noteCreated: serverRes,
+    message: serverRes,
+  })
+}
+
+export async function PATCH(req: Request) {
+  const data = (await req.json()) as NoteEditDto
+
+  const serverRes = (await editNote(data)) as NoteEditDto
+
+  return NextResponse.json({
+    status: 200,
+    message: serverRes,
   })
 }
