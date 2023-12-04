@@ -8,7 +8,9 @@ import { usePathname, useRouter } from 'next/navigation'
 import { Dispatch, DragEvent, SetStateAction, useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { BsCameraReels } from 'react-icons/bs'
+import { CgSpinnerTwo } from 'react-icons/cg'
 import { HiHashtag } from 'react-icons/hi2'
+import { TbFidgetSpinner } from 'react-icons/tb'
 import Img from '../shared/Img'
 
 interface Props {
@@ -29,6 +31,16 @@ const style = {
   icon: `text-[24px] cursor-pointer active:scale-95 hover:translate-x-[.2rem] transition-transform ease-linear z-10 absolute bottom-[1rem]`,
 }
 
+const MediaItemNull = () => {
+  return (
+    <div
+      className={`relative z-[20] w-[150px] h-[150px] 2xl:w-[200px] 2xl:h-[200px] p-1 bg-grey_3 hover:translate-y-[-.5rem] active:scale-[0.98] border hover:border-2 border-stone-500 dark:border-stone-800 hover:border-stone-300 dark:hover:border-grey_2 rounded-[10px] transition-all duration-[240ms] ease-in group flex items-center justify-center text-white dark:text-white`}
+    >
+      <CgSpinnerTwo className="h-10 w-10 animate-spin" />
+    </div>
+  )
+}
+
 function MediaItem({
   id,
   src,
@@ -44,6 +56,8 @@ function MediaItem({
 }: Props) {
   const router = useRouter()
   const pathname = usePathname()
+
+  const [isMounted, setIsMounted] = useState(false)
 
   const isGalleryPage = pathname.split('/')[1] === 'gallery'
   const isTagPage = pathname.split('/')[1] === 'tags'
@@ -119,6 +133,7 @@ function MediaItem({
   const [isHaveTag, setIsHaveTag] = useState<boolean>(false)
 
   useEffect(() => {
+    setIsMounted(true)
     async function getTags() {
       if (id !== 0) {
         try {
@@ -141,6 +156,10 @@ function MediaItem({
     }
     getTags()
   }, [id])
+
+  if (!isMounted) {
+    return <MediaItemNull />
+  }
 
   function handleOnDrag(
     e: DragEvent,
