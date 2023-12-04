@@ -65,6 +65,35 @@ def get_notes():
     return notes
 
 
+# Get a note
+@imagenotes_bp.route("/imagenotes/<int:NoteID>", methods=["GET"])
+def get_a_note(NoteID):
+    try:
+        connection = mysql.connector.connect(**db_config)
+        cursor = connection.cursor()
+
+        sql_query = """SELECT * FROM imagenotes WHERE NoteID = %s;"""
+        cursor.execute(sql_query, (NoteID,))
+
+        query_result = cursor.fetchall()
+        connection.commit()
+        cursor.close()
+        connection.close()
+    except mysql.connector.Error as err:
+        error = f"[get_a_note]: {err}"
+        print(error)
+        return make_response(jsonify({"message": error}), 500)
+
+    notes = {
+        "NoteID": query_result[0][0],
+        "Note": query_result[0][1],
+        "NoteCreatedAt": query_result[0][2],
+        "ImageID": query_result[0][3],
+    }
+
+    return notes
+
+
 # Update a note
 @imagenotes_bp.route("/imagenotes/<int:NoteID>", methods=["PATCH"])
 def update_note(NoteID):
