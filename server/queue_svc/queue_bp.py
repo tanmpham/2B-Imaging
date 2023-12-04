@@ -18,9 +18,9 @@ import queue
 queue_bp = Blueprint("queue", __name__)
 
 
-server_dir = "C:\\Users\\AmandaC\\Desktop\\ISSP_Project\\2B-Imaging\\server"
-config_file_path = os.path.join(server_dir, 'app_conf.yml')
-log_file_path = os.path.join(server_dir, 'log_conf.yml')
+server_dir = ""
+config_file_path = os.path.join(server_dir, "app_conf.yml")
+log_file_path = os.path.join(server_dir, "log_conf.yml")
 
 with open(config_file_path, "r") as f:
     appConfig = yaml.safe_load(f.read())
