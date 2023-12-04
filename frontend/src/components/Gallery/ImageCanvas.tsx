@@ -41,7 +41,6 @@ const ImageCanvas = () => {
       <div className={`ml-[1rem] w-[1040px] relative`}>
         {isDrawing ? (
           <DrawCanvas imgSrc={src} />
-          {/* Display the TextTool component when textToolVisible is true */}
         ) : (
           <Img src={src} className="!object-contain rounded-[10px]" />
         )}
