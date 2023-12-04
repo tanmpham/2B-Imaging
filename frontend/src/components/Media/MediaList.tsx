@@ -4,7 +4,7 @@ import { ImageDto } from '@/interfaces/image.dto'
 // import { format } from 'date-fns'
 import { compareList } from '@/interfaces/compare-list'
 import { format } from 'date-fns'
-import { Dispatch, DragEvent, Fragment, SetStateAction } from 'react'
+import { Dispatch, Fragment, SetStateAction } from 'react'
 import MediaItem from './MediaItem'
 
 interface Props {
