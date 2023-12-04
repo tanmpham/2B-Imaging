@@ -18,9 +18,9 @@ function TagsPage({ tags }: Props) {
   const [currentTagID, setCurrentTagID] = useState(-1)
 
   return (
-    <div className="text-white flex w-[88vw]">
+    <div className="text-black dark:text-white flex w-[88vw]">
       <div
-        className={`w-[580px] h-screen flex items-center justify-center shrink-0`}
+        className={`w-[580px] h-screen flex items-center justify-center shrink-0 bg-grey_1 dark:bg-transparent`}
       >
         <TagsView
           tags={tags}

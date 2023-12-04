@@ -1,8 +1,8 @@
-import GalleryPage from '@/components/Gallery/GalleryPage'
 import { Metadata } from 'next'
+import ComparePage from './_component/ComparePage'
 
 export const metadata: Metadata = {
-  title: 'Gallery | 2B Imaging',
+  title: 'Compare Page | 2B Imaging',
   description: 'Copyright © 2023 2B Imaging. All rights reserved.',
 }
 
@@ -12,6 +12,6 @@ interface Props {}
 
 function page({}: Props) {
   // const images = (await getAllImages()) as ImageDto[]
-  return <GalleryPage />
+  return <ComparePage />
 }
 export default page

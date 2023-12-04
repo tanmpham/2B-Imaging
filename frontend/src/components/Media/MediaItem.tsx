@@ -2,6 +2,7 @@
 
 import { toasterStyle } from '@/constants/toasterStyle'
 import { useGlobalContext } from '@/context/global-context'
+import { compareList } from '@/interfaces/compare-list'
 import { TagDto } from '@/interfaces/tag.dto'
 import { usePathname, useRouter } from 'next/navigation'
 import { Dispatch, DragEvent, SetStateAction, useEffect, useState } from 'react'
@@ -12,8 +13,8 @@ import Img from '../shared/Img'
 
 interface Props {
   src?: string
-  updateCompareList?: (src: string, method: string) => void
-  compareList?: string[]
+  updateCompareList?: (id: string, src: string, method: string) => void
+  compareList?: compareList[]
   fileType: string
   IsRightEye: number
   patientID: number
@@ -25,7 +26,7 @@ interface Props {
 }
 
 const style = {
-  icon: `text-[34px] cursor-pointer active:scale-95 hover:translate-x-[.2rem] transition-transform ease-linear z-10 absolute bottom-[1rem]`,
+  icon: `text-[24px] cursor-pointer active:scale-95 hover:translate-x-[.2rem] transition-transform ease-linear z-10 absolute bottom-[1rem]`,
 }
 
 function MediaItem({
@@ -54,8 +55,13 @@ function MediaItem({
     if (compareList?.length && compareList.length > 5) {
       toast.error('Reached limit 6 images to compare.', toasterStyle)
     } else {
-      if (src && !compareList?.includes(src) && updateCompareList) {
-        updateCompareList(src, 'add')
+      if (
+        src &&
+        compareList &&
+        !compareList.some((item) => item.src === src) &&
+        updateCompareList
+      ) {
+        updateCompareList(String(id), src, 'add')
       } else {
         toast.error('Item is already selected.', toasterStyle)
       }
@@ -102,7 +108,7 @@ function MediaItem({
           updateCompareListFn()
         } else {
           router.push(
-            `${process.env.NEXT_PUBLIC_CLIENT_FRONTEND_URL}/gallery/${id}?patient-id=${patientID}`
+            `${process.env.NEXT_PUBLIC_CLIENT_FRONTEND_URL}/gallery?patient-id=${patientID}`
           )
         }
 
@@ -157,9 +163,9 @@ function MediaItem({
           src: src ? src : '',
         })
       }}
-      className={`relative z-[20] w-[200px] h-[200px] p-1 ${
+      className={`relative z-[20] w-[150px] h-[150px] 2xl:w-[200px] 2xl:h-[200px] p-1 ${
         !src && 'bg-grey_2'
-      } hover:translate-y-[-.5rem] active:scale-[0.98] border-2 border-transparent hover:border-grey_2 rounded-[10px] transition-all duration-[240ms] ease-in group`}
+      } hover:translate-y-[-.5rem] active:scale-[0.98] border hover:border-2 border-stone-500 dark:border-stone-800 hover:border-stone-300 dark:hover:border-grey_2 rounded-[10px] transition-all duration-[240ms] ease-in group`}
     >
       {src && (
         <>
@@ -181,7 +187,7 @@ function MediaItem({
 
       {fileType === 'mp4' && (
         <BsCameraReels
-          className={`${style.icon} text-stone-300 hover:text-stone-400 left-[1rem]`}
+          className={`${style.icon} text-stone-700 dark:text-stone-300 hover:text-stone-600 dark:hover:text-stone-400 left-[1rem]`}
         />
       )}
 

@@ -3,6 +3,8 @@
 ## Setup instructions:
 
 Download NodeJs Windows Installer (LTS Version) <a href='https://nodejs.org/en/download'>https://nodejs.org/en/download</a>
+Docker Desktop: <a href='https://www.docker.com/products/docker-desktop/'>https://www.docker.com/products/docker-desktop/</a>
+Python: <a href='https://www.python.org/downloads/'>https://www.python.org/downloads/</a>
 
 ### Install dependencies and run the front-end app locally
 
@@ -31,6 +33,15 @@ Create a NEW app_conf.yml files (content is based on app_conf.example.yml).
 cd server
 pip install -r requirements.txt
 py populate-db.py
+py app.py
+```
+
+#### Images Hosting Service
+
+Make sure the images in images_hosting_svc\patientimages is the same as those in server\patientimages.
+
+```powershell
+cd images_hosting_svc
 py app.py
 ```
 

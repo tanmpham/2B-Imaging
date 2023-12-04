@@ -1,3 +1,4 @@
+export * from './imagenotes/add-note'
 export * from './imagenotes/get-notes'
 export * from './imagetags/create-tag'
 export * from './imagetags/get-all-tags'

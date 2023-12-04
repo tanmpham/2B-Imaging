@@ -1,21 +1,17 @@
-import { getImagesByPatient, getImagesByTag } from '@/functions'
+import { getAllImages } from '@/functions'
 import { ImageDto } from '@/interfaces/image.dto'
-import { NextRequest, NextResponse } from 'next/server'
+import { Metadata } from 'next'
+import TagsCreate from './_component/TagsCreate'
+
+export const metadata: Metadata = {
+  title: 'Create tag | 2B Imaging',
+  description: 'Copyright © 2023 2B Imaging. All rights reserved.',
+}
 
 export const revalidate = 0
-export async function GET(req: NextRequest) {
-  const tag_id = req.nextUrl.searchParams.get('tag-id')
-  const patient_id = req.nextUrl.searchParams.get('patient-id')
-
-  if (tag_id && !patient_id) {
-    const data = (await getImagesByTag(tag_id)) as ImageDto[]
-    return NextResponse.json(data)
-  }
-
-  if (patient_id && !tag_id) {
-    const data = (await getImagesByPatient(patient_id)) as ImageDto[]
-    return NextResponse.json(data)
-  }
-
-  return new NextResponse('Missing required fields', { status: 400 })
+interface Props {}
+async function page({}: Props) {
+  const images = (await getAllImages()) as ImageDto[]
+  return <TagsCreate images={images} />
 }
+export default page

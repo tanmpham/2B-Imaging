@@ -1,7 +1,7 @@
-import { Metadata } from 'next'
-import TagsCreate from './_component/TagsCreate'
 import { getAllImages } from '@/functions'
 import { ImageDto } from '@/interfaces/image.dto'
+import { Metadata } from 'next'
+import TagsCreate from './_component/TagsCreate'
 
 export const metadata: Metadata = {
   title: 'Create tag | 2B Imaging',

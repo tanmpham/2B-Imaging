@@ -224,12 +224,12 @@ def init_scheduler():
     sched.start()
 
 
-init_scheduler()
+# init_scheduler()
 
 # t1 = Thread(target=connect_kafka)
 # t1.setDaemon(True)
 # t1.start()
 
-t2 = Thread(target=consume_msg)
-t2.setDaemon(True)
-t2.start()
+# t2 = Thread(target=consume_msg)
+# t2.setDaemon(True)
+# t2.start()

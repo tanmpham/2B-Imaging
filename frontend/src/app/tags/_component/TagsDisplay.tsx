@@ -16,7 +16,7 @@ interface Props {
 const style = {
   title: {
     active: `text-orange_1 font-semibold`,
-    inactive: `text-grey_5 font-light hover:text-orange_1`,
+    inactive: `text-grey_2 dark:text-grey_5 font-light hover:text-orange_1`,
   },
 }
 function TagsDisplay({ tagsShowing, currentTagID, setCurrentTagID }: Props) {
@@ -47,31 +47,32 @@ function TagsDisplay({ tagsShowing, currentTagID, setCurrentTagID }: Props) {
     }
   }, [currentTagID, setCurrentTagID, tagsShowing])
 
-  const updateCompareList = (src: string, method: string) => {
+  const updateCompareList = (id: string, src: string, method: string) => {
     if (method === 'add') {
-      setCompareList((prev) => [...prev, src])
+      setCompareList((prev) => [...prev, { src: src, id: id }])
     }
 
     if (method === 'delete') {
-      setCompareList(compareList.filter((item) => item !== src))
+      setCompareList(compareList.filter((item) => item.src !== src))
     }
   }
 
   function handleOnDrop__compare(e: DragEvent) {
     const item = e.dataTransfer.getData('mediaDrop').split(',')
+    const id = item[0]
     const src = item[2]
     if (compareList.length && compareList.length > 5) {
       toast.error('Reached limit 6 images to compare.', toasterStyle)
     } else {
-      if (!compareList.includes(src)) {
-        updateCompareList(src, 'add')
+      if (!compareList.some((item) => item.src === src)) {
+        updateCompareList(id, src, 'add')
       } else {
         toast.error('Item is already selected.', toasterStyle)
       }
     }
   }
   return (
-    <div className={`grow h-screen bg-grey_3 overflow-x-auto`}>
+    <div className={`grow h-screen bg-grey_2 dark:bg-grey_3 overflow-x-auto`}>
       {tagsShowing.length === 0 ? (
         <div></div>
       ) : (

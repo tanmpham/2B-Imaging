@@ -27,7 +27,7 @@ function TagsImagesLink({
   imagesID,
 }: Props) {
   return (
-    <div className={`grow h-screen bg-grey_3 relative`}>
+    <div className={`grow h-screen bg-grey_2 dark:bg-grey_3 relative`}>
       <div className={`w-full flex justify-center absolute`}>
         <div className="h-screen w-[1px] bg-grey_4" />
       </div>

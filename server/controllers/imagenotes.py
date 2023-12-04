@@ -42,7 +42,7 @@ def get_notes():
             sql_query = """SELECT * FROM imagenotes;"""
             cursor.execute(sql_query)
         else:
-            sql_query = """SELECT * FROM imagenotes WHERE ImageID = %s;"""
+            sql_query = """SELECT * FROM imagenotes WHERE ImageID = %s ORDER BY NoteCreatedAt DESC;"""
             cursor.execute(sql_query, (image_id,))
 
         query_result = cursor.fetchall()

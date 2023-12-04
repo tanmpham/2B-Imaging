@@ -3,8 +3,9 @@
 import { Button } from '@/components/shared/Buttons/Button'
 import SlideSwitchBtn from '@/components/shared/Buttons/SlideSwitchBtn'
 import { TagDto } from '@/interfaces/tag.dto'
+import { closeOnClickOutside } from '@/utils'
 import { useRouter } from 'next/navigation'
-import { Dispatch, SetStateAction } from 'react'
+import { Dispatch, MouseEvent, SetStateAction, useRef, useState } from 'react'
 
 interface Props {
   tags: TagDto[]
@@ -12,6 +13,14 @@ interface Props {
   currentTagID: number
   setCurrentTagID: Dispatch<SetStateAction<number>>
 }
+
+const style = {
+  tag: {
+    default: `w-full flex justify-between items-center group active:scale-[0.98] transition-transform ease-in px-[.8rem] py-[.4rem] rounded-[10px]`,
+    active: `bg-stone-600`,
+  },
+}
+
 function TagsView({
   tags,
   setTagsShowing,
@@ -19,19 +28,36 @@ function TagsView({
   setCurrentTagID,
 }: Props) {
   const router = useRouter()
+  const ref = useRef(null)
+  const [currentSelectedTag, setCurrentSelectedTag] = useState<number>(-1)
+
+  function handleSelect(e: MouseEvent<HTMLDivElement>) {
+    setCurrentSelectedTag(Number(e.currentTarget.id))
+    closeOnClickOutside(ref, () => {
+      setCurrentSelectedTag(-1)
+    })
+  }
+
   return (
-    <div className="h-[88%] w-[500px] bg-grey_3 rounded-[16px]">
-      <div className={`max-h-[88%] overflow-y-auto pt-[4rem] px-[3rem]`}>
+    <div className="h-[88%] w-[500px] bg-grey_2 dark:bg-grey_3 rounded-[16px]">
+      <div
+        ref={ref}
+        className={`max-h-[88%] overflow-y-auto pt-[4rem] px-[2.4rem]`}
+      >
         {tags.map(({ TagID, Tag, UseCount }) => (
           <div
+            id={String(TagID)}
             key={TagID}
-            className="w-full flex justify-between items-center group"
+            onClick={handleSelect}
+            className={`${style.tag.default} ${
+              currentSelectedTag === TagID && style.tag.active
+            }`}
           >
             <div className="text-[26px] font-light group-hover:text-orange_1 group-hover:translate-x-[.2rem] hover:text-orange_1 transition-all ease-in">
               #{Tag}
             </div>
             <div className=" flex items-center gap-x-[.8rem]">
-              <div className="text-grey_4 font-light group-hover:translate-x-[.2rem] group-hover:text-orange_1 transition-all ease-in">
+              <div className="text-grey_2_inverted dark:text-grey_4 font-light group-hover:translate-x-[.2rem] group-hover:text-orange_1 transition-all ease-in">
                 {UseCount}
               </div>
               <SlideSwitchBtn
