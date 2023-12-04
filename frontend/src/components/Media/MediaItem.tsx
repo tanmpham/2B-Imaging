@@ -10,7 +10,6 @@ import toast from 'react-hot-toast'
 import { BsCameraReels } from 'react-icons/bs'
 import { CgSpinnerTwo } from 'react-icons/cg'
 import { HiHashtag } from 'react-icons/hi2'
-import { TbFidgetSpinner } from 'react-icons/tb'
 import Img from '../shared/Img'
 
 interface Props {
