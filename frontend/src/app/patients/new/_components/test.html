@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Patient Page</title>
+  <!-- Include your preferred styling, e.g., Tailwind CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-900">
+
+  <div class="flex items-center justify-center h-screen w-full">
+    <form class="bg-gray-800 p-6 rounded-md">
+      <div class="mb-4">
+        <label for="firstName" class="block text-white">First Name:</label>
+        <input
+          type="text"
+          id="firstName"
+          name="firstName"
+          class="bg-gray-700 p-2 text-white rounded-md w-full"
+        />
+      </div>
+      <div class="mb-4">
+        <label for="lastName" class="block text-white">Last Name:</label>
+        <input
+          type="text"
+          id="lastName"
+          name="lastName"
+          class="bg-gray-700 p-2 text-white rounded-md w-full"
+        />
+      </div>
+      <div class="mb-4">
+        <label for="dob" class="block text-white">Date of Birth:</label>
+        <input
+          type="date"
+          id="dob"
+          name="dob"
+          class="bg-gray-700 p-2 text-white rounded-md w-full"
+        />
+      </div>
+      <div class="flex justify-end">
+        <button type="button" class="mr-2 bg-red-500 text-white p-2 rounded-md">Cancel</button>
+        <button type="submit" class="bg-green-500 text-white p-2 rounded-md">Save</button>
+      </div>
+    </form>
+  </div>
+
+</body>
+</html>
