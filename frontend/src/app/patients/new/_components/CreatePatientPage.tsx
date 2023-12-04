@@ -82,7 +82,7 @@ function CreatePatientPage({}: Props) {
       <form
         id="create_patient"
         onSubmit={(e) => e.preventDefault()}
-        className="bg-grey_3 dark:bg-grey_3 p-6 rounded-md"
+        className="bg-grey_3 dark:bg-grey_3 text-black dark:text-white p-6 rounded-md"
       >
         {error && (
           <p className="text-red-500 mb-4 text-sm">
@@ -90,7 +90,10 @@ function CreatePatientPage({}: Props) {
           </p>
         )}
         <div className="mb-4">
-          <label htmlFor="firstName" className="block text-white">
+          <label
+            htmlFor="firstName"
+            className="block text-white dark:text-white"
+          >
             First Name:
           </label>
           <input
@@ -99,11 +102,14 @@ function CreatePatientPage({}: Props) {
             name="firstName"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
-            className="p-2 text-white rounded-md w-full"
+            className="p-2 rounded-md w-full"
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="lastName" className="block text-white">
+          <label
+            htmlFor="lastName"
+            className="block text-white dark:text-white"
+          >
             Last Name:
           </label>
           <input
@@ -112,11 +118,11 @@ function CreatePatientPage({}: Props) {
             name="lastName"
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
-            className="p-2 text-white rounded-md w-full"
+            className="p-2 rounded-md w-full"
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="dob" className="block text-white">
+          <label htmlFor="dob" className="block text-white dark:text-white">
             Date of Birth:
           </label>
           <input
@@ -125,14 +131,14 @@ function CreatePatientPage({}: Props) {
             name="dob"
             value={dob}
             onChange={(e) => setDob(e.target.value)}
-            className="p-2 text-white rounded-md w-full"
+            className="p-2 rounded-md w-full"
           />
         </div>
         <div className="flex justify-end">
           <button
             type="button"
             onClick={handleCancel}
-            className="shrink-0 rounded-[10px] border disabled:pointer-events-none disabled:text-stone-500 disabled:border-stone-500 disabled:bg-white disabled:border transition-all ease-in inline-flex items-center text-white border-white hover:border-red-600 hover:text-red-600 px-[.6rem] py-[.2rem] text-[13px] lg:text-base hover:scale-105 active:translate-y-[.2rem] w-fit"
+            className="text-white dark:text-white shrink-0 rounded-[10px] border disabled:pointer-events-none disabled:text-stone-500 disabled:border-stone-500 disabled:bg-white disabled:border transition-all ease-in inline-flex items-center border-white hover:border-red-600 hover:text-red-600 px-[.6rem] py-[.2rem] text-[13px] lg:text-base hover:scale-105 active:translate-y-[.2rem] w-fit"
           >
             Cancel
           </button>
@@ -140,7 +146,7 @@ function CreatePatientPage({}: Props) {
           <button
             type="submit"
             onClick={handleSubmit}
-            className="shrink-0 rounded-[10px] border disabled:pointer-events-none disabled:text-stone-500 disabled:border-stone-500 disabled:bg-white disabled:border transition-all ease-in inline-flex items-center text-white border-white hover:border-green-600 hover:text-green-600 px-[.6rem] py-[.2rem] text-[13px] lg:text-base hover:scale-105 active:translate-y-[.2rem] w-fit"
+            className="text-white dark:text-white shrink-0 rounded-[10px] border disabled:pointer-events-none disabled:text-stone-500 disabled:border-stone-500 disabled:bg-white disabled:border transition-all ease-in inline-flex items-center border-white hover:border-green-600 hover:text-green-600 px-[.6rem] py-[.2rem] text-[13px] lg:text-base hover:scale-105 active:translate-y-[.2rem] w-fit"
           >
             Submit
           </button>
