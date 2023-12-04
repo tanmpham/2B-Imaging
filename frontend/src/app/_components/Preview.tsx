@@ -1,6 +1,7 @@
 import Img from '@/components/shared/Img'
 import { toasterStyle } from '@/constants/toasterStyle'
 import { useGlobalContext } from '@/context/global-context'
+import { NoteDto } from '@/interfaces/note.dto'
 import { PatientDto } from '@/interfaces/patient.dto'
 import { TagDto } from '@/interfaces/tag.dto'
 import { format } from 'date-fns'
@@ -46,6 +47,7 @@ function Preview() {
 
   const { patientID, imageID, src, fileType, IsRightEye } = previewMedia
   const [tags, setTags] = useState<TagDto[]>([])
+  const [notes, setNotes] = useState<NoteDto[]>([])
   useEffect(() => {
     async function getPatient() {
       if (patientID !== 0) {
@@ -77,8 +79,27 @@ function Preview() {
       }
     }
 
+    async function getNotes() {
+      if (imageID !== 0) {
+        try {
+          const res = await fetch(
+            `${process.env.NEXT_PUBLIC_CLIENT_FRONTEND_URL}/api/imagenotes?image-id=${imageID}`
+          )
+          if (!res.ok) {
+            console.error('Failed to fetch data')
+          } else {
+            const notesData = (await res.json()) as NoteDto[]
+            setNotes(notesData)
+          }
+        } catch (error) {
+          console.error('Failed to fetch patient:', error)
+        }
+      }
+    }
+
     getPatient()
     getTags()
+    getNotes()
   }, [patientID, imageID])
 
   // console.log(patient)
@@ -144,7 +165,16 @@ function Preview() {
             </div>
 
             <div>
-              <span className={style.title}>notes:</span>
+              <span
+                className={`${style.title} flex flex-wrap items-center gap-x-[.8rem] mb-1`}
+              >
+                Notes:
+              </span>
+              {notes.map(({ NoteID, Note }) => (
+                <div key={NoteID} className="font-light">
+                  {Note}
+                </div>
+              ))}
             </div>
           </div>
         </div>

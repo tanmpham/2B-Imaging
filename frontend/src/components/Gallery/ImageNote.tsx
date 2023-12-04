@@ -1,5 +1,7 @@
-import { NoteDto } from '@/interfaces/note.dto'
+import { toasterStyle } from '@/constants/toasterStyle'
+import { NoteDto, NoteEditDto } from '@/interfaces/note.dto'
 import React, { Dispatch, SetStateAction, useEffect } from 'react'
+import toast from 'react-hot-toast'
 import { AiOutlineCloseCircle, AiOutlinePlusCircle } from 'react-icons/ai'
 import { BiSolidPencil } from 'react-icons/bi'
 import { MdDelete } from 'react-icons/md'
@@ -32,6 +34,66 @@ function ImageNote({ notes, imageID, setIsReFetch }: Props) {
 
   if (editData.length === 0) return null
 
+  function handleNoteSave(NoteID: number, new_content: string, idx: number) {
+    const noteData: NoteEditDto = {
+      NoteID: NoteID,
+      Note: new_content,
+    }
+
+    async function createNote(idx: number) {
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_CLIENT_FRONTEND_URL}/api/imagenotes`,
+          {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(noteData),
+          }
+        )
+        if (!res.ok) {
+          console.error('Failed to fetch data')
+        } else {
+          toast.success(`Note edited!`, toasterStyle)
+          setIsReFetch((prev) => !prev)
+          setIsEditing((prev) =>
+            prev.map((item, index) => index === idx && !item)
+          )
+        }
+      } catch (error) {
+        console.error('Create tag error:', error)
+        toast.error('Failed to create tag.', toasterStyle)
+      }
+    }
+
+    createNote(idx)
+  }
+
+  function handleNoteDelete(NoteID: number) {
+    async function deleteNote(NoteID: number) {
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_CLIENT_FRONTEND_URL}/api/imagenotes?note-id=${NoteID}`,
+          {
+            method: 'DELETE',
+          }
+        )
+        if (!res.ok) {
+          console.error('Failed to fetch data')
+        } else {
+          toast.success(`Note deleted!`, toasterStyle)
+          setIsReFetch((prev) => !prev)
+        }
+      } catch (error) {
+        console.error('Create tag error:', error)
+        toast.error('Failed to create tag.', toasterStyle)
+      }
+    }
+
+    deleteNote(NoteID)
+  }
+
   return (
     <div className="absolute right-[240px] w-[560px] h-[220px] bg-grey_2 text-black rounded-[10px] overflow-y-scroll">
       <div className={`relative`}>
@@ -61,7 +123,10 @@ function ImageNote({ notes, imageID, setIsReFetch }: Props) {
                 >
                   <BiSolidPencil />
                 </div>
-                <div className={`${style.icon_border}`}>
+                <div
+                  onClick={() => handleNoteDelete(NoteID)}
+                  className={`${style.icon_border}`}
+                >
                   <MdDelete />
                 </div>
               </div>
@@ -106,6 +171,9 @@ function ImageNote({ notes, imageID, setIsReFetch }: Props) {
                     </Button>
                     <Button
                       variant={'green'}
+                      onClick={(e) =>
+                        handleNoteSave(NoteID, editData[idx].Note, idx)
+                      }
                       className={`${style.button} hover:!border-green-700 hover:!text-green-700 dark:!hover:border-green-700 dark:!hover:text-green-700`}
                     >
                       Save
