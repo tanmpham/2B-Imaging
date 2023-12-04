@@ -70,6 +70,30 @@ function ImageNote({ notes, imageID, setIsReFetch }: Props) {
     createNote(idx)
   }
 
+  function handleNoteDelete(NoteID: number) {
+    async function deleteNote(NoteID: number) {
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_CLIENT_FRONTEND_URL}/api/imagenotes?note-id=${NoteID}`,
+          {
+            method: 'DELETE',
+          }
+        )
+        if (!res.ok) {
+          console.error('Failed to fetch data')
+        } else {
+          toast.success(`Note deleted!`, toasterStyle)
+          setIsReFetch((prev) => !prev)
+        }
+      } catch (error) {
+        console.error('Create tag error:', error)
+        toast.error('Failed to create tag.', toasterStyle)
+      }
+    }
+
+    deleteNote(NoteID)
+  }
+
   return (
     <div className="absolute right-[240px] w-[560px] h-[220px] bg-grey_2 text-black rounded-[10px] overflow-y-scroll">
       <div className={`relative`}>
@@ -99,7 +123,10 @@ function ImageNote({ notes, imageID, setIsReFetch }: Props) {
                 >
                   <BiSolidPencil />
                 </div>
-                <div className={`${style.icon_border}`}>
+                <div
+                  onClick={() => handleNoteDelete(NoteID)}
+                  className={`${style.icon_border}`}
+                >
                   <MdDelete />
                 </div>
               </div>
