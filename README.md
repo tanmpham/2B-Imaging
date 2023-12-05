@@ -17,7 +17,7 @@ yarn install
 yarn dev
 ```
 
-`PWA version:` Run `yarn build` before `yarn start`. The put http://localhost:3000/ in the browser, wait for the website to load, and you'll see the download option on the far right the search bar. After installed the PWA, you can run `yarn dev` (no `yarn start` or `yarn build`).
+`PWA version:` Run `yarn build` before `yarn start`. Then put http://localhost:3000/ in the browser, wait for the website to load, and you'll see the download option on the far right the search bar. After installed the PWA, you can run `yarn dev` (no `yarn start` or `yarn build`).
 
 ### Install dependencies, set up and run the back-end app locally
 
