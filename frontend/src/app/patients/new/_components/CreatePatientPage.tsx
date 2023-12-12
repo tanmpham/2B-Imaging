@@ -1,4 +1,5 @@
 'use client'
+import { Button } from '@/components/shared/Buttons/Button'
 import { toasterStyle } from '@/constants/toasterStyle'
 import { PatientCreateDto } from '@/interfaces/patient.dto'
 import { useRouter } from 'next/navigation'
@@ -135,21 +136,13 @@ function CreatePatientPage({}: Props) {
           />
         </div>
         <div className="flex justify-end">
-          <button
-            type="button"
-            onClick={handleCancel}
-            className="text-white dark:text-white shrink-0 rounded-[10px] border disabled:pointer-events-none disabled:text-stone-500 disabled:border-stone-500 disabled:bg-white disabled:border transition-all ease-in inline-flex items-center border-white hover:border-red-600 hover:text-red-600 px-[.6rem] py-[.2rem] text-[13px] lg:text-base hover:scale-105 active:translate-y-[.2rem] w-fit"
-          >
+          <Button type="button" onClick={handleCancel} variant={'error'}>
             Cancel
-          </button>
+          </Button>
           <div className="mx-2"></div>
-          <button
-            type="submit"
-            onClick={handleSubmit}
-            className="text-white dark:text-white shrink-0 rounded-[10px] border disabled:pointer-events-none disabled:text-stone-500 disabled:border-stone-500 disabled:bg-white disabled:border transition-all ease-in inline-flex items-center border-white hover:border-green-600 hover:text-green-600 px-[.6rem] py-[.2rem] text-[13px] lg:text-base hover:scale-105 active:translate-y-[.2rem] w-fit"
-          >
+          <Button type="submit" onClick={handleSubmit}>
             Submit
-          </button>
+          </Button>
         </div>
       </form>
     </div>
