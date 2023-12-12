@@ -114,7 +114,7 @@ function Preview() {
       ) : (
         <div className="mx-auto space-y-[24px]">
           <div
-            className={`relative w-[450px] h-[300px] 2xl:w-[600px] 2xl:h-[400px] mt-[130px] flex items-center justify-center text-stone-400 dark:text-stone-600 text-[80px]`}
+            className={`w-[450px] h-[300px] 2xl:w-[600px] 2xl:h-[400px] mt-[130px] flex items-center justify-center text-stone-400 dark:text-stone-600 text-[80px]`}
           >
             {fileType === 'jpg' && <Img src={src} className="rounded-[10px]" />}
             {fileType === 'mp4' && (

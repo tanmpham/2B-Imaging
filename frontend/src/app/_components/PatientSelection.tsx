@@ -9,6 +9,7 @@ import { format } from 'date-fns'
 import { useRouter } from 'next/navigation'
 import { MouseEvent, useRef, useState } from 'react'
 import toast from 'react-hot-toast'
+import { RiImageAddFill } from 'react-icons/ri'
 
 interface Props {
   patients: PatientDto[]
@@ -37,7 +38,9 @@ function PatientSelection({ patients }: Props) {
       toast('Please select a patient.', toasterStyle)
     } else {
       toast.success('Patient Selected!', toasterStyle)
-      router.push(`/gallery?patient-id=${patientSelected}`)
+      router.push(
+        `${process.env.NEXT_PUBLIC_CLIENT_FRONTEND_URL}/gallery?patient-id=${patientSelected}`
+      )
     }
   }
   // console.log(currentPatient)
@@ -155,6 +158,17 @@ function PatientSelection({ patients }: Props) {
           }}
         >
           Select
+        </Button>
+        <Button
+          size={'custom'}
+          className="px-[.3rem] py-[.2rem] text-[13px] lg:text-[24px]"
+          onClick={() =>
+            router.push(
+              `${process.env.NEXT_PUBLIC_CLIENT_FRONTEND_URL}/add-media`
+            )
+          }
+        >
+          <RiImageAddFill />
         </Button>
       </div>
     </div>
