@@ -1,5 +1,6 @@
 import { Metadata } from 'next'
 import React from 'react'
+import AddMediaPage from './_components/add-media'
 
 export const metadata: Metadata = {
   title: 'Add Media | 2B Imaging',
@@ -11,7 +12,7 @@ export const revalidate = 0
 type Props = {}
 
 function AddMedia({}: Props) {
-  return <div>AddMedia</div>
+  return <AddMediaPage />
 }
 
 export default AddMedia
