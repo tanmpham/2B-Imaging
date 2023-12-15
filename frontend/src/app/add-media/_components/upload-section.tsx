@@ -12,19 +12,19 @@ const style = {
 type Props = {}
 
 function UploadSection({}: Props) {
-  const [filesName, setFilesName] = React.useState<FileUpload[]>([])
+  const [filesUpload, setFilesUpload] = React.useState<FileUpload[]>([])
   function onChange(e: React.ChangeEvent<HTMLInputElement>) {
     //console.log(e.target.files)
     if (!e.target.files?.length) return
     for (const file of e.target.files) {
       // console.log(file)
-      setFilesName((prev) => [
+      setFilesUpload((prev) => [
         ...prev,
         { name: file.name, src: URL.createObjectURL(file) },
       ])
     }
   }
-  console.log(filesName)
+  console.log(filesUpload)
   return (
     <div className="flex items-center">
       <label className={`mt-[1rem] mx-[2rem]`}>
