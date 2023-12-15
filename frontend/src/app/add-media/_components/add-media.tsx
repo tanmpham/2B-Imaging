@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { MdDriveFolderUpload } from 'react-icons/md'
-import UploadImageSection from './upload-image'
+import UploadSection from './upload-section'
 
 const style = {
   type: {
@@ -20,7 +20,7 @@ function AddMediaPage({}: Props) {
       <h1 className="text-[34px] my-[1rem] mx-[2rem] flex gap-x-[1rem] items-center">
         Upload <MdDriveFolderUpload className="text-[40px]" />
       </h1>
-      <div className="h-[1px] w-full bg-black dark:bg-white" />
+      {/* <div className="h-[1px] w-full bg-black dark:bg-white" />
       <div className={`flex mb-[1rem]`}>
         <div
           className={isImage ? style.type.active : style.type.inactive}
@@ -36,7 +36,9 @@ function AddMediaPage({}: Props) {
         </div>
       </div>
 
-      <UploadImageSection />
+      {isImage ? <UploadImageSection /> : <></>} */}
+
+      <UploadSection />
     </div>
   )
 }

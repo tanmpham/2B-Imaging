@@ -9,7 +9,7 @@ const style = {
 
 type Props = {}
 
-function UploadImageSection({}: Props) {
+function UploadSection({}: Props) {
   const [imagesSrc, setImagesSrc] = React.useState<string[]>([])
   function onChange(e: React.ChangeEvent<HTMLInputElement>) {
     console.log(e.target.files)
@@ -29,18 +29,16 @@ function UploadImageSection({}: Props) {
   // console.log(imagesSrc, imagesSrc.length)
   return (
     <div className="flex items-center">
-      <form>
-        <input
-          onChange={onChange}
-          id="images_upload"
-          type="file"
-          //accept="video/mp4"
-          // accept="image/*"
-          multiple
-        />
-      </form>
+      <input
+        onChange={onChange}
+        id="media_upload"
+        name="media_upload"
+        type="file"
+        multiple
+        className="mt-[2rem] mx-[2rem]"
+      />
     </div>
   )
 }
 
-export default UploadImageSection
+export default UploadSection
