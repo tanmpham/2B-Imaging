@@ -1,3 +1,4 @@
+import Img from '@/components/shared/Img'
 import { FileUpload } from '@/interfaces/files-upload'
 import React from 'react'
 import { FiFolderPlus } from 'react-icons/fi'
@@ -26,9 +27,9 @@ function UploadSection({}: Props) {
   }
   console.log(filesUpload)
   return (
-    <div className="flex items-center">
-      <label className={`mt-[1rem] mx-[2rem]`}>
-        <div className="h-[80px] w-[100px] rounded-[10px] border border-white border-dashed cursor-pointer flex flex-col gap-y-[.2rem] justify-center items-center text-center hover:border-stone-200 hover:text-stone-200 active:scale-95 transition-all ease-in">
+    <div className="flex flex-col mx-[2rem]">
+      <label className={`mt-[1rem]`}>
+        <div className="h-[80px] w-[100px] rounded-[10px] border border-stone-300 text-stone-300 border-dashed cursor-pointer flex flex-col gap-y-[.2rem] justify-center items-center text-center hover:border-white hover:text-white active:scale-95 transition-all ease-in">
           <FiFolderPlus className="text-[20px]" />
           Add Files
         </div>
@@ -41,6 +42,14 @@ function UploadSection({}: Props) {
           multiple
         />
       </label>
+      <div className={`flex items-center overflow-x-auto gap-x-[1rem]`}>
+        {filesUpload.length > 0 &&
+          filesUpload.map(({ name, src, type }) => (
+            <div key={name} className="w-[200px] h-fit">
+              {type.split('/')[0] === 'image' && <Img src={src} />}
+            </div>
+          ))}
+      </div>
     </div>
   )
 }
