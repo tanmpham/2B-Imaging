@@ -20,7 +20,7 @@ function UploadSection({}: Props) {
       // console.log(file)
       setFilesUpload((prev) => [
         ...prev,
-        { name: file.name, src: URL.createObjectURL(file) },
+        { name: file.name, src: URL.createObjectURL(file), type: file.type },
       ])
     }
   }
