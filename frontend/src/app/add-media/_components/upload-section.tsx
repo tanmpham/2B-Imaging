@@ -29,7 +29,7 @@ function UploadSection({}: Props) {
   return (
     <div className="flex flex-col mx-[2rem]">
       <label className={`mt-[1rem]`}>
-        <div className="h-[80px] w-[100px] rounded-[10px] border border-stone-300 text-stone-300 border-dashed cursor-pointer flex flex-col gap-y-[.2rem] justify-center items-center text-center hover:border-white hover:text-white active:scale-95 transition-all ease-in">
+        <div className="h-[80px] w-[100px] rounded-[10px] border dark:border-stone-300 border-stone-700 dark:text-stone-300 text-stone-700 border-dashed cursor-pointer flex flex-col gap-y-[.2rem] justify-center items-center text-center dark:hover:border-white hover:border-black dark:hover:text-white hover:text-black active:scale-95 transition-all ease-in">
           <FiFolderPlus className="text-[20px]" />
           Add Files
         </div>
