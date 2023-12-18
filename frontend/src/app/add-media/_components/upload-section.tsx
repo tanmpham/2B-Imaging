@@ -13,19 +13,27 @@ const style = {
 type Props = {}
 
 function UploadSection({}: Props) {
-  const [filesUpload, setFilesUpload] = React.useState<FileUpload[]>([])
-  function onChange(e: React.ChangeEvent<HTMLInputElement>) {
+  const [fileName, setFileName] = React.useState<string[]>([])
+  const [fileType, setFileType] = React.useState<string[]>([])
+  const [fileSrc, setFileSrc] = React.useState<string[]>([])
+
+  function addLocalFile(e: React.ChangeEvent<HTMLInputElement>) {
     //console.log(e.target.files)
     if (!e.target.files?.length) return
     for (const file of e.target.files) {
       // console.log(file)
-      setFilesUpload((prev) => [
-        ...prev,
-        { name: file.name, src: URL.createObjectURL(file), type: file.type },
-      ])
+
+      setFileName((prev) => [...prev, file.name])
+      setFileType((prev) => [...prev, file.type])
+      setFileSrc((prev) => [...prev, URL.createObjectURL(file)])
     }
   }
-  console.log(filesUpload)
+
+  console.log({
+    name: fileName,
+    type: fileType,
+    src: fileSrc,
+  })
   return (
     <div className="flex flex-col">
       <label className={``}>
@@ -38,19 +46,32 @@ function UploadSection({}: Props) {
           id="media_upload"
           name="media_upload"
           className={`w-0 h-0`}
-          onChange={onChange}
+          onChange={addLocalFile}
           multiple
         />
       </label>
       <div className={`flex items-center overflow-x-auto gap-x-[1rem]`}>
-        {filesUpload.length > 0 &&
-          filesUpload.map(({ name, src, type }, index) => (
-            <div key={name} className="flex flex-col gap-y-[1rem] items-center">
+        {fileSrc.length > 0 &&
+          fileSrc.map((src, index) => (
+            <div key={src} className="flex flex-col gap-y-[1rem] items-center">
               <div className="w-[220px]">
-                {type.split('/')[0] === 'image' && <Img src={src} />}
-                {type.split('/')[0] === 'video' && <video src={src} />}
+                {fileType[index].split('/')[0] === 'image' && <Img src={src} />}
+                {fileType[index].split('/')[0] === 'video' && (
+                  <video src={src} />
+                )}
               </div>
-              <div className={`text-[12px]`}>{name}</div>
+
+              <input
+                value={fileName[index]}
+                onChange={(e) => {
+                  setFileName((prev) =>
+                    prev.map((file, idx) =>
+                      idx === index ? e.target.value : file
+                    )
+                  )
+                }}
+                className="text-[12px] w-[230px] text-center"
+              />
             </div>
           ))}
       </div>
