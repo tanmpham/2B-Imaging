@@ -44,9 +44,13 @@ function UploadSection({}: Props) {
       </label>
       <div className={`flex items-center overflow-x-auto gap-x-[1rem]`}>
         {filesUpload.length > 0 &&
-          filesUpload.map(({ name, src, type }) => (
-            <div key={name} className="w-[200px] h-fit">
-              {type.split('/')[0] === 'image' && <Img src={src} />}
+          filesUpload.map(({ name, src, type }, index) => (
+            <div key={name} className="flex flex-col gap-y-[1rem] items-center">
+              <div className="w-[220px]">
+                {type.split('/')[0] === 'image' && <Img src={src} />}
+                {type.split('/')[0] === 'video' && <video src={src} />}
+              </div>
+              <div className={`text-[12px]`}>{name}</div>
             </div>
           ))}
       </div>
