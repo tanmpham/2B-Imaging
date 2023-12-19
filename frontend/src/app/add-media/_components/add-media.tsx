@@ -45,7 +45,7 @@ function AddMediaPage({}: Props) {
       <div className="flex items-center gap-x-[2rem]">
         <div className={`text-[20px]`}>Add to Patient:</div>
         <div
-          className={`px-[1rem] py-[.6rem] border dark:border-stone-300 border-stone-700 dark:hover:border-white hover:border-black rounded-[10px] flex items-center gap-x-[1rem] cursor-pointer dark:text-stone-300 text-stone-700 group active:translate-y-[.2rem] transition-all ease-in`}
+          className={`px-[.8rem] py-[.5rem] border dark:border-stone-300 border-stone-700 dark:hover:border-white hover:border-black rounded-[10px] flex items-center gap-x-[1rem] cursor-pointer dark:text-stone-300 text-stone-700 group active:translate-y-[.2rem] transition-all ease-in`}
         >
           hi
           <GoTriangleDown className="text-[20px] group-hover:border-black dark:group-hover:text-white" />
