@@ -2,7 +2,6 @@
 
 import { PatientDto } from '@/interfaces/patient.dto'
 import React from 'react'
-import { FaAngleRight } from 'react-icons/fa'
 import { GoTriangleDown } from 'react-icons/go'
 import { MdDriveFolderUpload } from 'react-icons/md'
 import UploadSection from './upload-section'
@@ -19,7 +18,6 @@ type Props = {
 }
 
 function AddMediaPage({ patients }: Props) {
-  const [isImage, setIsImage] = React.useState(true)
   const [selectedPatient, setSelectedPatient] = React.useState<PatientDto>(
     patients[0]
   )
