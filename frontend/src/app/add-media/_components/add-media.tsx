@@ -1,5 +1,6 @@
 'use client'
 
+import { PatientDto } from '@/interfaces/patient.dto'
 import React from 'react'
 import { FaAngleRight } from 'react-icons/fa'
 import { GoTriangleDown } from 'react-icons/go'
@@ -13,10 +14,16 @@ const style = {
   },
 }
 
-type Props = {}
+type Props = {
+  patients: PatientDto[]
+}
 
-function AddMediaPage({}: Props) {
+function AddMediaPage({ patients }: Props) {
   const [isImage, setIsImage] = React.useState(true)
+  const [selectedPatient, setSelectedPatient] = React.useState<PatientDto>(
+    patients[0]
+  )
+  const [isSearchingPatient, setIsSearchingPatient] = React.useState(false)
   return (
     <div className="text-black dark:text-white m-auto bg-grey_2 dark:bg-grey_3 rounded-[10px] w-[84vw] h-[94vh] p-[2rem] flex flex-col gap-y-[1rem]">
       <h1 className="text-[34px] flex gap-x-[1rem] items-center">
@@ -44,11 +51,32 @@ function AddMediaPage({}: Props) {
 
       <div className="flex items-center gap-x-[2rem]">
         <div className={`text-[20px]`}>Add to Patient:</div>
-        <div
-          className={`px-[.8rem] py-[.5rem] border dark:border-stone-300 border-stone-700 dark:hover:border-white hover:border-black rounded-[10px] flex items-center gap-x-[1rem] cursor-pointer dark:text-stone-300 text-stone-700 group active:translate-y-[.2rem] transition-all ease-in`}
-        >
-          hi
-          <GoTriangleDown className="text-[20px] group-hover:border-black dark:group-hover:text-white" />
+        <div className={`relative`}>
+          <div
+            className={`px-[.8rem] py-[.5rem] border dark:border-stone-300 border-stone-700 dark:hover:border-white hover:border-black ${
+              isSearchingPatient ? 'rounded-t-[10px]' : 'rounded-[10px]'
+            } flex items-center gap-x-[1rem] cursor-pointer dark:text-stone-300 text-stone-700 group active:translate-y-[.2rem] transition-all ease-in`}
+            onClick={() => setIsSearchingPatient((prev) => !prev)}
+          >
+            {`${selectedPatient.FirstName} ${selectedPatient.LastName}`}
+            <GoTriangleDown className="text-[20px] group-hover:border-black dark:group-hover:text-white" />
+          </div>
+          <div
+            className={`${
+              !isSearchingPatient ? 'hidden' : 'absolute'
+            } border border-white py-[.5rem] px-[.8rem] w-full rounded-b-[10px]`}
+          >
+            {patients.map((patient) => (
+              <div
+                key={patient.PatientID}
+                className="hover:bg-green_1 cursor-pointer"
+                onClick={() => {
+                  setSelectedPatient(patient)
+                  setIsSearchingPatient(false)
+                }}
+              >{`${patient.FirstName} ${patient.LastName}`}</div>
+            ))}
+          </div>
         </div>
       </div>
     </div>

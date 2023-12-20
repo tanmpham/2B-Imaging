@@ -1,3 +1,5 @@
+import { getAllPatients } from '@/functions'
+import { PatientDto } from '@/interfaces/patient.dto'
 import { Metadata } from 'next'
 import React from 'react'
 import AddMediaPage from './_components/add-media'
@@ -11,8 +13,9 @@ export const revalidate = 0
 
 type Props = {}
 
-function AddMedia({}: Props) {
-  return <AddMediaPage />
+async function AddMedia({}: Props) {
+  const patients = (await getAllPatients()) as PatientDto[]
+  return <AddMediaPage patients={patients} />
 }
 
 export default AddMedia
