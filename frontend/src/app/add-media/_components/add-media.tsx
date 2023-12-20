@@ -64,7 +64,7 @@ function AddMediaPage({ patients }: Props) {
           <div
             className={`${
               !isSearchingPatient ? 'hidden' : 'absolute'
-            } border border-white py-[.5rem] px-[.8rem] w-full rounded-b-[10px]`}
+            } border dark:border-stone-300 border-stone-700 dark:hover:border-white hover:border-black py-[.5rem] px-[.8rem] w-full rounded-b-[10px]`}
           >
             {patients.map((patient) => (
               <div
