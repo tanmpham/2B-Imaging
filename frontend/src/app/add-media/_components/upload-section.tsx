@@ -11,37 +11,25 @@ const style = {
 }
 
 type Props = {
-  filesName: string[]
-  setFilesName: React.Dispatch<React.SetStateAction<string[]>>
-  filesType: string[]
-  setFilesType: React.Dispatch<React.SetStateAction<string[]>>
+  files: File[]
+  setFiles: React.Dispatch<React.SetStateAction<File[]>>
   filesSrc: string[]
   setFilesSrc: React.Dispatch<React.SetStateAction<string[]>>
 }
 
-function UploadSection({
-  filesName,
-  setFilesName,
-  filesType,
-  setFilesType,
-  filesSrc,
-  setFilesSrc,
-}: Props) {
+function UploadSection({ files, setFiles, filesSrc, setFilesSrc }: Props) {
   function addLocalFile(e: React.ChangeEvent<HTMLInputElement>) {
     //console.log(e.target.files)
     if (!e.target.files?.length) return
     for (const file of e.target.files) {
       // console.log(file)
-
-      setFilesName((prev) => [...prev, file.name])
-      setFilesType((prev) => [...prev, file.type])
+      setFiles((prev) => [...prev, file])
       setFilesSrc((prev) => [...prev, URL.createObjectURL(file)])
     }
   }
 
   function deselect_a_file(index: number) {
-    setFilesName((prev) => prev.filter((file, idx) => idx !== index))
-    setFilesType((prev) => prev.filter((file, idx) => idx !== index))
+    setFiles((prev) => prev.filter((file, idx) => idx !== index))
     setFilesSrc((prev) => prev.filter((file, idx) => idx !== index))
   }
 
@@ -65,6 +53,7 @@ function UploadSection({
         className={`grid grid-cols-3 overflow-y-auto gap-y-[1rem] max-h-[68vh]`}
       >
         {filesSrc.length > 0 &&
+          files.length > 0 &&
           filesSrc.map((src, index) => (
             <div key={src} className="flex flex-col gap-y-[1rem] items-center">
               <div className="w-[230px] relative group">
@@ -72,13 +61,14 @@ function UploadSection({
                   onClick={() => deselect_a_file(index)}
                   className="text-transparent group-hover:text-white absolute text-[40px] right-0 hover:!text-red-600 z-10 peer active:scale-95 transition-all ease-in"
                 />
-                {filesType[index].split('/')[0] === 'image' && (
+
+                {files[index].type?.split('/')[0] === 'image' && (
                   <Img
                     src={src}
                     className="rounded-[10px] object-cover hover:opacity-40 peer-hover:opacity-40 transition-all ease-in"
                   />
                 )}
-                {filesType[index].split('/')[0] === 'video' && (
+                {files[index].type?.split('/')[0] === 'video' && (
                   <video
                     src={src}
                     className="rounded-[10px] hover:opacity-40 peer-hover:opacity-40 transition-all ease-in"
@@ -87,11 +77,16 @@ function UploadSection({
               </div>
 
               <input
-                value={filesName[index]}
+                value={files[index].name}
                 onChange={(e) => {
-                  setFilesName((prev) =>
+                  setFiles((prev) =>
                     prev.map((file, idx) =>
-                      idx === index ? e.target.value : file
+                      idx === index
+                        ? new File([file], e.target.value, {
+                            type: file.type,
+                            lastModified: file.lastModified,
+                          })
+                        : file
                     )
                   )
                 }}
