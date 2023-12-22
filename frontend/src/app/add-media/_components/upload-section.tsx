@@ -45,7 +45,7 @@ function UploadSection({
     src: fileSrc,
   })
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col w-[40vw]">
       <label className={``}>
         <div className="h-[80px] w-[100px] rounded-[10px] border dark:border-stone-300 border-stone-700 dark:text-stone-300 text-stone-700 border-dashed cursor-pointer flex flex-col gap-y-[.2rem] justify-center items-center text-center dark:hover:border-white hover:border-black dark:hover:text-white hover:text-black active:scale-95 transition-all ease-in">
           <FiFolderPlus className="text-[20px]" />
@@ -60,7 +60,7 @@ function UploadSection({
           multiple
         />
       </label>
-      <div className={`flex items-center overflow-x-auto gap-x-[1rem]`}>
+      <div className={`grid grid-cols-3 overflow-y-auto gap-y-[1rem] h-[68vh]`}>
         {fileSrc.length > 0 &&
           fileSrc.map((src, index) => (
             <div key={src} className="flex flex-col gap-y-[1rem] items-center">
