@@ -39,12 +39,6 @@ function UploadSection({
     }
   }
 
-  console.log({
-    name: fileName,
-    type: fileType,
-    src: fileSrc,
-  })
-
   function deselect_a_file(index: number) {
     setFileName((prev) => prev.filter((file, idx) => idx !== index))
     setFileType((prev) => prev.filter((file, idx) => idx !== index))
