@@ -1,7 +1,7 @@
 import Img from '@/components/shared/Img'
-import { FileUpload } from '@/interfaces/files-upload'
 import React from 'react'
 import { FiFolderPlus } from 'react-icons/fi'
+import { IoIosCloseCircleOutline } from 'react-icons/io'
 
 const style = {
   addBtn: {
@@ -64,10 +64,19 @@ function UploadSection({
         {fileSrc.length > 0 &&
           fileSrc.map((src, index) => (
             <div key={src} className="flex flex-col gap-y-[1rem] items-center">
-              <div className="w-[220px]">
-                {fileType[index].split('/')[0] === 'image' && <Img src={src} />}
+              <div className="w-[230px] relative group">
+                <IoIosCloseCircleOutline className="text-transparent group-hover:text-white absolute text-[40px] right-0 hover:!text-red-600 z-10 peer active:scale-95 transition-all ease-in" />
+                {fileType[index].split('/')[0] === 'image' && (
+                  <Img
+                    src={src}
+                    className="rounded-[10px] object-cover hover:opacity-40 peer-hover:opacity-40 transition-all ease-in"
+                  />
+                )}
                 {fileType[index].split('/')[0] === 'video' && (
-                  <video src={src} />
+                  <video
+                    src={src}
+                    className="rounded-[10px] hover:opacity-40 peer-hover:opacity-40 transition-all ease-in"
+                  />
                 )}
               </div>
 
