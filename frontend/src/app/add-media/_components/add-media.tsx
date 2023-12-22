@@ -23,18 +23,18 @@ function AddMediaPage({ patients }: Props) {
   const [selectedPatient, setSelectedPatient] = React.useState<PatientDto>(
     patients[0]
   )
-  const [fileName, setFileName] = React.useState<string[]>([])
-  const [fileType, setFileType] = React.useState<string[]>([])
-  const [fileSrc, setFileSrc] = React.useState<string[]>([])
+  const [filesName, setFilesName] = React.useState<string[]>([])
+  const [filesType, setFilesType] = React.useState<string[]>([])
+  const [filesSrc, setFilesSrc] = React.useState<string[]>([])
   const [isSearchingPatient, setIsSearchingPatient] = React.useState(false)
   const router = useRouter()
 
   console.log({
     patient: selectedPatient,
     file: {
-      name: fileName,
-      src: fileSrc,
-      type: fileType,
+      name: filesName,
+      src: filesSrc,
+      type: filesType,
     },
   })
 
@@ -63,12 +63,12 @@ function AddMediaPage({ patients }: Props) {
       {isImage ? <UploadImageSection /> : <></>} */}
 
         <UploadSection
-          fileName={fileName}
-          setFileName={setFileName}
-          fileType={fileType}
-          setFileType={setFileType}
-          fileSrc={fileSrc}
-          setFileSrc={setFileSrc}
+          filesName={filesName}
+          setFilesName={setFilesName}
+          filesType={filesType}
+          setFilesType={setFilesType}
+          filesSrc={filesSrc}
+          setFilesSrc={setFilesSrc}
         />
       </div>
 

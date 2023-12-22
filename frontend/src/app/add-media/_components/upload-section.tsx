@@ -11,21 +11,21 @@ const style = {
 }
 
 type Props = {
-  fileName: string[]
-  setFileName: React.Dispatch<React.SetStateAction<string[]>>
-  fileType: string[]
-  setFileType: React.Dispatch<React.SetStateAction<string[]>>
-  fileSrc: string[]
-  setFileSrc: React.Dispatch<React.SetStateAction<string[]>>
+  filesName: string[]
+  setFilesName: React.Dispatch<React.SetStateAction<string[]>>
+  filesType: string[]
+  setFilesType: React.Dispatch<React.SetStateAction<string[]>>
+  filesSrc: string[]
+  setFilesSrc: React.Dispatch<React.SetStateAction<string[]>>
 }
 
 function UploadSection({
-  fileName,
-  setFileName,
-  fileType,
-  setFileType,
-  fileSrc,
-  setFileSrc,
+  filesName,
+  setFilesName,
+  filesType,
+  setFilesType,
+  filesSrc,
+  setFilesSrc,
 }: Props) {
   function addLocalFile(e: React.ChangeEvent<HTMLInputElement>) {
     //console.log(e.target.files)
@@ -33,16 +33,16 @@ function UploadSection({
     for (const file of e.target.files) {
       // console.log(file)
 
-      setFileName((prev) => [...prev, file.name])
-      setFileType((prev) => [...prev, file.type])
-      setFileSrc((prev) => [...prev, URL.createObjectURL(file)])
+      setFilesName((prev) => [...prev, file.name])
+      setFilesType((prev) => [...prev, file.type])
+      setFilesSrc((prev) => [...prev, URL.createObjectURL(file)])
     }
   }
 
   function deselect_a_file(index: number) {
-    setFileName((prev) => prev.filter((file, idx) => idx !== index))
-    setFileType((prev) => prev.filter((file, idx) => idx !== index))
-    setFileSrc((prev) => prev.filter((file, idx) => idx !== index))
+    setFilesName((prev) => prev.filter((file, idx) => idx !== index))
+    setFilesType((prev) => prev.filter((file, idx) => idx !== index))
+    setFilesSrc((prev) => prev.filter((file, idx) => idx !== index))
   }
 
   return (
@@ -64,21 +64,21 @@ function UploadSection({
       <div
         className={`grid grid-cols-3 overflow-y-auto gap-y-[1rem] max-h-[68vh]`}
       >
-        {fileSrc.length > 0 &&
-          fileSrc.map((src, index) => (
+        {filesSrc.length > 0 &&
+          filesSrc.map((src, index) => (
             <div key={src} className="flex flex-col gap-y-[1rem] items-center">
               <div className="w-[230px] relative group">
                 <IoIosCloseCircleOutline
                   onClick={() => deselect_a_file(index)}
                   className="text-transparent group-hover:text-white absolute text-[40px] right-0 hover:!text-red-600 z-10 peer active:scale-95 transition-all ease-in"
                 />
-                {fileType[index].split('/')[0] === 'image' && (
+                {filesType[index].split('/')[0] === 'image' && (
                   <Img
                     src={src}
                     className="rounded-[10px] object-cover hover:opacity-40 peer-hover:opacity-40 transition-all ease-in"
                   />
                 )}
-                {fileType[index].split('/')[0] === 'video' && (
+                {filesType[index].split('/')[0] === 'video' && (
                   <video
                     src={src}
                     className="rounded-[10px] hover:opacity-40 peer-hover:opacity-40 transition-all ease-in"
@@ -87,9 +87,9 @@ function UploadSection({
               </div>
 
               <input
-                value={fileName[index]}
+                value={filesName[index]}
                 onChange={(e) => {
-                  setFileName((prev) =>
+                  setFilesName((prev) =>
                     prev.map((file, idx) =>
                       idx === index ? e.target.value : file
                     )
