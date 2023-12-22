@@ -10,13 +10,23 @@ const style = {
   },
 }
 
-type Props = {}
+type Props = {
+  fileName: string[]
+  setFileName: React.Dispatch<React.SetStateAction<string[]>>
+  fileType: string[]
+  setFileType: React.Dispatch<React.SetStateAction<string[]>>
+  fileSrc: string[]
+  setFileSrc: React.Dispatch<React.SetStateAction<string[]>>
+}
 
-function UploadSection({}: Props) {
-  const [fileName, setFileName] = React.useState<string[]>([])
-  const [fileType, setFileType] = React.useState<string[]>([])
-  const [fileSrc, setFileSrc] = React.useState<string[]>([])
-
+function UploadSection({
+  fileName,
+  setFileName,
+  fileType,
+  setFileType,
+  fileSrc,
+  setFileSrc,
+}: Props) {
   function addLocalFile(e: React.ChangeEvent<HTMLInputElement>) {
     //console.log(e.target.files)
     if (!e.target.files?.length) return

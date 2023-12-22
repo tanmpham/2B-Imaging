@@ -23,6 +23,9 @@ function AddMediaPage({ patients }: Props) {
   const [selectedPatient, setSelectedPatient] = React.useState<PatientDto>(
     patients[0]
   )
+  const [fileName, setFileName] = React.useState<string[]>([])
+  const [fileType, setFileType] = React.useState<string[]>([])
+  const [fileSrc, setFileSrc] = React.useState<string[]>([])
   const [isSearchingPatient, setIsSearchingPatient] = React.useState(false)
   const router = useRouter()
   return (
@@ -48,7 +51,14 @@ function AddMediaPage({ patients }: Props) {
 
       {isImage ? <UploadImageSection /> : <></>} */}
 
-      <UploadSection />
+      <UploadSection
+        fileName={fileName}
+        setFileName={setFileName}
+        fileType={fileType}
+        setFileType={setFileType}
+        fileSrc={fileSrc}
+        setFileSrc={setFileSrc}
+      />
 
       <div className="flex items-center gap-x-[2rem]">
         <div className={`text-[20px]`}>Add to Patient:</div>
