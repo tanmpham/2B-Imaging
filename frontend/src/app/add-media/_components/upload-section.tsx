@@ -44,6 +44,13 @@ function UploadSection({
     type: fileType,
     src: fileSrc,
   })
+
+  function deselect_a_file(index: number) {
+    setFileName((prev) => prev.filter((file, idx) => idx !== index))
+    setFileType((prev) => prev.filter((file, idx) => idx !== index))
+    setFileSrc((prev) => prev.filter((file, idx) => idx !== index))
+  }
+
   return (
     <div className="flex flex-col w-[40vw]">
       <label className={``}>
@@ -60,12 +67,17 @@ function UploadSection({
           multiple
         />
       </label>
-      <div className={`grid grid-cols-3 overflow-y-auto gap-y-[1rem] h-[68vh]`}>
+      <div
+        className={`grid grid-cols-3 overflow-y-auto gap-y-[1rem] max-h-[68vh]`}
+      >
         {fileSrc.length > 0 &&
           fileSrc.map((src, index) => (
             <div key={src} className="flex flex-col gap-y-[1rem] items-center">
               <div className="w-[230px] relative group">
-                <IoIosCloseCircleOutline className="text-transparent group-hover:text-white absolute text-[40px] right-0 hover:!text-red-600 z-10 peer active:scale-95 transition-all ease-in" />
+                <IoIosCloseCircleOutline
+                  onClick={() => deselect_a_file(index)}
+                  className="text-transparent group-hover:text-white absolute text-[40px] right-0 hover:!text-red-600 z-10 peer active:scale-95 transition-all ease-in"
+                />
                 {fileType[index].split('/')[0] === 'image' && (
                   <Img
                     src={src}
