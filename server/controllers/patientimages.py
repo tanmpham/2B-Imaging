@@ -111,3 +111,8 @@ def fetch_single_image(image_id):
         "FileType": fileType,
         "DateCreated": query_result[7],
     }
+
+
+@patientimages_bp.route("/patientimages", methods=["POST"])
+def add_media():
+    return None

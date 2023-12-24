@@ -33,6 +33,12 @@ function AddMediaPage({ patients }: Props) {
     files: files,
   })
 
+  function clearFn() {
+    setFiles([])
+    setFilesSrc([])
+    setSelectedPatient(patients[0])
+  }
+
   return (
     <div className="text-black dark:text-white m-auto bg-grey_2 dark:bg-grey_3 rounded-[10px] w-[84vw] h-[94vh] p-[2rem] flex gap-x-[3.4rem]">
       <div className={`flex flex-col gap-y-[1rem]`}>
@@ -98,9 +104,9 @@ function AddMediaPage({ patients }: Props) {
         </div>
 
         <div className="flex items-center gap-x-[.6rem]">
-          <Button>Save</Button>
-          <Button variant={'error'} onClick={() => router.push('/')}>
-            Cancel
+          <Button>Upload</Button>
+          <Button variant={'error'} onClick={() => clearFn()}>
+            Clear
           </Button>
         </div>
       </div>
