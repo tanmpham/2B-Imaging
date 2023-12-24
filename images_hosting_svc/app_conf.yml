@@ -2,3 +2,4 @@ version: 1
 client-frontend-url: localhost:3000
 client-backend-url: localhost:4200
 server-url: localhost:4000
+sql-pass: Password_

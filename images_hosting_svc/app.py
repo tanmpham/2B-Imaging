@@ -1,6 +1,7 @@
 from flask import Flask, abort, request
 from flask_cors import CORS
 from urllib.parse import urlparse
+from controllers.add_media import add_media_bp
 import yaml
 
 
@@ -30,6 +31,7 @@ app = SecuredStaticFlask(
     __name__, static_folder="patientimages", static_url_path="/gallery"
 )
 
+app.register_blueprint(add_media_bp)
 
 CORS(
     app,
