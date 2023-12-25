@@ -128,6 +128,7 @@ function PatientSelection({ patients }: Props) {
 
       <div className={`flex justify-end mt-[1rem] gap-x-[.8rem]`}>
         <Button
+          variant={'success'}
           onClick={() => {
             router.push(
               `${process.env.NEXT_PUBLIC_CLIENT_FRONTEND_URL}/patients/new`

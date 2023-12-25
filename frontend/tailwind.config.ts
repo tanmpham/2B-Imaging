@@ -13,7 +13,7 @@ const config: Config = {
         blue_1: '#004580',
         blue_2: '#ABCEDD',
         green_1: '#A5F8EE91',
-        green_2: '#4b7772',
+        green_2: '#51B3A8',
         navBg: '#0A0A0A',
         grey_1: '#0000005C',
         grey_2: '#D9D9D9',

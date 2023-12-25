@@ -12,6 +12,8 @@ def add_media():
 
     print(request.files)
 
+    patient = request.json["Patient"]
+
     try:
         connection = mysql.connector.connect(**db_config)
         cursor = connection.cursor()

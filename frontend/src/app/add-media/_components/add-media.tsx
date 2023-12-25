@@ -1,9 +1,11 @@
 'use client'
 
 import { Button } from '@/components/shared/Buttons/Button'
+import { toasterStyle } from '@/constants/toasterStyle'
 import { PatientDto } from '@/interfaces/patient.dto'
 import { useRouter } from 'next/navigation'
 import React from 'react'
+import toast from 'react-hot-toast'
 import { GoTriangleDown } from 'react-icons/go'
 import { MdDriveFolderUpload } from 'react-icons/md'
 import UploadSection from './upload-section'
@@ -37,6 +39,13 @@ function AddMediaPage({ patients }: Props) {
     setFiles([])
     setFilesSrc([])
     setSelectedPatient(patients[0])
+  }
+
+  function handleMediaUpload(e: React.MouseEvent<HTMLButtonElement>) {
+    if (files.length < 1) {
+      toast.error('Please upload at least 1 file', toasterStyle)
+    } else {
+    }
   }
 
   return (
@@ -104,7 +113,7 @@ function AddMediaPage({ patients }: Props) {
         </div>
 
         <div className="flex items-center gap-x-[.6rem]">
-          <Button>Upload</Button>
+          <Button onClick={handleMediaUpload}>Upload</Button>
           <Button variant={'error'} onClick={() => clearFn()}>
             Clear
           </Button>

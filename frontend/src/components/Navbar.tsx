@@ -178,11 +178,11 @@ function Navbar() {
             }}
             form=""
             variant={'error'}
-            className={`w-fit`}
+            className={``}
           >
             Clear
           </Button>
-          <Button form="patientSelection" className={`w-fit`}>
+          <Button form="patientSelection" className={``}>
             Search
           </Button>
         </div>
