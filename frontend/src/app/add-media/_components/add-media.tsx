@@ -2,6 +2,7 @@
 
 import { Button } from '@/components/shared/Buttons/Button'
 import { toasterStyle } from '@/constants/toasterStyle'
+import { FilesUpload } from '@/interfaces/files-upload'
 import { PatientDto } from '@/interfaces/patient.dto'
 import { useRouter } from 'next/navigation'
 import React from 'react'
@@ -45,6 +46,36 @@ function AddMediaPage({ patients }: Props) {
     if (files.length < 1) {
       toast.error('Please upload at least 1 file', toasterStyle)
     } else {
+      const filesUpload: FilesUpload = {
+        Files: files,
+        Patient: selectedPatient,
+      }
+
+      async function addMedia(filesUpload: FilesUpload) {
+        try {
+          const res = await fetch(
+            `${process.env.NEXT_PUBLIC_CLIENT_FRONTEND_URL}/api/patientimages`,
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(filesUpload),
+            }
+          )
+          if (!res.ok) {
+            console.error('Failed to fetch data')
+          } else {
+            toast.success(`Upload success!`, toasterStyle)
+            window.location.href = '/'
+          }
+        } catch (error) {
+          console.error('Add media error', error)
+          toast.error('Failed to add media', toasterStyle)
+        }
+      }
+
+      addMedia(filesUpload)
     }
   }
 

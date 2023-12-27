@@ -2,6 +2,7 @@ from flask import Flask, abort, request
 from flask_cors import CORS
 from urllib.parse import urlparse
 from controllers.add_media import add_media_bp
+from controllers.patient_images import patient_images_bp
 import yaml
 
 
@@ -27,11 +28,10 @@ class SecuredStaticFlask(Flask):
         abort(403)  # Forbidden access
 
 
-app = SecuredStaticFlask(
-    __name__, static_folder="patientimages", static_url_path="/gallery"
-)
+app = SecuredStaticFlask(__name__)
 
 app.register_blueprint(add_media_bp)
+app.register_blueprint(patient_images_bp)
 
 CORS(
     app,

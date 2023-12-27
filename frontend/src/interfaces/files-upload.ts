@@ -1,5 +1,6 @@
-export interface FileUpload {
-  name: string
-  src: string
-  type: string
+import { PatientDto } from './patient.dto'
+
+export interface FilesUpload {
+  Files: File[]
+  Patient: PatientDto
 }
